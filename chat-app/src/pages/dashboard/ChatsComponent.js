@@ -68,7 +68,6 @@ const Chats = () => {
           width: "90%",
           height: "57px",
           borderRadius: "20px",
-          // marginLeft: "10px",
         }}
       >
         <Stack

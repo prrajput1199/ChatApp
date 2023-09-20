@@ -72,7 +72,7 @@ const DashboardLayout = () => {
 
   return (
     <>
-      <Stack direction={"row"} height={"100%"}>
+      <Stack direction={"row"} height={"100vh"}>
         <Box
           p={2}
           sx={{
