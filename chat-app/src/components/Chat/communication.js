@@ -1,9 +1,42 @@
-import { Avatar, Box, Stack, Badge, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Stack,
+  Badge,
+  Typography,
+  IconButton,
+  Divider,
+  TextField,
+  backdropClasses,
+  InputAdornment,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import { faker } from "@faker-js/faker";
 import styled from "@emotion/styled";
+import {
+  CaretDown,
+  LinkSimple,
+  MagnifyingGlass,
+  PaperPlaneTilt,
+  Phone,
+  Smiley,
+  VideoCamera,
+} from "phosphor-react";
+
 
 const Communication = () => {
+  const theme = useTheme();
+
+  console.log(theme);
+
+  const StyledInput = styled(TextField)(({ theme }) => ({
+    "& .MuiInputBased-input": {
+      paddingTop: "12px",
+      paddingBottom: "12px",
+    },
+  }));
+
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -41,9 +74,9 @@ const Communication = () => {
     >
       <Box
         sx={{
-          height: "100px",
+          // height: "100px",
           width: "100%",
-          backgroundColor: "#F8FAFF",
+          backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
         }}
       >
@@ -54,36 +87,87 @@ const Communication = () => {
           sx={{ width: "100%", height: "100%" }}
           spacing={"16px"}
         >
-          <Stack direction={"row"} spacing={2}>
-          <Box padding={2}>
-            <StyledBadge
-              overlap="circular"
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              variant="dot"
-              sx={{ marginLeft: "0px" }}
-            >
-              <Avatar src={faker.image.avatar()} alt={faker.name.fullName} />
-            </StyledBadge>
-          </Box>
-          <Stack direction={"column"}>
-              <Typography variant="subtitle2">{faker.name.fullName()}</Typography>
+          <Stack direction={"row"} spacing={2} alignItems={"center"}>
+            <Box padding={2}>
+              <StyledBadge
+                overlap="circular"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                variant="dot"
+                sx={{ marginLeft: "0px" }}
+              >
+                <Avatar src={faker.image.avatar()} alt={faker.name.fullName} />
+              </StyledBadge>
+            </Box>
+            <Stack direction={"column"}>
+              <Typography variant="subtitle2">
+                {faker.name.fullName()}
+              </Typography>
               <Typography variant="caption">Online</Typography>
+            </Stack>
           </Stack>
+          <Stack direction={"row"} spacing={1}>
+            <IconButton>
+              <VideoCamera />
+            </IconButton>
+            <IconButton>
+              <Phone />
+            </IconButton>
+            <IconButton>
+              <MagnifyingGlass />
+            </IconButton>
+            <Divider orientation="vertical" flexItem />
+            <IconButton>
+              <CaretDown />
+            </IconButton>
           </Stack>
-        
         </Stack>
       </Box>
 
       <Box sx={{ width: "100%", flexFlow: "8px" }}></Box>
 
       <Box
+        p={2}
         sx={{
           height: "100px",
           width: "100%",
-          backgroundColor: "#F8FAFF",
+          backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
         }}
-      ></Box>
+      >
+        <Stack direction={"row"} alignItems={"center"} spacing={2}>
+          <StyledInput
+            fullWidth
+            placeholder="Write a message"
+            InputProps={{
+              // disableUnderline: "true",
+              startAdornment: (
+                <InputAdornment>
+                  <IconButton>
+                    <LinkSimple />
+                  </IconButton>
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment>
+                  <IconButton>
+                    <Smiley />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Box
+            sx={{
+              
+              borderRadius: 1.5 ,
+            }}
+          >
+            <IconButton>
+              <PaperPlaneTilt color="white"/>
+            </IconButton>
+          </Box>
+        </Stack>
+      </Box>
     </Stack>
   );
 };
