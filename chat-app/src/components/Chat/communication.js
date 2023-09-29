@@ -6,6 +6,7 @@ import {
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import Messages from "./messages";
 
 const Communication = () => {
   const theme = useTheme();
@@ -21,7 +22,9 @@ const Communication = () => {
     >
       <Header />
 
-      <Box sx={{ width: "100%", flexFlow: "8px" }}></Box>
+      <Box sx={{ width: "100%", flexFlow: "8px" }}>
+        <Messages/>
+      </Box>
 
       <Footer />
     </Stack>
