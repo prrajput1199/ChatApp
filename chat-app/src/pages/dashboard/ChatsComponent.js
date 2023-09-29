@@ -145,7 +145,7 @@ const Chats = () => {
       <Box
         sx={{
           height: "100%",
-          width: "20vw",
+          width: "300px",
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
           backgroundColor: theme.palette.mode ==="Light" ? "#f3fdfa" : theme.palette.background.paper
         }}

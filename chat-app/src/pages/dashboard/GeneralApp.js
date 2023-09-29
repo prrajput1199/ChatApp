@@ -5,21 +5,22 @@ import Chats from "./ChatsComponent.js";
 import Communication from "../../components/Chat/communication";
 import { useTheme } from "@emotion/react";
 
-
 const GeneralApp = () => {
-  const theme=useTheme();
+  const theme = useTheme();
   return (
-    <Stack direction={"row"}>
-      <Chats/>
-      {/* <Box
-        sx={{
-          height: "100%",
-          width: "calc(100vw)",
-          // backgroundColor: theme.pallete.mode == "light" ? "white" : theme.pallete.background.default,
-        }}
-      >
-     <Communication/>
-      </Box> */}
+    <Stack width={"100%"} height={"100%"}>
+      <Stack direction={"row"} width={"100%"}>
+        <Chats />
+        <Box
+          sx={{
+            height: "100%",
+            width: "80%",
+            // backgroundColor: theme.pallete.mode == "light" ? "white" : theme.pallete.background.default,
+          }}
+        >
+          <Communication />
+        </Box>
+      </Stack>
     </Stack>
   );
 };

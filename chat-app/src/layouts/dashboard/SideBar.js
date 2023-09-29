@@ -28,7 +28,7 @@ const SideBar = () => {
           backgroundColor: theme.palette.background.paper,
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
           height: "100%",
-          width: "8%",
+          width: "100px",
         }}
       >
         <Stack
