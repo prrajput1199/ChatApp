@@ -2,7 +2,7 @@ import { Box, Stack } from "@mui/material";
 import { element } from "prop-types";
 import React from "react";
 import { Chat_History } from "../../data/index";
-import { TextMsg, Timeline } from "./MessageTypes";
+import { DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, Timeline } from "./MessageTypes.js";
 import { KeyReturn } from "phosphor-react";
 
 const Messages = () => {
@@ -10,39 +10,30 @@ const Messages = () => {
     <>
       <Box p={3}>
         <Stack spacing={3} direction={"column"}>
-          {Chat_History.map((element) => {
-
-            switch (element.type) {
-              case "divider":
-                return <Timeline element={element}/>;
-
-              case "msg":
-                switch (element.subtype) {
-                  case "img":
-                    //img
-                    break;
-
-                  case "doc":
-                    //doc
-                    break;
-
-                  case "link":
-                    //link
-                    break;
-
-                  case "reply":
-                    //reply
-                    break;
-
-                  default:
-                    return <TextMsg element={element}/>;
-                }
-
-              default: 
-                return <></>;
+          {
+          Chat_History.map((element) => {
+            if(element.type==="divider"){
+              return <Timeline element={element}/>;
+            }
+            
+            else if(element.type==="msg"){
+              if(element.subtype==="img"){
+                return <MediaMsg element={element}/>;
+              }
+              else if(element.subtype==="doc"){
+                return <DocMsg element={element}/>;
+              }
+              else if(element.subtype==="link"){
+                return <LinkMsg element={element}/>;
+              }
+              else if(element.subtype==="reply"){
+                return <ReplyMsg element={element}/>;
+              }
+              else{
+                return <TextMsg element={element}/>;
+              } 
             }
           })}
-
         </Stack>
       </Box>
     </>

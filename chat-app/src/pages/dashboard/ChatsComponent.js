@@ -161,9 +161,9 @@ const Chats = () => {
               <Button>Archives</Button>
             </Stack>
             <Divider />
-            <Stack sx={{ height: "100%", flexGrow: "1", overflow: "scroll" }} spacing={2}>
+            <Stack sx={{ height: "100%", flexGrow: "1", overflowY: "scroll" }} spacing={2}> 
        
-                <SimpleBarStyle timeout={500} clickOnTrack={false}>
+                {/* <SimpleBarStyle timeout={500} clickOnTrack={false}> */}
                 <Stack direction={"column"} spacing={2} alignItems={"center"}>
                     <Typography
                       variant="caption"
@@ -189,7 +189,7 @@ const Chats = () => {
                       return <ChatSection {...Element} />;
                     })}
                   </Stack>
-                </SimpleBarStyle>        
+                {/* </SimpleBarStyle>         */}
             </Stack>
           </Stack>
         </Stack>

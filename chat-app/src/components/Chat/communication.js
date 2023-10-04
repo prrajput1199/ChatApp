@@ -20,9 +20,9 @@ const Communication = () => {
       // width={"100%"}
       justifyContent={"space-between"}
     >
-      <Header />
+      <Header/>
 
-      <Box sx={{ width: "100%", flexFlow: "8px" }}>
+      <Box sx={{ width: "100%", flexFlow: "8px", height:"100%" , overflowY:"scroll"}}>
         <Messages/>
       </Box>
 
