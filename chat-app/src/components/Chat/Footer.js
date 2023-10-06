@@ -10,14 +10,60 @@ import {
   backdropClasses,
   InputAdornment,
   useTheme,
+  Fab,
+  Tooltip,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { faker } from "@faker-js/faker";
 import styled from "@emotion/styled";
-import { LinkSimple, PaperPlaneTilt, Smiley } from "phosphor-react";
+import {
+  Camera,
+  File,
+  Image,
+  LinkSimple,
+  PaperPlaneTilt,
+  Smiley,
+  Sticker,
+  User,
+} from "phosphor-react";
+import EmojiPicker from "emoji-picker-react";
 
 const Footer = () => {
   const theme = useTheme();
+  const [openPicker, setOpenPicker] = useState(false);
+
+  const AddDocument = [
+    {
+      color: "#4da5fe",
+      Icon: <Image size={24} />,
+      Y: "102",
+      title: "photo/video",
+    },
+    {
+      color: "#4da5fe",
+      Icon: <Sticker size={24} />,
+      Y: "172",
+      title: "Stickers",
+    },
+    {
+      color: "#4da5fe",
+      Icon: <Camera size={24} />,
+      Y: "242",
+      title: "image",
+    },
+    {
+      color: "#4da5fe",
+      Icon: <File size={24} />,
+      Y: "312",
+      title: "document",
+    },
+    {
+      color: "#4da5fe",
+      Icon: <User size={24} />,
+      Y: "382",
+      title: "contact",
+    },
+  ];
 
   const StyledInput = styled(TextField)(({ theme }) => ({
     "& .MuiInputBased-input": {
@@ -25,6 +71,64 @@ const Footer = () => {
       paddingBottom: "12px",
     },
   }));
+
+  const ChatInput = ({ setOpenPicker }) => {
+    const [clickActions , setClickActions]=useState(false);
+
+    return (
+      <>
+        <StyledInput
+          fullWidth
+          placeholder="Write a message"
+          InputProps={{
+            // disableUnderline: "true",
+            startAdornment: (
+              <Stack sx={{ width: "max-content" }}>
+                <Stack sx={{ position: "relative" }}>
+                  {AddDocument.map((Element) => {
+                    return (
+                      <>
+                        <Tooltip title={Element.title} placement="right">
+                          <Fab
+                            sx={{
+                              position: "absolute",
+                              top: -Element.Y,
+                              backgroundColor: Element.color,
+                              display: clickActions ? "inline-block" : "none"
+                            }}
+                          >
+                            {Element.Icon}
+                          </Fab>
+                        </Tooltip>
+                      </>
+                    );
+                  })}
+                </Stack>
+                <InputAdornment>
+                  <IconButton>
+                    <LinkSimple onClick={()=>{
+                      setClickActions((prev)=>!prev)
+                    }}/>
+                  </IconButton>
+                </InputAdornment>
+              </Stack>
+            ),
+            endAdornment: (
+              <InputAdornment>
+                <IconButton>
+                  <Smiley
+                    onClick={() => {
+                      openPicker ? setOpenPicker(false) : setOpenPicker(true);
+                    }}
+                  />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </>
+    );
+  };
 
   return (
     <div>
@@ -40,29 +144,25 @@ const Footer = () => {
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
         }}
       >
-        <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"} spacing={2}>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          spacing={2}
+        >
           <Stack width={"100%"}>
-            <StyledInput
-              fullWidth
-              placeholder="Write a message"
-              InputProps={{
-                // disableUnderline: "true",
-                startAdornment: (
-                  <InputAdornment>
-                    <IconButton>
-                      <LinkSimple />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment>
-                    <IconButton>
-                      <Smiley />
-                    </IconButton>
-                  </InputAdornment>
-                ),
+            <Box
+              sx={{
+                position: "fixed",
+                bottom: "90px",
+                right: "95px",
+                zIndex: "10",
+                display: openPicker ? "inline" : "none",
               }}
-            />
+            >
+              <EmojiPicker Theme={theme.palette.mode} />
+            </Box>
+            <ChatInput setOpenPicker={setOpenPicker} />
           </Stack>
 
           <Stack>
@@ -79,9 +179,9 @@ const Footer = () => {
                 alignItems={"center"}
                 sx={{
                   backgroundColor:
-                  theme.palette.mode === "light"
-                    ? theme.palette.primary.main
-                    : theme.palette.background.paper,
+                    theme.palette.mode === "light"
+                      ? theme.palette.primary.main
+                      : theme.palette.background.paper,
                 }}
               >
                 <IconButton>
