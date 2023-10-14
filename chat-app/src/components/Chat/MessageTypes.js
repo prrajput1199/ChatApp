@@ -1,8 +1,18 @@
 import { useTheme } from "@emotion/react";
-import { Box, Divider, IconButton, Link, Stack, Typography } from "@mui/material";
-import { DownloadSimple, Image } from "phosphor-react";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { DotsThreeCircleVertical, DownloadSimple, Image } from "phosphor-react";
 import { element } from "prop-types";
 import React from "react";
+import { Message_options } from "../../data";
 
 const DocMsg = ({ element }) => {
   const theme = useTheme();
@@ -11,6 +21,7 @@ const DocMsg = ({ element }) => {
       <Stack
         direction={"row"}
         justifyContent={element.incoming ? "start" : "end"}
+        spacing={1}
       >
         <Box
           p={1.5}
@@ -33,15 +44,21 @@ const DocMsg = ({ element }) => {
                 borderRadius: 1,
               }}
             >
-              <Image size={48}/>
+              <Image size={48} />
               <Typography variant="caption">Abstract.msg</Typography>
               <IconButton>
-                <DownloadSimple/>
+                <DownloadSimple />
               </IconButton>
             </Stack>
-            <Typography variant="body2" sx={{color: element.incoming ? theme.palette.text : "#fff"}}>{element.message}</Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: element.incoming ? theme.palette.text : "#fff" }}
+            >
+              {element.message}
+            </Typography>
           </Stack>
         </Box>
+        <MessagesMenu/>
       </Stack>
     </div>
   );
@@ -54,6 +71,7 @@ const LinkMsg = ({ element }) => {
       <Stack
         direction={"row"}
         justifyContent={element.incoming ? "start" : "end"}
+        spacing={1}
       >
         <Box
           p={1.5}
@@ -103,6 +121,7 @@ const LinkMsg = ({ element }) => {
             </Stack>
           </Stack>
         </Box>
+        <MessagesMenu/>
       </Stack>
     </div>
   );
@@ -115,6 +134,7 @@ const ReplyMsg = ({ element }) => {
       <Stack
         direction={"row"}
         justifyContent={element.incoming ? "start" : "end"}
+        spacing={1}
       >
         <Box
           p={1.5}
@@ -149,6 +169,7 @@ const ReplyMsg = ({ element }) => {
             </Typography>
           </Stack>
         </Box>
+        <MessagesMenu/>
       </Stack>
     </div>
   );
@@ -162,6 +183,7 @@ const MediaMsg = ({ element }) => {
       <Stack
         direction={"row"}
         justifyContent={element.incoming ? "start" : "end"}
+        spacing={1}
       >
         <Box
           p={1.5}
@@ -187,6 +209,7 @@ const MediaMsg = ({ element }) => {
             </Typography>
           </Stack>
         </Box>
+        <MessagesMenu/>
       </Stack>
     </div>
   );
@@ -200,6 +223,7 @@ const TextMsg = ({ element }) => {
       <Stack
         direction={"row"}
         justifyContent={element.incoming ? "start" : "end"}
+        spacing={1}
       >
         <Box
           p={1.5}
@@ -218,6 +242,7 @@ const TextMsg = ({ element }) => {
             {element.message}
           </Typography>
         </Box>
+        <MessagesMenu/>
       </Stack>
     </div>
   );
@@ -247,4 +272,47 @@ const Timeline = ({ element }) => {
   );
 };
 
-export { Timeline, TextMsg, MediaMsg, ReplyMsg, LinkMsg,DocMsg };
+const MessagesMenu = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <DotsThreeCircleVertical
+        size={20}
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <Stack direction={"column"} spacing={1}>
+          {Message_options.map((element) => {
+            return (
+              <>
+                <MenuItem onClick={() => handleClick}>{element.title}</MenuItem>
+              </>
+            );
+          })}
+        </Stack>
+      </Menu>
+    </>
+  );
+};
+
+export { Timeline, TextMsg, MediaMsg, ReplyMsg, LinkMsg, DocMsg, MessagesMenu };
