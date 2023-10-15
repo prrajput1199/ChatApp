@@ -122,6 +122,7 @@ const SideBar = () => {
               }}
             />
             <Avatar src={faker.image.avatar()} sx={{ marginBottom: "30px" }} />
+            
           </Stack>
         </Stack>
       </Box>
