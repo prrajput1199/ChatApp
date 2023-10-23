@@ -6,10 +6,12 @@ import {
   Divider,
   FormLabel,
   IconButton,
+  Menu,
+  MenuItem,
   Stack,
 } from "@mui/material";
 import { useState } from "react";
-import { Nav_Buttons } from "../../data";
+import { Nav_Buttons, Profile_Menu } from "../../data";
 import { Gear } from "phosphor-react";
 import { faker } from "@faker-js/faker";
 import useSettings from "../../hooks/useSettings";
@@ -19,6 +21,14 @@ const SideBar = () => {
   const theme = useTheme();
   const [selectedButton, setSelectedButton] = useState(0);
   const { onToggleMode } = useSettings();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -121,8 +131,47 @@ const SideBar = () => {
                 onToggleMode();
               }}
             />
-            <Avatar src={faker.image.avatar()} sx={{ marginBottom: "30px" }} />
-            
+            <Avatar
+              src={faker.image.avatar()}
+              sx={{ marginBottom: "30px" }}
+              id="basic-buttton"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            />
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              anchorOrigin={{
+                vertical:'bottom',
+                horizontal:'right'
+              }}
+              transformOrigin={{
+                vertical:'bottom',
+                horizontal:'left'
+              }}
+            >
+              <Stack direction={"column"} spacing={1}>
+                {Profile_Menu.map((element) => {
+                  return (
+                    <>
+                      <MenuItem onClick={() => handleClick}>
+                        <Stack direction={"row"} alignItems={"cebter"} width={100} justifyContent={"space-between"}>
+                          <span>{element.title}</span>
+                          {element.icon}
+                        </Stack>
+                      </MenuItem>
+                    </>
+                  );
+                })}
+              </Stack>
+            </Menu>
           </Stack>
         </Stack>
       </Box>
