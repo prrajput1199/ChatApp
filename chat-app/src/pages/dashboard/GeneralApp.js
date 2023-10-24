@@ -4,6 +4,7 @@ import DashboardLayout from "../../layouts/dashboard";
 import Chats from "./ChatsComponent.js";
 import Communication from "../../components/Chat/communication";
 import { useTheme } from "@emotion/react";
+import Contact from "../../components/settings/contact";
 
 const GeneralApp = () => {
   const theme = useTheme();
@@ -18,8 +19,9 @@ const GeneralApp = () => {
             backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
           }}
         >
-          <Communication />
+          <Communication/>
         </Box>
+        <Contact/>
       </Stack>
     </Stack>
   );
