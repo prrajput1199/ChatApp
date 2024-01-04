@@ -11,3 +11,9 @@ const rootPersistConfig={
     //whitelist: [],
     //blacklist: []
 }
+
+const rootReducer=combineReducers({
+    app:appReducer,
+});
+
+export {rootPersistConfig,rootReducer};

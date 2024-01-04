@@ -11,7 +11,10 @@ const GeneralApp = () => {
   return (
     <Stack width={"100%"} height={"100%"}>
       <Stack direction={"row"} width={"100%"}>
+        {/* 1st section */}
         <Chats />
+        
+        {/* 2nd section */}
         <Box
           sx={{
             height: "100%",
@@ -21,6 +24,8 @@ const GeneralApp = () => {
         >
           <Communication/>
         </Box>
+
+        {/* last section */}
         <Contact/>
       </Stack>
     </Stack>
