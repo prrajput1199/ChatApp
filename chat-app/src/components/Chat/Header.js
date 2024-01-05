@@ -12,9 +12,14 @@ import React from "react";
 import { faker } from "@faker-js/faker";
 import styled from "@emotion/styled";
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from "phosphor-react";
+import { ToggleSidebar } from "../../Redux/slices/app";
+import { useDispatch, useSelector } from "react-redux";
+import { store } from "../../Redux/store";
 
 const Header = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -58,6 +63,10 @@ const Header = () => {
         }}
       >
         <Stack
+          onClick={() => {
+            dispatch(ToggleSidebar());
+          }}
+          
           direction={"row"}
           alignItems={"center"}
           justifyContent={"space-between"}
@@ -65,7 +74,10 @@ const Header = () => {
           spacing={"16px"}
         >
           <Stack direction={"row"} spacing={2} alignItems={"center"}>
-            <Box padding={2}>
+            <Box
+            
+              padding={2}
+            >
               <StyledBadge
                 overlap="circular"
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

@@ -7,12 +7,10 @@ import {rootPersistConfig,rootReducer} from "./rootReducer"
 
 const store = configureStore({
   reducer:persistReducer(rootPersistConfig,rootReducer),
-  middleware: (getDefaultMiddleware)=>{
-     getDefaultMiddleware({
-        serialzableCheck:"false",
-        immutableCheck:false
+  middleware: (getDefaultMiddleware)=>getDefaultMiddleware({
+         serialzableCheck:"false",
+         immutableCheck:false,
      })
-  }
 });
 
 const persistor=persistStore(store);

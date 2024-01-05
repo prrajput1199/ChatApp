@@ -5,9 +5,11 @@ import Chats from "./ChatsComponent.js";
 import Communication from "../../components/Chat/communication";
 import { useTheme } from "@emotion/react";
 import Contact from "../../components/settings/contact";
+import { useSelector } from "react-redux";
 
 const GeneralApp = () => {
   const theme = useTheme();
+  const {sidebar}=useSelector((store)=>store.app);
   return (
     <Stack width={"100%"} height={"100%"}>
       <Stack direction={"row"} width={"100%"}>
@@ -18,7 +20,7 @@ const GeneralApp = () => {
         <Box
           sx={{
             height: "100%",
-            width: "80%",
+            width: sidebar.open ? "80%":"100%",
             backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
           }}
         >
@@ -26,7 +28,7 @@ const GeneralApp = () => {
         </Box>
 
         {/* last section */}
-        <Contact/>
+        {sidebar.open && <Contact/> }
       </Stack>
     </Stack>
   );

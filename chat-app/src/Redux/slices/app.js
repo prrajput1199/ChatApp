@@ -4,7 +4,7 @@ import { dispatch } from "../store";
 
 const initialState = {
   sidebar: {
-    open: "false",
+    open: false,
     type: "CONTACT",
   },
 };
@@ -26,3 +26,17 @@ const Slice = createSlice({
 //reducer
 
 export default Slice.reducer;
+
+export function ToggleSidebar(){
+  return async()=>{
+    dispatch(Slice.actions.toggleSidebar())
+  }
+}
+
+export function UpdateSidebar(type){
+  return async()=>{
+    dispatch(Slice.actions.updateSidebarType({
+      type,
+    }))
+  }
+}

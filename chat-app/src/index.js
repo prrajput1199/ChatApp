@@ -18,7 +18,7 @@ root.render(
       <ReduxProvider store={store}>
         <SettingsProvider>
           <BrowserRouter>
-            <App />
+            <App/>
           </BrowserRouter>
         </SettingsProvider>
       </ReduxProvider>
