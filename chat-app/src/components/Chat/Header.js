@@ -63,21 +63,21 @@ const Header = () => {
         }}
       >
         <Stack
-          onClick={() => {
-            dispatch(ToggleSidebar());
-          }}
-          
           direction={"row"}
           alignItems={"center"}
           justifyContent={"space-between"}
           sx={{ width: "100%", height: "100%" }}
           spacing={"16px"}
         >
-          <Stack direction={"row"} spacing={2} alignItems={"center"}>
-            <Box
-            
-              padding={2}
-            >
+          <Stack
+            direction={"row"}
+            spacing={2}
+            alignItems={"center"}
+            onClick={() => {
+              dispatch(ToggleSidebar());
+            }}
+          >
+            <Box padding={2}>
               <StyledBadge
                 overlap="circular"
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
