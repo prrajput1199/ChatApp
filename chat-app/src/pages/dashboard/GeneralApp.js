@@ -11,7 +11,9 @@ const GeneralApp = () => {
   const theme = useTheme();
   const {sidebar}=useSelector((store)=>store.app);
   return (
-    <Stack width={"100%"} height={"100%"}>
+    <Stack width={"100%"} height={"100%"} sx={{
+      overflowY:"hidden"
+    }}>
       <Stack direction={"row"} width={"100%"}>
         {/* 1st section */}
         <Chats />
