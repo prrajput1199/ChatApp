@@ -10,9 +10,17 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-// import Typography from '../../theme/overrides/Typography';
-import { Bell, CaretRight, Phone, Prohibit, Star, Trash, VideoCamera, X } from "phosphor-react";
-import { ToggleSidebar } from "../../Redux/slices/app";
+import {
+  Bell,
+  CaretRight,
+  Phone,
+  Prohibit,
+  Star,
+  Trash,
+  VideoCamera,
+  X,
+} from "phosphor-react";
+import { ToggleSidebar, UpdateSidebarType } from "../../Redux/slices/app";
 import { useDispatch } from "react-redux";
 import { faker } from "@faker-js/faker";
 import MaterialUISwitch from "../MaterialUISwitch";
@@ -23,7 +31,7 @@ const Contact = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <Box sx={{ width: "320px", height: "100vh",overflowY:"scroll" }}>
+      <Box sx={{ width: "300px", height: "100vh"}}>
         <Stack direction={"column"} sx={{ height: "100%" }}>
           {/* Header */}
           <Box
@@ -60,6 +68,7 @@ const Contact = () => {
           <Stack
             sx={{
               height: "100%",
+              
             }}
           >
             <Stack
@@ -127,9 +136,11 @@ const Contact = () => {
               </Stack>
             </Stack>
 
-            <Divider sx={{
-              pt:"4px"
-            }}/>
+            <Divider
+              sx={{
+                pt: "4px",
+              }}
+            />
 
             {/* about */}
 
@@ -139,7 +150,7 @@ const Contact = () => {
             </Stack>
 
             <Divider />
-            
+
             {/* Media */}
             <Stack
               direction={"row"}
@@ -150,7 +161,14 @@ const Contact = () => {
               }}
             >
               <Typography fontSize={"13px"}>Media,links and docs</Typography>
-              <Button endIcon={<CaretRight />}>401</Button>
+              <Button
+                endIcon={<CaretRight/>}
+                // onClick={() => {
+                //   dispatch(UpdateSidebarType("SHARRED"));
+                // }}
+              >
+                401
+              </Button>
             </Stack>
 
             <Stack
@@ -164,17 +182,19 @@ const Contact = () => {
               {[1, 2, 3].map((element) => {
                 return (
                   <>
-                    <Box sx={{
-                      width:"70px"
-                    }}>
+                    <Box
+                      sx={{
+                        width: "70px",
+                      }}
+                    >
                       <img src={faker.image.food()} alt="" />
                     </Box>
                   </>
                 );
               })}
             </Stack>
-            
-            <Divider/>
+
+            <Divider />
 
             <Stack
               direction={"row"}
@@ -183,22 +203,33 @@ const Contact = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Stack direction={"row"} spacing={1} sx={{
-                alignItems:"center",
-                p:"4px"
-              }}>
+              <Stack
+                direction={"row"}
+                spacing={1}
+                sx={{
+                  alignItems: "center",
+                  p: "4px",
+                }}
+              >
                 <IconButton>
                   <Star />
                 </IconButton>
-                <Typography variant="subtitle2" sx={{
-                  fontSize:"14px"
-                }}>Starred Message</Typography>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    fontSize: "14px",
+                  }}
+                >
+                  Starred Message
+                </Typography>
               </Stack>
 
-              <Button endIcon={<CaretRight />}></Button>
+              <Button
+                endIcon={<CaretRight />}
+              ></Button>
             </Stack>
 
-            <Divider/>
+            <Divider />
 
             <Stack
               direction={"row"}
@@ -207,24 +238,35 @@ const Contact = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Stack direction={"row"} spacing={1} sx={{
-                alignItems:"center",
-                p:"4px"
-              }}>
+              <Stack
+                direction={"row"}
+                spacing={1}
+                sx={{
+                  alignItems: "center",
+                  p: "4px",
+                }}
+              >
                 <IconButton>
                   <Bell />
                 </IconButton>
-                <Typography variant="subtitle2" sx={{
-                  fontSize:"14px"
-                }}>Mute Notification</Typography>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    fontSize: "14px",
+                  }}
+                >
+                  Mute Notification
+                </Typography>
               </Stack>
 
               <Button>
-                 <AntSwitch/>
+                <AntSwitch />
               </Button>
             </Stack>
 
-            <Typography fontSize={"13px"} p={1}>1 group in common</Typography>
+            <Typography fontSize={"13px"} p={1}>
+              1 group in common
+            </Typography>
 
             <Stack
               sx={{
@@ -261,9 +303,15 @@ const Contact = () => {
               </Stack>
             </Stack>
 
-            <Stack direction={"row"} alignItems={"center"} p={1} spacing={3} justifyContent={"center"}>
-              <Button startIcon={<Prohibit/>}>Block</Button>
-              <Button startIcon={<Trash/>}>Delete</Button>
+            <Stack
+              direction={"row"}
+              alignItems={"center"}
+              p={1}
+              spacing={3}
+              justifyContent={"center"}
+            >
+              <Button startIcon={<Prohibit />}>Block</Button>
+              <Button startIcon={<Trash />}>Delete</Button>
             </Stack>
           </Stack>
         </Stack>
