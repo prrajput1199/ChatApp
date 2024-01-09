@@ -163,9 +163,9 @@ const Contact = () => {
               <Typography fontSize={"13px"}>Media,links and docs</Typography>
               <Button
                 endIcon={<CaretRight/>}
-                // onClick={() => {
-                //   dispatch(UpdateSidebarType("SHARRED"));
-                // }}
+                onClick={() => {
+                  dispatch(UpdateSidebarType("SHARED"));
+                }}
               >
                 401
               </Button>
