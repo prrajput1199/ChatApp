@@ -68,7 +68,6 @@ const Contact = () => {
           <Stack
             sx={{
               height: "100%",
-              
             }}
           >
             <Stack

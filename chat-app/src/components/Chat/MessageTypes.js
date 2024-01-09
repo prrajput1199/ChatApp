@@ -26,9 +26,9 @@ const DocMsg = ({ element }) => {
         <Box
           p={1.5}
           sx={{
-            backgroundColor: element.incoming
-              ? theme.palette.background.default
-              : theme.palette.primary.main,
+            // backgroundColor: element.incoming
+            //   ? theme.palette.background.default
+            //   : theme.palette.primary.main,
             borderRadius: 1.5,
             width: "max-content",
           }}
