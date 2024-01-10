@@ -4,8 +4,9 @@ import React from "react";
 import { Chat_History } from "../../data/index";
 import { DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, Timeline } from "./MessageTypes.js";
 import { KeyReturn } from "phosphor-react";
+import { MessagesMenu } from "./MessageTypes.js";
 
-const Messages = () => {
+const Messages = ({Menu}) => {
   return (
     <>
       <Box p={3}>
@@ -18,19 +19,19 @@ const Messages = () => {
             
             else if(element.type==="msg"){
               if(element.subtype==="img"){
-                return <MediaMsg element={element}/>;
+                return <MediaMsg element={element} Menu={Menu}/>;
               }
               else if(element.subtype==="doc"){
-                return <DocMsg element={element}/>;
+                return <DocMsg element={element} Menu={Menu}/>;
               }
               else if(element.subtype==="link"){
-                return <LinkMsg element={element}/>;
+                return <LinkMsg element={element} Menu={Menu}/>;
               }
               else if(element.subtype==="reply"){
-                return <ReplyMsg element={element}/>;
+                return <ReplyMsg element={element} Menu={Menu}/>;
               }
               else{
-                return <TextMsg element={element}/>;
+                return <TextMsg element={element} Menu={Menu}/>;
               } 
             }
           })}

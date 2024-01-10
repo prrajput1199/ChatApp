@@ -3,13 +3,19 @@ import {
   Avatar,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   IconButton,
+  Slide,
   Stack,
   Typography,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import {
   Bell,
   CaretRight,
@@ -26,12 +32,68 @@ import { faker } from "@faker-js/faker";
 import MaterialUISwitch from "../MaterialUISwitch";
 import AntSwitch from "../AntSwitch";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const BlockDialog = ({Open,handleClose}) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>{"Block this contact"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are you sure You want to block this contact?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Disagree</Button>
+        <Button onClick={handleClose}>Agree</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const DeleteDialog = ({Open,handleClose}) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>{"Delete this Contact"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+        Are you sure You want to delete this contact?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Disagree</Button>
+        <Button onClick={handleClose}>Agree</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
 const Contact = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+
+  const [openBlock,setopenBlock]=useState(false);
+  const [openDelete,setopenDelete]=useState(false);
+
+  
+
   return (
     <div>
-      <Box sx={{ width: "300px", height: "100vh"}}>
+      <Box sx={{ width: "300px", height: "100vh" }}>
         <Stack direction={"column"} sx={{ height: "100%" }}>
           {/* Header */}
           <Box
@@ -58,7 +120,7 @@ const Contact = () => {
                   dispatch(ToggleSidebar());
                 }}
               >
-                <X />
+                <X/>
               </IconButton>
             </Stack>
           </Box>
@@ -68,6 +130,7 @@ const Contact = () => {
           <Stack
             sx={{
               height: "100%",
+              overflowY: "scroll",
             }}
           >
             <Stack
@@ -161,7 +224,7 @@ const Contact = () => {
             >
               <Typography fontSize={"13px"}>Media,links and docs</Typography>
               <Button
-                endIcon={<CaretRight/>}
+                endIcon={<CaretRight />}
                 onClick={() => {
                   dispatch(UpdateSidebarType("SHARED"));
                 }}
@@ -225,6 +288,9 @@ const Contact = () => {
 
               <Button
                 endIcon={<CaretRight />}
+                onClick={() => {
+                  dispatch(UpdateSidebarType("STARRED"));
+                }}
               ></Button>
             </Stack>
 

@@ -64,7 +64,7 @@ const DocMsg = ({ element }) => {
   );
 };
 
-const LinkMsg = ({ element }) => {
+const LinkMsg = ({ element,Menu }) => {
   const theme = useTheme();
   return (
     <div>
@@ -121,13 +121,13 @@ const LinkMsg = ({ element }) => {
             </Stack>
           </Stack>
         </Box>
-        <MessagesMenu/>
+        {Menu &&  <MessagesMenu/>}
       </Stack>
     </div>
   );
 };
 
-const ReplyMsg = ({ element }) => {
+const ReplyMsg = ({ element,Menu }) => {
   const theme = useTheme();
   return (
     <div>
@@ -169,13 +169,13 @@ const ReplyMsg = ({ element }) => {
             </Typography>
           </Stack>
         </Box>
-        <MessagesMenu/>
+        {Menu &&  <MessagesMenu/>}
       </Stack>
     </div>
   );
 };
 
-const MediaMsg = ({ element }) => {
+const MediaMsg = ({ element,Menu }) => {
   const theme = useTheme();
   return (
     <div>
@@ -209,13 +209,13 @@ const MediaMsg = ({ element }) => {
             </Typography>
           </Stack>
         </Box>
-        <MessagesMenu/>
+        {Menu &&  <MessagesMenu/>}
       </Stack>
     </div>
   );
 };
 
-const TextMsg = ({ element }) => {
+const TextMsg = ({ element,Menu }) => {
   const theme = useTheme();
 
   return (
@@ -242,7 +242,7 @@ const TextMsg = ({ element }) => {
             {element.message}
           </Typography>
         </Box>
-        <MessagesMenu/>
+        {Menu &&  <MessagesMenu/>}
       </Stack>
     </div>
   );

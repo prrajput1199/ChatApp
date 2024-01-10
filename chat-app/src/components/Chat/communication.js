@@ -23,7 +23,7 @@ const Communication = () => {
       <Header/>
 
       <Box sx={{ width: "100%", flexFlow: "8px", height:"100%" , overflowY:"scroll"}}>
-        <Messages/>
+        <Messages Menu={true}/>
       </Box>
 
       <Footer />

@@ -98,7 +98,7 @@ const Chats = () => {
             )}
             <Stack direction={"column"} alignItems={"center"}>
               <Typography variant="subtitle2">{name}</Typography>
-              <Typography variant="caption">{msg}</Typography>
+              <Typography variant="caption" sx={{textOverflow:"ellipsis"}}> {msg}</Typography>
             </Stack>
           </Stack>
           <Stack
