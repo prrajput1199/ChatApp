@@ -36,7 +36,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const BlockDialog = ({Open,handleClose}) => {
+const BlockDialog = ({open,handleClose}) => {
   return (
     <Dialog
       open={open}
@@ -59,7 +59,7 @@ const BlockDialog = ({Open,handleClose}) => {
   );
 };
 
-const DeleteDialog = ({Open,handleClose}) => {
+const DeleteDialog = ({open,handleClose}) => {
   return (
     <Dialog
       open={open}
@@ -89,7 +89,13 @@ const Contact = () => {
   const [openBlock,setopenBlock]=useState(false);
   const [openDelete,setopenDelete]=useState(false);
 
-  
+  const handleCloseBlock = () => {
+    setopenBlock(false);
+  };
+
+  const handleCloseDelete = () => {
+    setopenDelete(false);
+  };
 
   return (
     <div>
@@ -375,10 +381,12 @@ const Contact = () => {
               spacing={3}
               justifyContent={"center"}
             >
-              <Button startIcon={<Prohibit />}>Block</Button>
-              <Button startIcon={<Trash />}>Delete</Button>
+              <Button startIcon={<Prohibit/>} onClick={()=>setopenBlock(true)}>Block</Button>
+              <Button startIcon={<Trash />} onClick={()=>setopenBlock(true)}>Delete</Button>
             </Stack>
           </Stack>
+          {openBlock && <BlockDialog open={openBlock} handleClose={handleCloseBlock}/>}
+          {openDelete && <DeleteDialog open={openDelete} handleClose={handleCloseDelete}/>}
         </Stack>
       </Box>
     </div>
