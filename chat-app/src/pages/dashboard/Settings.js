@@ -20,9 +20,12 @@ import {
   WarningCircle,
 } from "phosphor-react";
 import React from "react";
+import Shortcuts from "../../settings/sections/Shortcuts";
 
 const Settings = () => {
   const theme = useTheme();
+
+
 
   const SettingsList = [
     {
@@ -135,6 +138,7 @@ const Settings = () => {
               );
             })}
           </Stack>
+          <Shortcuts open={true} handle={()=>{}}/>
         </Box>
 
         {/* Right */}
