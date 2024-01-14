@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Slide,
@@ -60,27 +61,27 @@ const Shortcuts = ({ open, handleClose }) => {
     {
       key: 8,
       Title: "Mute",
-      combination: ["cmd", "shift", "U"],
+      combination: ["cmd", "shift", "M"],
     },
     {
       key: 9,
       Title: "Delete Chat",
-      combination: ["cmd", "shift", "U"],
+      combination: ["cmd", "shift", "D"],
     },
     {
       key: 10,
       Title: "Search",
-      combination: ["cmd", "shift", "U"],
+      combination: ["cmd", "F"],
     },
     {
       key: 11,
       Title: "New chat",
-      combination: ["cmd", "shift", "U"],
+      combination: ["cmd","N"],
     },
     {
       key: 12,
       Title: "Previous Chat",
-      combination: ["cmd", "shift", "U"],
+      combination: ["ctrl", "shift", "tab"],
     },
     {
       key: 13,
@@ -89,29 +90,24 @@ const Shortcuts = ({ open, handleClose }) => {
     },
     {
       key: 14,
-      Title: "New chat",
-      combination: ["cmd", "shift", "U"],
+      Title: "Profile nad About",
+      combination: ["cmd","P"],
     },
     {
       key: 15,
-      Title: "New chat",
-      combination: ["cmd", "shift", "U"],
+      Title: "Decrease speed of voice message",
+      combination: ["shift",","],
     },
     {
       key: 16,
-      Title: "New chat",
-      combination: ["cmd", "shift", "U"],
+      Title: "Emoji Panel",
+      combination: ["cmd", "E"],
     },
     {
       key: 17,
-      Title: "New chat",
-      combination: ["cmd", "shift", "U"],
-    },
-    {
-      key: 18,
-      Title: "New chat",
-      combination: ["cmd", "shift", "U"],
-    },
+      Title: "Sticker panel",
+      combination: ["cmd","S"],
+    }
   ];
   return (
     <>
@@ -125,24 +121,35 @@ const Shortcuts = ({ open, handleClose }) => {
         sx={{ p: 4 }}
       >
         <DialogTitle>Shortcuts</DialogTitle>
-        <DialogContent sx={{ mt: 4 }}>
+        <DialogContent sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {ShortcutList.map(({ key, Title, combination }) => {
               return (
                 <>
                   <Grid item xs={6} key={key}>
-                    <Stack direction={"row"} width={"100%"} sx={{
-                      justifyContent:"space-between",
-                      alignItems:"center"
-                    }}>
+                    <Stack
+                      direction={"row"}
+                      width={"100%"}
+                      sx={{
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
                       <Typography variant="caption" fontSize={14}>
                         {Title}
                       </Typography>
                       <Stack direction={"row"}>
                         {combination.map((el) => {
-                        return <Button disabled sx={{
-                          color:"#212121"
-                        }}>{el}</Button>;
+                          return (
+                            <Button
+                              disabled
+                              sx={{
+                                color: "#212121",
+                              }}
+                            >
+                              {el}
+                            </Button>
+                          );
                         })}
                       </Stack>
                     </Stack>
@@ -152,6 +159,9 @@ const Shortcuts = ({ open, handleClose }) => {
             })}
           </Grid>
         </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>Ok</Button>
+        </DialogActions>
       </Dialog>
     </>
   );

@@ -24,7 +24,16 @@ import Shortcuts from "../../settings/sections/Shortcuts";
 
 const Settings = () => {
   const theme = useTheme();
+  
+  const [openShortcut, setOpenShortcut] = React.useState(false);
 
+  const handleOpenshortcut = () => {
+    setOpenShortcut(true);
+  };
+
+  const handleCloseshortcut = () => {
+    setOpenShortcut(false);
+  };
 
 
   const SettingsList = [
@@ -68,7 +77,7 @@ const Settings = () => {
       key: 6,
       icon: <Article size={20} />,
       title: "Keyboard shortcuts",
-      onclick: () => {},
+      onclick: handleOpenshortcut,
     },
     {
       key: 7,
@@ -130,7 +139,7 @@ const Settings = () => {
               return (
                 <Stack>
                   <Stack direction={"row"} spacing={2} alignItems={"center"}>
-                    <IconButton>{icon}</IconButton>
+                    <IconButton onClick={onclick}>{icon}</IconButton>
                     <Typography>{title}</Typography>
                   </Stack>
                   {key != 7 && <Divider />}
@@ -138,7 +147,7 @@ const Settings = () => {
               );
             })}
           </Stack>
-          <Shortcuts open={true} handle={()=>{}}/>
+          {openShortcut && <Shortcuts open={handleOpenshortcut} handleClose={handleCloseshortcut}/>}
         </Box>
 
         {/* Right */}
