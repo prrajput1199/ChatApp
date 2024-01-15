@@ -1,5 +1,7 @@
 import { Link, Stack, Typography } from '@mui/material';
 import React from 'react'
+import AuthSection from '../../settings/Auth/AuthSection';
+import Loginform from '../../settings/Auth/LoginForm';
 
 const LoginPage = () => {
   return (
@@ -16,6 +18,13 @@ const LoginPage = () => {
         <Link to="/auth/register">Create Account</Link>
       </Stack>
        </Stack>
+
+       {/* Loginform */}
+       <Loginform/>
+      
+
+       <AuthSection/>
+       {/* auth */}
     </>
   )
 }
