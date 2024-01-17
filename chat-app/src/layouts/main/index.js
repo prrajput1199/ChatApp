@@ -8,8 +8,8 @@ const MainLayout = () => {
     <>
       <Container sx={{mb:5}} maxWidth={"sm"}>
         <Stack spacing={5}>
-          <Stack sx={{width:"100%",direction:"column",alignItems:"center"}}>
-            <img src={Logo} alt="" style={{height:120,width:120}}/>
+          <Stack sx={{width:"100%",direction:"column",alignItems:"center",py:"24px"}}>
+            <img src={Logo} alt="" style={{height:140,width:140,borderRadius:"15px"}}/>
           </Stack>
          
         </Stack>
