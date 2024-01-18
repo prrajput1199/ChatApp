@@ -9,7 +9,7 @@ import MainLayout from "../layouts/main";
 // config
 import { DEFAULT_PATH } from "../config";
 import LoadingScreen from "../components/LoadingScreen";
-import LoginPage from "../pages/auth/Loginpage";
+
 
 
 
@@ -27,7 +27,8 @@ export default function Router() {
       path: "/auth",
       element: <MainLayout/>,
       children: [
-        {element:<LoginPage/> , path:"login"}
+        {element:<LoginPage/> , path:"login"},
+        {element:<Register/> , path:"register"},
       ],
     },
     {
@@ -54,6 +55,8 @@ const Settings = Loadable(
   lazy(() => import("../pages/dashboard/Settings")),
 );
 
-const Auth = Loadable(lazy(()=>import("../pages/auth/Loginpage")))
+const LoginPage = Loadable(lazy(()=>import("../pages/auth/Loginpage")))
+
+const Register = Loadable(lazy(()=>import("../pages/auth/register")))
 
 const Page404 = Loadable(lazy(() => import("../pages/Page404")));
