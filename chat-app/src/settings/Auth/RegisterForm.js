@@ -65,8 +65,8 @@ const RegisterForm = () => {
             <Alert severity="error">{errors.afterSubmit.message}</Alert>
           )}
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-            <RHFTextField Name="FirstName" label="First name" />
-            <RHFTextField Name="LastName" label="Last name" />
+            <RHFTextField name="FirstName" label="First name" />
+            <RHFTextField name="LastName" label="Last name" />
           </Stack>
 
           <RHFTextField
@@ -108,6 +108,8 @@ const RegisterForm = () => {
             Create an account
           </Button>
         </Stack>
+
+      
       </FormProvider>
     </>
   );
