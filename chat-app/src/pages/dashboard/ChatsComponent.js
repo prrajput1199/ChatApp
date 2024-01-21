@@ -68,7 +68,7 @@ const Chats = () => {
             theme.palette.mode === "Light"
               ? "white"
               : theme.palette.background.paper,
-          width: "90%",
+          width: "100%",
           height: "57px",
           borderRadius: "20px",
         }}
@@ -96,9 +96,12 @@ const Chats = () => {
             ) : (
               <Avatar alt="Remy Sharp" src={faker.image.avatar()} />
             )}
-            <Stack direction={"column"} alignItems={"center"}>
+            <Stack direction={"column"}>
               <Typography variant="subtitle2">{name}</Typography>
-              <Typography variant="caption" sx={{textOverflow:"ellipsis"}}> {msg}</Typography>
+              <Typography variant="caption" sx={{
+                overflow: "hidden",
+                textOverflow:"ellipsis"
+              }} noWrap> {msg}</Typography>
             </Stack>
           </Stack>
           <Stack
@@ -150,6 +153,7 @@ const Chats = () => {
           height: "100%",
           width: "300px",
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
+          px:"15px",
           backgroundColor:
             theme.palette.mode === "Light"
               ? "#f3fdfa"
@@ -167,10 +171,10 @@ const Chats = () => {
               <Button>Archives</Button>
             </Stack>
             <Divider />
-            <Stack sx={{ height: "100%", flexGrow: "1" }} spacing={2}>
+            <Stack sx={{ height: "100%", flexGrow: "1" }} spacing={1}>
               {/* <SimpleBarStyle timeout={500} clickOnTrack={false}> */}
-              <Stack direction={"column"} spacing={2} alignItems={"center"}>
-                <Typography variant="caption" color={"#676767"} marginLeft={3}>
+              <Stack direction={"column"} spacing={1}>
+                <Typography variant="caption" color={"#676767"}>
                   Pinned
                 </Typography>
                 {ChatList.filter((Element) => {
@@ -180,9 +184,7 @@ const Chats = () => {
                 })}
               </Stack>
 
-              <Stack direction={"column"} spacing={2} alignItems={"center"} p={2} sx={{
-                overflowY:'scroll',
-              }}>
+              <Stack direction={"column"} spacing={1}>
                 <Typography variant="caption" color={"#676767"} spacing={2}>
                   All Chats
                 </Typography>

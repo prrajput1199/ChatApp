@@ -35,11 +35,17 @@ const SideBar = () => {
       <Box
         p={2}
         sx={{
-          backgroundColor: theme.palette.background.paper,
-          boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
+          // backgroundColor: theme.palette.background.paper,
+          backgroundColor:
+          theme.palette.mode === "light"
+            ? "#F8FAFF"
+            : theme.palette.background,
+          boxShadow: "0px 1px 2px rgba(0,0,0,0.25)",
           height: "100%",
           width: "100px",
+ 
         }}
+
       >
         <Stack
           sx={{ width: "100%" }}

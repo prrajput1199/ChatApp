@@ -47,7 +47,7 @@ const GeneralApp = () => {
                 break;
              }
         })()}
-        {/* {sidebar.open && <Contact/>} */}
+        
       </Stack>
     </Stack>
   );
