@@ -188,10 +188,9 @@ const Chats = () => {
             </Stack>
             <Divider />
             <Stack
-              sx={{ height: "100%", flexGrow: "1", overflowX: "hidden",width:"100%",overflowY:"scroll" }}
+              sx={{ height: "100%", flexGrow: "1", overflowX: "hidden",width:"100%" }}
               spacing={1}
               direction={"column"}
-              
             >
               <SimpleBarStyle timeout={100} clickOnTrack={false}>
                 <Stack direction={"column"} spacing={2}>
