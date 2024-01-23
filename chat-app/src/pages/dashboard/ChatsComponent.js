@@ -17,6 +17,7 @@ import styled from "@emotion/styled";
 import { faker } from "@faker-js/faker";
 import { ChatList } from "../../data";
 import { SimpleBarStyle } from "../../components/Scrollbar";
+import BasicTextFields from "../../components/Search/Search";
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -135,33 +136,35 @@ const Chats = () => {
     );
   };
 
-  function BasicTextFields() {
-    return (
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "90%", borderRadius: 2 },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <FormControl>
-          <TextField
-            id="outlined-basic"
-            label="Search"
-            variant="outlined"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <MagnifyingGlass size={32} />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </FormControl>
-      </Box>
-    );
-  }
+  // function BasicTextFields() {
+  //   return (
+  //     <Box
+  //       component="form"
+  //       sx={{
+  //         "& > :not(style)": { m: 1, width: "90%", borderRadius: 2 },
+  //       }}
+  //       noValidate
+  //       autoComplete="off"
+  //     >
+  //       <FormControl>
+  //         <TextField
+  //           id="outlined-basic"
+  //           label="Search"
+  //           variant="outlined"
+  //           InputProps={{
+  //             endAdornment: (
+  //               <InputAdornment position="end" sx={{
+  //                 cursor:"pointer"
+  //               }}>
+  //                 <MagnifyingGlass size={32} />
+  //               </InputAdornment>
+  //             ),
+  //           }}
+  //         />
+  //       </FormControl>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <>
@@ -176,17 +179,17 @@ const Chats = () => {
               : theme.palette.background,
         }}
       >
-        <Stack sx={{ height: "100vh", width: "100%" }}>
+        <Stack sx={{ height: "100vh", width: "100%"}}>
           <Stack padding={3}>
             <Typography variant="h5">Chats</Typography>
           </Stack>
           <Stack spacing={3} overflowX={"hidden"}>
-            <BasicTextFields />
+            <BasicTextFields/>
             <Stack direction={"row"} alignItems={"center"} spacing={3}>
               <Archive size={24} />
               <Button>Archives</Button>
             </Stack>
-            <Divider />
+            <Divider/>
             <Stack
               sx={{ height: "100%", flexGrow: "1", overflowX: "hidden",width:"100%" }}
               spacing={1}
