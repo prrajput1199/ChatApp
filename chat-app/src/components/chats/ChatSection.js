@@ -42,7 +42,7 @@ const ChatSection = ({ id, img, name, msg, time, unread, pinned, online }) => {
             ? "white"
             : theme.palette.background.paper,
 
-        width: "100%",
+        // width: "100%",
         height: "57px",
         borderRadius: "20px",
       }}

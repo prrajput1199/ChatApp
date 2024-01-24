@@ -16,7 +16,7 @@ const GeneralApp = () => {
     <Stack width={"100%"} height={"100%"} sx={{
       overflowY:"hidden"
     }}>
-      <Stack direction={"row"} width={"100%"}>
+      <Stack direction={"row"} >
         {/* 1st section */}
         <Chats />
         

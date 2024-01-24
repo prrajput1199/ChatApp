@@ -22,8 +22,9 @@ const Group = () => {
         <Box
           sx={{
             height: "100vh",
+            overflowX:"hidden",
             overflowY:"scroll",
-            width: "320px",
+            width: "400px",
             boxShadow: "0 0 2px rgba(0,0,0,0.25)",
             backgroundColor:
               theme.palette.mode === "light"
@@ -88,9 +89,11 @@ const Group = () => {
             </Stack>
           </Stack>
         </Box>
-      </Stack>
-      <Stack>
-        {/* Right */}
+        <Box width={"100%"}>
+          <Stack>
+            Right
+          </Stack>
+        </Box>
       </Stack>
     </>
   );
