@@ -20,7 +20,6 @@ import { SimpleBarStyle } from "../../components/Scrollbar";
 import BasicTextFields from "../../components/Search/Search";
 import ChatSection from "../../components/chats/ChatSection";
 
-
 const Chats = () => {
   const theme = useTheme();
 
@@ -29,8 +28,8 @@ const Chats = () => {
       <Box
         sx={{
           width: "320px",
-          height:"100vh",
-          overflow:"scroll",
+          height: "100vh",
+          overflow: "scroll",
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
           px: "15px",
           backgroundColor:
@@ -39,56 +38,53 @@ const Chats = () => {
               : theme.palette.background,
         }}
       >
-        <Stack sx={{ height: "100%", width: "100%"}}>
+        <Stack sx={{ height: "100%", width: "100%" }}>
           <Stack padding={3}>
             <Typography variant="h5">Chats</Typography>
           </Stack>
           <Stack spacing={3} overflowX={"hidden"}>
-            <BasicTextFields/>
+            <BasicTextFields />
             <Stack direction={"row"} alignItems={"center"} spacing={3}>
               <Archive size={24} />
               <Button>Archives</Button>
             </Stack>
-            <Divider/>
+            <Divider />
             <Stack
-              sx={{ height: "100%",width:"100%" ,flexGrow:1}}
+              sx={{ height: "100%", width: "100%", flexGrow: 1 }}
               spacing={1}
               direction={"column"}
             >
-                <Stack direction={"column"} spacing={2}>
-                  <Typography variant="caption" color={"#676767"}>
-                    Pinned
-                  </Typography>
-                  <Stack width={"100%"} direction={"column"} spacing={2}>
-                    {ChatList.filter((Element) => {
-                      return Element.pinned;
-                    }).map((Element) => {
-                      return <ChatSection {...Element} />;
-                    })}
-                  </Stack>
+              <Stack direction={"column"} spacing={2}>
+                <Typography variant="caption" color={"#676767"}>
+                  Pinned
+                </Typography>
+                <Stack width={"100%"} direction={"column"} spacing={2}>
+                  {ChatList.filter((Element) => {
+                    return Element.pinned;
+                  }).map((Element) => {
+                    return <ChatSection {...Element} />;
+                  })}
                 </Stack>
+              </Stack>
 
-                <Stack direction={"column"} spacing={2} mt={2}>
-                  <Typography variant="caption" color={"#676767"} spacing={2}>
-                    All Chats
-                  </Typography>
-                  <Stack width={"100%"} direction={"column"} spacing={2}> 
-                    {ChatList.filter((Element) => {
-                      return !Element.pinned;
-                    }).map((Element) => {
-                      return <ChatSection {...Element} />;
-                    })}
-                  </Stack>
+              <Stack direction={"column"} spacing={2} mt={2}>
+                <Typography variant="caption" color={"#676767"} spacing={2}>
+                  All Chats
+                </Typography>
+                <Stack width={"100%"} direction={"column"} spacing={2}>
+                  {ChatList.filter((Element) => {
+                    return !Element.pinned;
+                  }).map((Element) => {
+                    return <ChatSection {...Element} />;
+                  })}
                 </Stack>
-
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
 
         {/* right */}
-        <Stack>
-
-        </Stack>
+        <Stack></Stack>
       </Box>
     </>
   );
