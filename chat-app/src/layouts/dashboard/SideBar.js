@@ -16,18 +16,35 @@ import { Gear } from "phosphor-react";
 import { faker } from "@faker-js/faker";
 import useSettings from "../../hooks/useSettings";
 import MaterialUISwitch from "../../components/MaterialUISwitch";
-
+import { useNavigate } from "react-router-dom";
 const SideBar = () => {
   const theme = useTheme();
   const [selectedButton, setSelectedButton] = useState(0);
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const getPath = (index) => {
+    switch (index) {
+      case 0:
+        return ("/app");
+
+      case 1:
+        return ("/group");
+
+      case 2:
+        return ("/settings");
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -43,7 +60,6 @@ const SideBar = () => {
           height: "100%",
           width: "100px",
         }}
-
       >
         <Stack
           sx={{ width: "100%" }}
@@ -95,7 +111,10 @@ const SideBar = () => {
                         color:
                           theme.palette.mode === "light" ? "black" : "white",
                       }}
-                      onClick={() => setSelectedButton(Element.index)}
+                      onClick={() => {
+                        setSelectedButton(Element.index);
+                        navigate(getPath(Element.index));
+                      }}
                     >
                       {Element.icon}
                     </IconButton>
@@ -104,7 +123,7 @@ const SideBar = () => {
               );
             })}
             <Divider sx={{ width: "100%", backgroundColor: "blue" }} />
-            {selectedButton === 3 ? (
+            {selectedButton === 2 ? (
               <Box
                 sx={{
                   backgroundColor: "black",
@@ -121,7 +140,9 @@ const SideBar = () => {
                 sx={{
                   color: theme.palette.mode === "light" ? "black" : "white",
                 }}
-                onClick={() => setSelectedButton(3)}
+                onClick={() => {setSelectedButton(2)
+                  navigate(getPath(2));
+                }}
               >
                 <Gear size={25} />
               </IconButton>
@@ -153,12 +174,12 @@ const SideBar = () => {
                 "aria-labelledby": "basic-button",
               }}
               anchorOrigin={{
-                vertical:'bottom',
-                horizontal:'right'
+                vertical: "bottom",
+                horizontal: "right",
               }}
               transformOrigin={{
-                vertical:'bottom',
-                horizontal:'left'
+                vertical: "bottom",
+                horizontal: "left",
               }}
             >
               <Stack direction={"column"} spacing={1}>
@@ -166,7 +187,12 @@ const SideBar = () => {
                   return (
                     <>
                       <MenuItem onClick={() => handleClick}>
-                        <Stack direction={"row"} alignItems={"cebter"} width={100} justifyContent={"space-between"}>
+                        <Stack
+                          direction={"row"}
+                          alignItems={"cebter"}
+                          width={100}
+                          justifyContent={"space-between"}
+                        >
                           <span>{element.title}</span>
                           {element.icon}
                         </Stack>
