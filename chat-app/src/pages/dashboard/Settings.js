@@ -151,6 +151,11 @@ const Settings = () => {
         </Box>
 
         {/* Right */}
+        <Stack>
+          <Box>
+            right
+          </Box>
+        </Stack>
       </Stack>
     </>
   );
