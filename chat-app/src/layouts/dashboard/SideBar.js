@@ -53,7 +53,7 @@ const SideBar = () => {
         p={2}
         sx={{
           backgroundColor:
-            theme.palette.mode === "Light"
+            theme.palette.mode === "light"
               ? "white"
               : theme.palette.background.paper,
           boxShadow: "0px 1px 2px rgba(0,0,0,0.25)",

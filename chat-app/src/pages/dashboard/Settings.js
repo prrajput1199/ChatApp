@@ -24,7 +24,7 @@ import Shortcuts from "../../settings/sections/Shortcuts";
 
 const Settings = () => {
   const theme = useTheme();
-  
+
   const [openShortcut, setOpenShortcut] = React.useState(false);
 
   const handleOpenshortcut = () => {
@@ -34,7 +34,6 @@ const Settings = () => {
   const handleCloseshortcut = () => {
     setOpenShortcut(false);
   };
-
 
   const SettingsList = [
     {
@@ -147,12 +146,25 @@ const Settings = () => {
               );
             })}
           </Stack>
-          {openShortcut && <Shortcuts open={handleOpenshortcut} handleClose={handleCloseshortcut}/>}
+          {openShortcut && (
+            <Shortcuts
+              open={handleOpenshortcut}
+              handleClose={handleCloseshortcut}
+            />
+          )}
         </Box>
 
         {/* Right */}
         <Stack>
-          <Box>
+          <Box
+            sx={{
+              backgroundColor:
+                theme.palette.mode == "light"
+                  ? "white"
+                  : theme.palette.background.paper,
+              width: "100%",
+            }}
+          >
             right
           </Box>
         </Stack>
