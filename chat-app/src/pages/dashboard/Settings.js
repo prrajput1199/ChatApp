@@ -96,7 +96,7 @@ const Settings = () => {
         {/* left */}
         <Box
           sx={{
-            width: "310px",
+            width: "350px",
             backgroundColor:
               theme.palette.mode === "light"
                 ? "#F8FAFF"
@@ -155,19 +155,28 @@ const Settings = () => {
         </Box>
 
         {/* Right */}
-        <Stack>
-          <Box
+
+        <Box
+          sx={{
+            backgroundColor:
+              theme.palette.mode == "light"
+                ? "white"
+                : theme.palette.background.paper,
+            width: "100%",
+          }}
+        >
+          <Stack
+            direction={"column"}
             sx={{
-              backgroundColor:
-                theme.palette.mode == "light"
-                  ? "white"
-                  : theme.palette.background.paper,
               width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            right
-          </Box>
-        </Stack>
+            <img src="settings.svg" alt="" />
+          </Stack>
+        </Box>
       </Stack>
     </>
   );

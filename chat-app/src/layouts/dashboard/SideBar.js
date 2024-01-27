@@ -19,7 +19,7 @@ import MaterialUISwitch from "../../components/MaterialUISwitch";
 import { useNavigate } from "react-router-dom";
 const SideBar = () => {
   const theme = useTheme();
-  const [selectedButton, setSelectedButton] = useState(0);
+  const [selectedButton, setSelectedButton] = useState();
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -43,7 +43,7 @@ const SideBar = () => {
         return ("/settings");
 
       default:
-        break;
+        return ("/app");
     }
   };
 

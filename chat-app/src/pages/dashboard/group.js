@@ -12,9 +12,11 @@ import BasicTextFields from "../../components/Search/Search";
 import { Plus } from "phosphor-react";
 import { ChatList } from "../../data";
 import ChatSection from "../../components/chats/ChatSection";
+import Communication from "../../components/Chat/communication";
 
 const Group = () => {
   const theme = useTheme();
+ 
   return (
     <>
       <Stack direction={"row"} width={"100%"}>
@@ -89,10 +91,14 @@ const Group = () => {
             </Stack>
           </Stack>
         </Box>
-        <Box width={"100%"}>
-          <Stack>
-            Right
-          </Stack>
+        <Box
+          sx={{
+            height: "100%",
+            width:"100%",
+            backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
+          }}
+        >
+          <Communication/>
         </Box>
       </Stack>
     </>
