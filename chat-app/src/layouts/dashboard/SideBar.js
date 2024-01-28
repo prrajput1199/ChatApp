@@ -6,6 +6,7 @@ import {
   Divider,
   FormLabel,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Stack,
@@ -34,16 +35,16 @@ const SideBar = () => {
   const getPath = (index) => {
     switch (index) {
       case 0:
-        return ("/app");
+        return "/app";
 
       case 1:
-        return ("/group");
+        return "/group";
 
       case 2:
-        return ("/settings");
+        return "/settings";
 
       default:
-        return ("/app");
+        return "/app";
     }
   };
 
@@ -140,7 +141,8 @@ const SideBar = () => {
                 sx={{
                   color: theme.palette.mode === "light" ? "black" : "white",
                 }}
-                onClick={() => {setSelectedButton(2)
+                onClick={() => {
+                  setSelectedButton(2);
                   navigate(getPath(2));
                 }}
               >
@@ -189,7 +191,7 @@ const SideBar = () => {
                       <MenuItem onClick={() => handleClick}>
                         <Stack
                           direction={"row"}
-                          alignItems={"cebter"}
+                          alignItems={"center"}
                           width={100}
                           justifyContent={"space-between"}
                         >
