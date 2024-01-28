@@ -13,14 +13,17 @@ const Profile_Menu = [
   {
     title: "Profile",
     icon: <User />,
+    index: 0
   },
   {
     title: "Settings",
-    icon: <Gear />,
+    icon: <Gear/>,
+    index: 1
   },
   {
-    title: "Profile",
-    icon: <SignOut />,
+    title: "Sign out",
+    icon: <SignOut/>,
+    index: 2
   },
 ];
 

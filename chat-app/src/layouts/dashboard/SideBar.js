@@ -23,6 +23,7 @@ const SideBar = () => {
   const [selectedButton, setSelectedButton] = useState();
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [avatarIndex, setAvatarIndex] = useState();
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const handleClick = (event) => {
@@ -30,6 +31,22 @@ const SideBar = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const getAvatarPath = (index) => {
+    switch (index) {
+      case 0:
+        return "./profile";
+
+      case 1:
+        return "./settings";
+
+      case 2:
+        return "./auth/login";
+
+      // default:
+      //   return "./app";
+    }
   };
 
   const getPath = (index) => {
@@ -188,12 +205,16 @@ const SideBar = () => {
                 {Profile_Menu.map((element) => {
                   return (
                     <>
-                      <MenuItem onClick={() => handleClick}>
+                      <MenuItem>
                         <Stack
                           direction={"row"}
                           alignItems={"center"}
                           width={100}
                           justifyContent={"space-between"}
+                          onClick={() => {
+                            setAvatarIndex(element.index);
+                            navigate(getAvatarPath(element.index));
+                          }}
                         >
                           <span>{element.title}</span>
                           {element.icon}
