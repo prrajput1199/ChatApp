@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { CaretLeft } from "phosphor-react";
 import React from "react";
+import ProfileForm from "../../components/settings/ProfileForm";
 
 const Profile = () => {
   const theme = useTheme();
@@ -35,6 +36,8 @@ const Profile = () => {
             </IconButton>
             <Typography variant="h5">Profile</Typography>
           </Stack>
+
+          <ProfileForm/>
         </Stack>
       </Box>
     </>

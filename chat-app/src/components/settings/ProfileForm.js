@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import FormProvider from "../../components/hookform/FormProvider";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,9 +17,9 @@ import { Link as RouterLink } from "react-router-dom";
 
 const ProfileForm = () => {
   const LoginSchema = Yup.object().shape({
-    name: Yup.string().required("name is required"),
+    Name: Yup.string().required("name is required"),
     about: Yup.string().required("About is required"),
-    Avatar: Yup.string().required("Avatar is correct").nullable(true),
+    Avatarurl: Yup.string().required("Avatar is correct").nullable(true),
   });
 
   const defaultvalues = {
@@ -34,15 +34,33 @@ const ProfileForm = () => {
   const {
     reset,
     watch,
+    setValue,
     control,
     setError,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSUccessful },
   } = methods;
 
+  const values = watch();
+
+  const handledrop = useCallback(
+    (acceptedfiles) => {
+      const file = acceptedfiles[0];
+
+      const newFile = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
+
+      if (file) {
+        setValue("Avatarurl", newFile, { shouldValidate: true });
+      }
+    },
+    [setValue]
+  );
   const onSubmit = async (data) => {
     try {
       //submit data to backend
+      console.log("Data", data);
     } catch (error) {
       console.log(error);
       reset();
@@ -61,57 +79,29 @@ const ProfileForm = () => {
             <Alert severity="error">{errors.afterSubmit.message}</Alert>
           )}
 
-          <RHFTextField name="email" label="Email address" />
+          <RHFTextField
+            name="Name"
+            label="Name"
+            helperText={"This name is visible to contacts"}
+          />
 
           <RHFTextField
-            name="password"
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment>
-                  <IconButton
-                    onClick={() => {
-                      setShowPassoword(!showPassword);
-                    }}
-                  >
-                    {showPassword ? <Eye /> : <EyeSlash />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+            name="About"
+            label="About"
+            multiline
+            rows={3}
+            maxRows={5}
           />
-        </Stack>
-        <Stack sx={{ alignItems: "flex-end", my: 2, cursor: "pointer" }}>
-          <Link
-            underline="always"
-            variant="body2"
-            color={"inherit"}
-            to="/auth/reset-password"
-            component={RouterLink}
+
+          <Button
+            color="primary"
+            size="large"
+            type="submit"
+            variant="outlined"
           >
-            Forget Password?
-          </Link>
+            Save
+          </Button>
         </Stack>
-        <Button
-          fullWidth
-          color="inherit"
-          size="large"
-          type="submit"
-          variant="contained"
-          sx={{
-            bgcolor: "text.primary",
-            color: (theme) =>
-              theme.palette.mode === "light" ? "common.white" : "grey.800",
-            "&:hover": {
-              bgcolor: "text.primary",
-              color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800",
-            },
-          }}
-        >
-          Login
-        </Button>
       </FormProvider>
     </>
   );
