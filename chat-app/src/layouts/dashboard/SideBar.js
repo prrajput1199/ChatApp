@@ -103,7 +103,16 @@ const SideBar = () => {
                 borderRadius: 1.5,
               }}
             >
-              <img src="../" alt="" />
+              <img
+                src="chatapplogo.jpg"
+                alt=""
+                style={{
+                  width: "85%",
+                  height: "85%",
+                  margin: "5px",
+                  borderRadius: "8px",
+                }}
+              />
             </Box>
             {Nav_Buttons.map((Element) => {
               return (
