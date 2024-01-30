@@ -16,6 +16,13 @@ import { Eye, EyeSlash } from "phosphor-react";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
+  const [userData,setuserData]=useState({
+    FirstName:"",
+    LastName:"",
+    password:""
+  })
+
+  
 
   const RegisterSchema = Yup.object().shape({
     FirstName: Yup.string().required("First Name is required"),
@@ -47,7 +54,8 @@ const RegisterForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      //submit data to backend
+      // const res=createUserWithEmailAndPassword(auth, email, password);
+      
     } catch (error) {
       console.log(error);
       reset();
