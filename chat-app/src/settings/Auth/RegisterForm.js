@@ -13,20 +13,17 @@ import {
 } from "@mui/material";
 import RHFTextField from "../../components/hookform/ReacthookFormTextField";
 import { Eye, EyeSlash } from "phosphor-react";
+// import firebase from 'firebase/app';
+import  { createUserWithEmailAndPassword } from "firebase/auth"
+import { auth } from "../../firebase";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
-  const [userData,setuserData]=useState({
-    FirstName:"",
-    LastName:"",
-    password:""
-  })
 
-  
 
   const RegisterSchema = Yup.object().shape({
-    FirstName: Yup.string().required("First Name is required"),
-    LastName: Yup.string().required("Last Name is required"),
+    // FirstName: Yup.string().required("First Name is required"),
+    // LastName: Yup.string().required("Last Name is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -34,8 +31,8 @@ const RegisterForm = () => {
   });
 
   const defaultvalues = {
-    FirstName: "",
-    LastName: "",
+    // FirstName: "",
+    // LastName: "",
     email: "demo@chat.com",
     password: "chat1234",
   };
@@ -52,12 +49,14 @@ const RegisterForm = () => {
     formState: { errors, isSubmitting, isSubmitSUccessful },
   } = methods;
 
+ 
   const onSubmit = async (data) => {
     try {
-      // const res=createUserWithEmailAndPassword(auth, email, password);
-      
+      const { email, password } = data;
+      await createUserWithEmailAndPassword(auth,email, password);
+      alert('Account created successfully!');
     } catch (error) {
-      console.log(error);
+      
       reset();
       setError("afterSubmit", {
         ...error,
@@ -65,6 +64,8 @@ const RegisterForm = () => {
       });
     }
   };
+  
+
   return (
     <>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -72,12 +73,15 @@ const RegisterForm = () => {
           {!!errors.afterSubmit && (
             <Alert severity="error">{errors.afterSubmit.message}</Alert>
           )}
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          {/* <Stack direction={{ xs: "column", sm: "row" }} spacing={2}> 
             <RHFTextField name="FirstName" label="First name" />
-            <RHFTextField name="LastName" label="Last name" />
-          </Stack>
+            <RHFTextField name="LastName" label="Last name"/>
+          </Stack> */}
+
+          <RHFTextField name="email" label="Email address"/>
 
           <RHFTextField
+       
             name="password"
             label="Password"
             type={showPassword ? "text" : "password"}
@@ -116,8 +120,6 @@ const RegisterForm = () => {
             Create an account
           </Button>
         </Stack>
-
-      
       </FormProvider>
     </>
   );
