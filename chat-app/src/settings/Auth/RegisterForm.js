@@ -19,6 +19,10 @@ import { auth } from "../../firebase";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
+  const [userData,setuserData]=useState({
+    email:"",
+    password:""
+  });
 
 
   const RegisterSchema = Yup.object().shape({
@@ -55,8 +59,8 @@ const RegisterForm = () => {
       const { email, password } = data;
       await createUserWithEmailAndPassword(auth,email, password);
       alert('Account created successfully!');
+      reset();
     } catch (error) {
-      
       reset();
       setError("afterSubmit", {
         ...error,
@@ -78,10 +82,10 @@ const RegisterForm = () => {
             <RHFTextField name="LastName" label="Last name"/>
           </Stack> */}
 
-          <RHFTextField name="email" label="Email address"/>
+          <RHFTextField name="email" label="Email address" />
 
           <RHFTextField
-       
+      
             name="password"
             label="Password"
             type={showPassword ? "text" : "password"}
