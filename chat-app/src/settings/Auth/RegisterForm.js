@@ -14,16 +14,13 @@ import {
 import RHFTextField from "../../components/hookform/ReacthookFormTextField";
 import { Eye, EyeSlash } from "phosphor-react";
 // import firebase from 'firebase/app';
-import  { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
-  const [userData,setuserData]=useState({
-    email:"",
-    password:""
-  });
-
+  const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
     // FirstName: Yup.string().required("First Name is required"),
@@ -31,14 +28,20 @@ const RegisterForm = () => {
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    password: Yup.string().required("Password is correct"),
+    Newpassword: Yup.string()
+      .min(6, "Password must be of at least 6 characters")
+      .required("Password is required"),
+    Confirmpassword: Yup.string()
+      .required("Password is required")
+      .oneOf([Yup.ref("Newpassword"), null], "Password must match"),
   });
 
   const defaultvalues = {
     // FirstName: "",
     // LastName: "",
     email: "demo@chat.com",
-    password: "chat1234",
+    Newpassword: "",
+    Confirmpassword: "",
   };
 
   const methods = useForm({
@@ -53,12 +56,12 @@ const RegisterForm = () => {
     formState: { errors, isSubmitting, isSubmitSUccessful },
   } = methods;
 
- 
   const onSubmit = async (data) => {
     try {
-      const { email, password } = data;
-      await createUserWithEmailAndPassword(auth,email, password);
-      alert('Account created successfully!');
+      const { email, Newpassword } = data;
+      const res = await createUserWithEmailAndPassword(auth, email, Newpassword);
+      navigate("/app");
+      // console.log(Identifier);
       reset();
     } catch (error) {
       reset();
@@ -68,7 +71,6 @@ const RegisterForm = () => {
       });
     }
   };
-  
 
   return (
     <>
@@ -85,9 +87,27 @@ const RegisterForm = () => {
           <RHFTextField name="email" label="Email address" />
 
           <RHFTextField
-      
-            name="password"
+            name="Newpassword"
             label="Password"
+            type={showPassword ? "text" : "password"}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment>
+                  <IconButton
+                    onClick={() => {
+                      setShowPassoword(!showPassword);
+                    }}
+                  >
+                    {showPassword ? <Eye /> : <EyeSlash />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <RHFTextField
+            name="Confirmpassword"
+            label="confirm password"
             type={showPassword ? "text" : "password"}
             InputProps={{
               endAdornment: (
