@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useContext } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import MainLayout from "../layouts/main";
 // config
 import { DEFAULT_PATH } from "../config";
 import LoadingScreen from "../components/LoadingScreen";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Loadable = (Component) => (props) => {
   return (
@@ -19,6 +20,8 @@ const Loadable = (Component) => (props) => {
 };
 
 export default function Router() {
+  const {currentUser}=useContext(AuthContext);
+  console.log(currentUser);
   return useRoutes([
     {
       path: "/auth",
