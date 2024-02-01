@@ -20,8 +20,13 @@ const Loadable = (Component) => (props) => {
 };
 
 export default function Router() {
-  const {currentUser}=useContext(AuthContext);
-  console.log(currentUser);
+  const { currentUser } = useContext(AuthContext);
+
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to={"/auth/login"} />;
+    }
+  };
   return useRoutes([
     {
       path: "/auth",
@@ -35,10 +40,17 @@ export default function Router() {
     },
     {
       path: "/",
-      element: <DashboardLayout />,
+      element: (
+        <ProtectedRoute>
+          <DashboardLayout />
+        </ProtectedRoute>
+      ),
       children: [
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
-        { path: "app", element: <GeneralApp /> },
+        {
+          path: "app",
+          element: <GeneralApp />,
+        },
         { path: "group", element: <Group /> },
         { path: "profile", element: <Profile /> },
         { path: "settings", element: <Settings /> },

@@ -13,11 +13,13 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Nav_Buttons, Profile_Menu } from "../../data";
-import { Gear } from "phosphor-react";
+import { Gear, SignOut } from "phosphor-react";
 import { faker } from "@faker-js/faker";
 import useSettings from "../../hooks/useSettings";
 import MaterialUISwitch from "../../components/MaterialUISwitch";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 const SideBar = () => {
   const theme = useTheme();
   const [selectedButton, setSelectedButton] = useState();
@@ -41,8 +43,8 @@ const SideBar = () => {
       case 1:
         return "./settings";
 
-      case 2:
-        return "./auth/login";
+      // case 2:
+      //   return "./auth/login";
 
       // default:
       //   return "./app";
@@ -232,6 +234,20 @@ const SideBar = () => {
                     </>
                   );
                 })}
+                <MenuItem>
+                  <Stack
+                    direction={"row"}
+                    alignItems={"center"}
+                    width={100}
+                    justifyContent={"space-between"}
+                    onClick={() => {
+                      signOut(auth);
+                    }}
+                  >
+                    <span>Sign Out</span>
+                    <SignOut />
+                  </Stack>
+                </MenuItem>
               </Stack>
             </Menu>
           </Stack>

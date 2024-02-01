@@ -13,10 +13,13 @@ import {
 } from "@mui/material";
 import RHFTextField from "../../components/hookform/ReacthookFormTextField";
 import { Eye, EyeSlash } from "phosphor-react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
+  const navigate = useNavigate();
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -44,9 +47,12 @@ const LoginForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      //submit data to backend
+      const { email, Newpassword } = data;
+      const res = await signInWithEmailAndPassword(auth, email, Newpassword);
+      navigate("/app");
+      // console.log(Identifier);
+      reset();
     } catch (error) {
-      console.log(error);
       reset();
       setError("afterSubmit", {
         ...error,

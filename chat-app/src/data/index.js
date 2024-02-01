@@ -20,11 +20,12 @@ const Profile_Menu = [
     icon: <Gear/>,
     index: 1
   },
-  {
-    title: "Sign out",
-    icon: <SignOut/>,
-    index: 2
-  },
+  // {
+  //   title: "Sign out",
+  //   icon: <SignOut/>,
+  //   onclick:()=>{},
+  //   index: 2
+  // },
 ];
 
 const Nav_Buttons = [

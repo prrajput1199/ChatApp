@@ -73,7 +73,7 @@ const Footer = () => {
   }));
 
   const ChatInput = ({ setOpenPicker }) => {
-    const [clickActions , setClickActions]=useState(false);
+    const [clickActions, setClickActions] = useState(false);
 
     return (
       <>
@@ -94,7 +94,7 @@ const Footer = () => {
                               position: "absolute",
                               top: -Element.Y,
                               backgroundColor: Element.color,
-                              display: clickActions ? "inline-block" : "none"
+                              display: clickActions ? "inline-block" : "none",
                             }}
                           >
                             {Element.Icon}
@@ -106,21 +106,23 @@ const Footer = () => {
                 </Stack>
                 <InputAdornment>
                   <IconButton>
-                    <LinkSimple onClick={()=>{
-                      setClickActions((prev)=>!prev)
-                    }}/>
+                    <LinkSimple
+                      onClick={() => {
+                        setClickActions((prev) => !prev);
+                      }}
+                    />
                   </IconButton>
                 </InputAdornment>
               </Stack>
             ),
             endAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <Smiley
-                    onClick={() => {
-                      openPicker ? setOpenPicker(false) : setOpenPicker(true);
-                    }}
-                  />
+                <IconButton
+                  onClick={() => {
+                    openPicker ? setOpenPicker(false) : setOpenPicker(true);
+                  }}
+                >
+                  <Smiley />
                 </IconButton>
               </InputAdornment>
             ),
