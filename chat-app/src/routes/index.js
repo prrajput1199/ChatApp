@@ -26,7 +26,10 @@ export default function Router() {
     if (!currentUser) {
       return <Navigate to={"/auth/login"} />;
     }
+
+    return children;
   };
+
   return useRoutes([
     {
       path: "/auth",

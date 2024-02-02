@@ -25,12 +25,14 @@ const LoginForm = () => {
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    password: Yup.string().required("Password is correct"),
+    Newpassword: Yup.string()
+      .min(6, "Password must be of at least 6 characters")
+      .required("Password is required"),
   });
 
   const defaultvalues = {
     email: "demo@chat.com",
-    password: "chat1234",
+    Newpassword: "",
   };
 
   const methods = useForm({
@@ -50,8 +52,6 @@ const LoginForm = () => {
       const { email, Newpassword } = data;
       const res = await signInWithEmailAndPassword(auth, email, Newpassword);
       navigate("/app");
-      // console.log(Identifier);
-      reset();
     } catch (error) {
       reset();
       setError("afterSubmit", {
@@ -72,7 +72,7 @@ const LoginForm = () => {
           <RHFTextField name="email" label="Email address" />
 
           <RHFTextField
-            name="password"
+            name="Newpassword"
             label="Password"
             type={showPassword ? "text" : "password"}
             InputProps={{
@@ -91,7 +91,13 @@ const LoginForm = () => {
           />
         </Stack>
         <Stack sx={{ alignItems: "flex-end", my: 2, cursor: "pointer" }}>
-          <Link underline="always" variant="body2" color={"inherit"} to="/auth/reset-password" component={RouterLink}>
+          <Link
+            underline="always"
+            variant="body2"
+            color={"inherit"}
+            to="/auth/reset-password"
+            component={RouterLink}
+          >
             Forget Password?
           </Link>
         </Stack>

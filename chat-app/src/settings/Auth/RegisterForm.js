@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import {
   Alert,
+  Avatar,
   Button,
   IconButton,
   InputAdornment,
@@ -17,6 +18,8 @@ import { Eye, EyeSlash } from "phosphor-react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+
+
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
@@ -59,10 +62,12 @@ const RegisterForm = () => {
   const onSubmit = async (data) => {
     try {
       const { email, Newpassword } = data;
-      const res = await createUserWithEmailAndPassword(auth, email, Newpassword);
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        Newpassword
+      );
       navigate("/app");
-      // console.log(Identifier);
-      reset();
     } catch (error) {
       reset();
       setError("afterSubmit", {
@@ -123,7 +128,15 @@ const RegisterForm = () => {
               ),
             }}
           />
-
+          {/* <Stack>
+            <input type="file" id="file" style={{ display: "none" }} />
+            <label htmlFor="file">
+              <Stack direction={"row"} alignItems={"center"} spacing={3}>
+                <Avatar src="ProfileImage.jpeg"/>
+                <p>Add an Avatar</p>
+              </Stack>
+            </label>
+          </Stack> */}
           <Button
             fullWidth
             color="inherit"
