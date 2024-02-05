@@ -15,19 +15,20 @@ import {
 import RHFTextField from "../../components/hookform/ReacthookFormTextField";
 import { Eye, EyeSlash } from "phosphor-react";
 // import firebase from 'firebase/app';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-
-
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
+  const [photo, setPhoto] = useState();
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
-    // FirstName: Yup.string().required("First Name is required"),
-    // LastName: Yup.string().required("Last Name is required"),
+    name: Yup.string().required("Last Name is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -61,13 +62,36 @@ const RegisterForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const { email, Newpassword } = data;
+      const { email, Newpassword, name } = data;
       const res = await createUserWithEmailAndPassword(
         auth,
         email,
         Newpassword
       );
       navigate("/app");
+
+      const storageRef = ref(storage, name);
+
+      const uploadTask = uploadBytesResumable(storageRef, photo);
+      uploadTask.on(
+        "state_changed",
+
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+           await updateProfile(res.user, {
+              name,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, "users",res.user.uid), {
+              name,
+              email,
+              photoURL:downloadURL,
+              uid:res.user.uid
+            });
+          });
+        }
+      );
     } catch (error) {
       reset();
       setError("afterSubmit", {
@@ -84,10 +108,8 @@ const RegisterForm = () => {
           {!!errors.afterSubmit && (
             <Alert severity="error">{errors.afterSubmit.message}</Alert>
           )}
-          {/* <Stack direction={{ xs: "column", sm: "row" }} spacing={2}> 
-            <RHFTextField name="FirstName" label="First name" />
-            <RHFTextField name="LastName" label="Last name"/>
-          </Stack> */}
+
+          <RHFTextField name="name" label="Name" />
 
           <RHFTextField name="email" label="Email address" />
 
@@ -128,15 +150,20 @@ const RegisterForm = () => {
               ),
             }}
           />
-          {/* <Stack>
-            <input type="file" id="file" style={{ display: "none" }} />
+          <Stack>
+            <input
+              type="file"
+              id="file"
+              style={{ display: "none" }}
+              value={photo}
+            />
             <label htmlFor="file">
               <Stack direction={"row"} alignItems={"center"} spacing={3}>
-                <Avatar src="ProfileImage.jpeg"/>
+                <Avatar src="ProfileImage.jpeg" />
                 <p>Add an Avatar</p>
               </Stack>
             </label>
-          </Stack> */}
+          </Stack>
           <Button
             fullWidth
             color="inherit"
