@@ -24,7 +24,7 @@ import { doc, setDoc } from "firebase/firestore";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
-  const [photo, setPhoto] = useState();
+  const [photo,setPhoto]=useState();
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
@@ -57,12 +57,15 @@ const RegisterForm = () => {
     reset,
     setError,
     handleSubmit,
+    register,
     formState: { errors, isSubmitting, isSubmitSUccessful },
   } = methods;
 
   const onSubmit = async (data) => {
+
     try {
       const { email, Newpassword, name } = data;
+      console.log(data);
       const res = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -72,23 +75,25 @@ const RegisterForm = () => {
 
       const storageRef = ref(storage, name);
 
-      const uploadTask = uploadBytesResumable(storageRef, photo);
+      const uploadTask = uploadBytesResumable(storageRef,photo);
       uploadTask.on(
         "state_changed",
 
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-           await updateProfile(res.user, {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateProfile(res.user, {
               name,
               photoURL: downloadURL,
             });
 
-            await setDoc(doc(db, "users",res.user.uid), {
+            await setDoc(doc(db, "users", res.user.uid), {
               name,
               email,
-              photoURL:downloadURL,
-              uid:res.user.uid
+              photoURL: downloadURL,
+              uid: res.user.uid,
             });
+
+            await setDoc(doc(db, "userChats", res.user.uid), {});
           });
         }
       );
@@ -155,7 +160,8 @@ const RegisterForm = () => {
               type="file"
               id="file"
               style={{ display: "none" }}
-              value={photo}
+               value={photo}
+
             />
             <label htmlFor="file">
               <Stack direction={"row"} alignItems={"center"} spacing={3}>
