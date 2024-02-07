@@ -80,7 +80,7 @@ const RegisterForm = () => {
         "state_changed",
 
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
             await updateProfile(res.user, {
               name,
               photoURL: downloadURL,

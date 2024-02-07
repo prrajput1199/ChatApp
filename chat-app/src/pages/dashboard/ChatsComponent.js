@@ -57,6 +57,7 @@ const Chats = () => {
               setUserName={setUserName}
               setErr={setErr}
             />
+            {err && <Typography>something went wrong</Typography>}
             <Stack direction={"row"} alignItems={"center"} spacing={3}>
               <Archive size={24} />
               <Button>Archives</Button>
@@ -150,7 +151,7 @@ const Chats = () => {
                   {ChatList.filter((Element) => {
                     return !Element.pinned;
                   }).map((Element) => {
-                    return <ChatSection {...Element} />;
+                    return <ChatSection {...Element} user={user} />;
                   })}
                 </Stack>
               </Stack>

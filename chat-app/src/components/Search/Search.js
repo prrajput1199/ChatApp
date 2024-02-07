@@ -1,4 +1,4 @@
-import { Box, FormControl, InputAdornment, TextField } from "@mui/material";
+import { Box, FormControl, InputAdornment, TextField, Typography } from "@mui/material";
 import { MagnifyingGlass } from "phosphor-react";
 import { useState } from "react";
 import { db } from "../../firebase";
@@ -55,6 +55,7 @@ export default function BasicTextFields({username,err,user,setErr,setUser,setUse
             ),
           }}
         />
+       
       </FormControl>
     </Box>
   );

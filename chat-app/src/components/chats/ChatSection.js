@@ -2,10 +2,41 @@ import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { faker } from "@faker-js/faker";
 import { Avatar, Badge, Box, Stack, Typography } from "@mui/material";
-import React from "react";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import React, { useContext } from "react";
+import { db } from "../../firebase";
+import { AuthContext } from "../../contexts/AuthContext";
 
-const ChatSection = ({ id, img, name, msg, time, unread, pinned, online }) => {
+const ChatSection = ({
+  id,
+  img,
+  name,
+  msg,
+  time,
+  unread,
+  pinned,
+  online,
+  user,
+}) => {
   const theme = useTheme();
+  const { currentuser } = useContext(AuthContext);
+  const handleselect = async () => {
+    //check whether the group exist(in firebase) ,if not then create
+    const CombinedId =
+      currentuser.uid > user.uid
+        ? currentuser.uid + user.uid
+        : user.uid + currentuser.uid;
+    try {
+      const res = getDoc(doc(db, "chats", CombinedId));
+
+      if (!res.exists()) {
+        //create chat in chats collection
+        await setDoc(doc(db, "chats", CombinedId), { messages: [] });
+      }
+    } catch (error) {}
+
+    
+  };
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -46,6 +77,7 @@ const ChatSection = ({ id, img, name, msg, time, unread, pinned, online }) => {
         height: "57px",
         borderRadius: "20px",
       }}
+      onClick={handleselect}
     >
       <Stack
         direction={"row"}
