@@ -65,7 +65,6 @@ const RegisterForm = () => {
 
     try {
       const { email, Newpassword, name } = data;
-      console.log(data);
       const res = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -93,7 +92,9 @@ const RegisterForm = () => {
               uid: res.user.uid,
             });
 
-            await setDoc(doc(db, "userChats", res.user.uid), {});
+            await setDoc(doc(db, "userChats", res.user.uid), {
+
+            });
           });
         }
       );

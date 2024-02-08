@@ -19,24 +19,7 @@ const ChatSection = ({
   user,
 }) => {
   const theme = useTheme();
-  const { currentuser } = useContext(AuthContext);
-  const handleselect = async () => {
-    //check whether the group exist(in firebase) ,if not then create
-    const CombinedId =
-      currentuser.uid > user.uid
-        ? currentuser.uid + user.uid
-        : user.uid + currentuser.uid;
-    try {
-      const res = getDoc(doc(db, "chats", CombinedId));
 
-      if (!res.exists()) {
-        //create chat in chats collection
-        await setDoc(doc(db, "chats", CombinedId), { messages: [] });
-      }
-    } catch (error) {}
-
-    
-  };
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -77,7 +60,7 @@ const ChatSection = ({
         height: "57px",
         borderRadius: "20px",
       }}
-      onClick={handleselect}
+     
     >
       <Stack
         direction={"row"}

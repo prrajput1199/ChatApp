@@ -22,6 +22,7 @@ const Loadable = (Component) => (props) => {
 export default function Router() {
   const { currentUser } = useContext(AuthContext);
 
+
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to={"/auth/login"} />;

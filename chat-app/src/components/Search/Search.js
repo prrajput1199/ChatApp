@@ -1,14 +1,23 @@
-import { Box, FormControl, InputAdornment, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { MagnifyingGlass } from "phosphor-react";
 import { useState } from "react";
 import { db } from "../../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
-export default function BasicTextFields({username,err,user,setErr,setUser,setUserName}) {
-  // const [username, setUserName] = useState();
-  // const [user, setUser] = useState(null);
-  // const [err, setErr] = useState(false);
-
+export default function BasicTextFields({
+  username,
+  err,
+  user,
+  setErr,
+  setUser,
+  setUserName,
+}) {
   const HandleSearch = async () => {
     const q = query(collection(db, "users"), where("name", "==", username));
 
@@ -16,12 +25,11 @@ export default function BasicTextFields({username,err,user,setErr,setUser,setUse
 
     try {
       querySnapshot.forEach((doc) => {
-             setUser(doc.data());
+        setUser(doc.data());
       });
     } catch (error) {
       setErr(true);
     }
-    
   };
   const handleKey = (e) => {
     e.code == "enter" && HandleSearch();
@@ -42,6 +50,7 @@ export default function BasicTextFields({username,err,user,setErr,setUser,setUse
           variant="outlined"
           onChange={(e) => setUserName(e.target.value)}
           onKeyDown={handleKey}
+          value={username}
           InputProps={{
             endAdornment: (
               <InputAdornment
@@ -55,7 +64,6 @@ export default function BasicTextFields({username,err,user,setErr,setUser,setUse
             ),
           }}
         />
-       
       </FormControl>
     </Box>
   );

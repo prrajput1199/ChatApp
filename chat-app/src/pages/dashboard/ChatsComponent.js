@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTheme } from "@emotion/react";
 import TextField from "@mui/material/TextField";
 import { Archive, MagnifyingGlass } from "phosphor-react";
@@ -19,14 +19,67 @@ import { ChatList } from "../../data";
 import { SimpleBarStyle } from "../../components/Scrollbar";
 import BasicTextFields from "../../components/Search/Search";
 import ChatSection from "../../components/chats/ChatSection";
+import {
+  collection,
+  query,
+  where,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../../firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Chats = () => {
   const theme = useTheme();
   const [username, setUserName] = useState();
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
+
+  // paste here
+  const { currentUser } = useContext(AuthContext);
+
+  const Handleselect = async () => {
+    //check whether the group exist(in firebase) ,if not then create
+    const CombinedId =
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
+    try {
+      const res = await getDoc(doc(db, "chats", CombinedId));
+
+      if (!res.exists()) {
+        //create chat in chats collection
+        await setDoc(doc(db, "chats", CombinedId), { messages: [] });
+
+        //create user chats
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [CombinedId + ".userinfo"]: {
+            uid: user.uid,
+            name: user.name,
+            photoURL: user.photoURL,
+          },
+          [CombinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [CombinedId + ".userinfo"]: {
+            uid: currentUser.uid,
+            name: currentUser.name,
+            photoURL: currentUser.photoURL,
+          },
+          [CombinedId + ".date"]: serverTimestamp(),
+        });
+      }
+
+      setUser(null);
+      setUserName("");
+    } catch (error) {
+      setErr(true);
+    }
+  };
 
   return (
     <>
@@ -57,7 +110,6 @@ const Chats = () => {
               setUserName={setUserName}
               setErr={setErr}
             />
-            {err && <Typography>something went wrong</Typography>}
             <Stack direction={"row"} alignItems={"center"} spacing={3}>
               <Archive size={24} />
               <Button>Archives</Button>
@@ -88,7 +140,15 @@ const Chats = () => {
 
                 <Stack width={"100%"} direction={"column"} spacing={2}>
                   {user && (
-                    <Stack width={"100%"} direction={"column"} spacing={2}>
+                    <Stack
+                      width={"100%"}
+                      sx={{
+                        cursor: "pointer",
+                      }}
+                      direction={"column"}
+                      spacing={2}
+                      onClick={Handleselect}
+                    >
                       {/* used for testing purpose */}
                       <Box
                         sx={{
@@ -116,7 +176,11 @@ const Chats = () => {
                             spacing={2}
                             marginTop={"2px"}
                           >
-                            <Avatar alt="Remy Sharp" src={user.photoURL} />
+                            <Avatar
+                              alt="Remy Sharp"
+                              src={user.photoURL}
+                            
+                            />
 
                             <Stack direction={"column"}>
                               <Typography variant="subtitle2">
