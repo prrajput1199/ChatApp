@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import TextField from "@mui/material/TextField";
 import { Archive, MagnifyingGlass } from "phosphor-react";
@@ -28,6 +28,7 @@ import {
   setDoc,
   updateDoc,
   serverTimestamp,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -37,6 +38,7 @@ const Chats = () => {
   const [username, setUserName] = useState();
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
+  const [chats, setChats] = useState();
 
   // paste here
   const { currentUser } = useContext(AuthContext);
@@ -81,6 +83,23 @@ const Chats = () => {
     }
   };
 
+  useEffect(() => {
+    const getdata = () => {
+      const getRes = onSnapshot(
+        doc(db, "userChats", currentUser.uid),
+        (doc) => {
+          setChats(doc.data());
+        }
+      );
+      return () => {
+        getRes();
+      };
+    };
+
+    currentUser.uid && getdata();
+  }, [currentUser.uid]);
+
+  console.log(Object.entries(chats));
   return (
     <>
       <Box
@@ -176,11 +195,7 @@ const Chats = () => {
                             spacing={2}
                             marginTop={"2px"}
                           >
-                            <Avatar
-                              alt="Remy Sharp"
-                              src={user.photoURL}
-                            
-                            />
+                            <Avatar alt="Remy Sharp" src={user.photoURL} />
 
                             <Stack direction={"column"}>
                               <Typography variant="subtitle2">
