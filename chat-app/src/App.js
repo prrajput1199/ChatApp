@@ -5,16 +5,19 @@ import ThemeProvider from "./theme";
 // components
 import ThemeSettings from "./components/settings";
 import { AuthContextProvider } from "./contexts/AuthContext";
+import { ChatContextProvider } from "./contexts/ChatContext";
 
 function App() {
   return (
     <AuthContextProvider>
-      <ThemeProvider>
-        <ThemeSettings>
-          {" "}
-          <Router />{" "}
-        </ThemeSettings>
-      </ThemeProvider>
+      <ChatContextProvider>
+        <ThemeProvider>
+          <ThemeSettings>
+            {" "}
+            <Router />{" "}
+          </ThemeSettings>
+        </ThemeProvider>
+      </ChatContextProvider>
     </AuthContextProvider>
   );
 }

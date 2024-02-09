@@ -11,8 +11,10 @@ import {
 } from "@mui/material";
 import { DotsThreeCircleVertical, DownloadSimple, Image } from "phosphor-react";
 import { element } from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { Message_options } from "../../data";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ChatContext } from "../../contexts/ChatContext";
 
 const DocMsg = ({ element }) => {
   const theme = useTheme();
@@ -217,6 +219,9 @@ const MediaMsg = ({ element,Menu }) => {
 
 const TextMsg = ({ element,Menu }) => {
   const theme = useTheme();
+  const {currentUser}=useContext(AuthContext);
+  const {data}=useContext(ChatContext);
+
 
   return (
     <div>

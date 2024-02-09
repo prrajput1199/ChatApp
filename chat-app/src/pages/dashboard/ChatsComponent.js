@@ -32,6 +32,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ChatContext } from "../../contexts/ChatContext";
 
 const Chats = () => {
   const theme = useTheme();
@@ -42,6 +43,7 @@ const Chats = () => {
 
   // paste here
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
   //styledbadge
   const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -131,6 +133,12 @@ const Chats = () => {
   }, [currentUser.uid]);
 
   console.log(Object.entries(chats));
+
+  const HandleClick=(u)=>{
+    dispatch({type:"CHANGE_USER",payload:u});
+  }
+
+
   return (
     <>
       <Box
@@ -226,7 +234,7 @@ const Chats = () => {
                             spacing={2}
                             marginTop={"2px"}
                           >
-                            <Avatar alt="Remy Sharp" src={user.photoURL} />
+                            <Avatar alt="Remy Sharp" src={user.photoURL}/>
 
                             <Stack direction={"column"}>
                               <Typography variant="subtitle2">
@@ -271,8 +279,10 @@ const Chats = () => {
                           // width: "100%",
                           height: "57px",
                           borderRadius: "20px",
+                          cursor:"pointer"
                         }}
                         key={chat[0]}
+                        onClick={()=>HandleClick(chat[1].userinfo)}
                       >
                         <Stack
                           direction={"row"}

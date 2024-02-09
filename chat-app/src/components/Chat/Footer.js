@@ -13,7 +13,7 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { faker } from "@faker-js/faker";
 import styled from "@emotion/styled";
 import {
@@ -27,10 +27,60 @@ import {
   User,
 } from "phosphor-react";
 import EmojiPicker from "emoji-picker-react";
+import {
+  Timestamp,
+  arrayUnion,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db, storage } from "../../firebase";
+import { ChatContext } from "../../contexts/ChatContext";
+import { v4 as uuid } from "uuid";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Footer = () => {
   const theme = useTheme();
   const [openPicker, setOpenPicker] = useState(false);
+  const [textData, setTextData] = useState();
+  const [img, setImg] = useState(null);
+  const { data } = useContext(ChatContext);
+  const { currentUser } = useContext(AuthContext);
+
+  const HandleSend = async () => {
+    if (img) {
+      const storageRef = ref(storage, uuid);
+
+      const uploadTask = uploadBytesResumable(storageRef, img);
+      uploadTask.on(
+        "state_changed",
+
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                textData,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
+          });
+        }
+      );
+    } else {
+      await updateDoc(doc(db, "chats", data.chatId), {
+        messages: arrayUnion({
+          id: uuid(),
+          textData,
+          senderId: currentUser.uid,
+          date: Timestamp.now(),
+        }),
+      });
+    }
+  };
 
   const AddDocument = [
     {
@@ -66,7 +116,7 @@ const Footer = () => {
   ];
 
   const StyledInput = styled(TextField)(({ theme }) => ({
-    "& .MuiInputBased-input": {
+    "& .MuiInputBase-input": {
       paddingTop: "12px",
       paddingBottom: "12px",
     },
@@ -80,8 +130,11 @@ const Footer = () => {
         <StyledInput
           fullWidth
           placeholder="Write a message"
+          onChange={(e)=>setTextData(e.target.value)}
+          value={textData}
           InputProps={{
             // disableUnderline: "true",
+           
             startAdornment: (
               <Stack sx={{ width: "max-content" }}>
                 <Stack sx={{ position: "relative" }}>
@@ -187,7 +240,7 @@ const Footer = () => {
                 }}
               >
                 <IconButton>
-                  <PaperPlaneTilt color="white" />
+                  <PaperPlaneTilt color="white" onClick={HandleSend} />
                 </IconButton>
               </Stack>
             </Box>

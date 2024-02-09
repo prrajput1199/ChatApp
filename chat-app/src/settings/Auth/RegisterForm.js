@@ -24,7 +24,7 @@ import { doc, setDoc } from "firebase/firestore";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
-  const [photo,setPhoto]=useState();
+  const [photo,setPhoto]=useState(null);
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
@@ -106,7 +106,7 @@ const RegisterForm = () => {
       });
     }
   };
-
+ 
   return (
     <>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -161,8 +161,8 @@ const RegisterForm = () => {
               type="file"
               id="file"
               style={{ display: "none" }}
-               value={photo}
-
+              src={photo}
+              onChange={(e)=>setPhoto(e.target.files[0])}
             />
             <label htmlFor="file">
               <Stack direction={"row"} alignItems={"center"} spacing={3}>

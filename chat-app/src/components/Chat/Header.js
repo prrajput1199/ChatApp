@@ -8,17 +8,19 @@ import {
   Divider,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { faker } from "@faker-js/faker";
 import styled from "@emotion/styled";
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from "phosphor-react";
 import { ToggleSidebar } from "../../Redux/slices/app";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "../../Redux/store";
+import { ChatContext } from "../../contexts/ChatContext";
 
 const Header = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const {data}=useContext(ChatContext);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -89,7 +91,7 @@ const Header = () => {
             </Box>
             <Stack direction={"column"}>
               <Typography variant="subtitle2">
-                {faker.name.fullName()}
+                {data.user?.name}
               </Typography>
               <Typography variant="caption">Online</Typography>
             </Stack>
