@@ -7,6 +7,7 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Messages from "./messages";
+import Footer_New from "./Footer(new)";
 
 const Communication = () => {
   const theme = useTheme();
@@ -26,7 +27,8 @@ const Communication = () => {
         <Messages Menu={true}/>
       </Box>
 
-      <Footer />
+
+      <Footer_New />
     </Stack>
   );
 };

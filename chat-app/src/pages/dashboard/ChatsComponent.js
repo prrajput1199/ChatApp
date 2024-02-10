@@ -132,7 +132,7 @@ const Chats = () => {
     currentUser.uid && getchatdata();
   }, [currentUser.uid]);
 
-  console.log(Object.entries(chats));
+  
 
   const HandleClick=(u)=>{
     dispatch({type:"CHANGE_USER",payload:u});
@@ -266,7 +266,7 @@ const Chats = () => {
                       </Box>
                     </Stack>
                   )}
-                  {Object.entries(chats)?.map((chat) => {
+                  {Object.entries(chats).map((chat) => {
                     //chatsection paste here
                     return (
                       <Box

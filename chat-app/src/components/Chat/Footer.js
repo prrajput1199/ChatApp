@@ -6,13 +6,14 @@ import {
   Typography,
   IconButton,
   Divider,
-  TextField,
   backdropClasses,
   InputAdornment,
   useTheme,
   Fab,
   Tooltip,
+  FormControl,
 } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import React, { useContext, useState } from "react";
 import { faker } from "@faker-js/faker";
 import styled from "@emotion/styled";
@@ -43,7 +44,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 const Footer = () => {
   const theme = useTheme();
   const [openPicker, setOpenPicker] = useState(false);
-  const [textData, setTextData] = useState();
+  const [textData, setTextData] = useState("");
   const [img, setImg] = useState(null);
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(AuthContext);
@@ -61,7 +62,7 @@ const Footer = () => {
             await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
                 id: uuid(),
-                textData,
+                textData: textData,
                 senderId: currentUser.uid,
                 date: Timestamp.now(),
                 img: downloadURL,
@@ -74,7 +75,7 @@ const Footer = () => {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
-          textData,
+          textData: textData,
           senderId: currentUser.uid,
           date: Timestamp.now(),
         }),
@@ -115,26 +116,32 @@ const Footer = () => {
     },
   ];
 
-  const StyledInput = styled(TextField)(({ theme }) => ({
-    "& .MuiInputBase-input": {
-      paddingTop: "12px",
-      paddingBottom: "12px",
-    },
-  }));
+  // const StyledInput = styled(TextField)(({ theme }) => ({
+  //   "& .MuiInputBase-input": {
+  //     paddingTop: "12px",
+  //     paddingBottom: "12px",
+  //   },
+  // }));
 
-  const ChatInput = ({ setOpenPicker }) => {
+  const ChatInput = ({ setOpenPicker, textData, setTextData }) => {
     const [clickActions, setClickActions] = useState(false);
 
+    const handleChange = (e) => {
+     setTextData(e.target.value);
+    };
     return (
       <>
-        <StyledInput
+        <TextField
+         id="outlined-basic"
+      
+         variant="outlined"
           fullWidth
           placeholder="Write a message"
-          onChange={(e)=>setTextData(e.target.value)}
-          value={textData}
+          // onChange={handleChange}
+          // Value={textData}
           InputProps={{
             // disableUnderline: "true",
-           
+
             startAdornment: (
               <Stack sx={{ width: "max-content" }}>
                 <Stack sx={{ position: "relative" }}>
@@ -147,6 +154,7 @@ const Footer = () => {
                               position: "absolute",
                               top: -Element.Y,
                               backgroundColor: Element.color,
+
                               display: clickActions ? "inline-block" : "none",
                             }}
                           >
@@ -168,6 +176,7 @@ const Footer = () => {
                 </InputAdornment>
               </Stack>
             ),
+
             endAdornment: (
               <InputAdornment>
                 <IconButton
@@ -198,6 +207,7 @@ const Footer = () => {
               : theme.palette.background.paper,
           boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
         }}
+        component="form"
       >
         <Stack
           direction={"row"}
@@ -217,7 +227,10 @@ const Footer = () => {
             >
               <EmojiPicker Theme={theme.palette.mode} />
             </Box>
-            <ChatInput setOpenPicker={setOpenPicker} />
+            <ChatInput
+         
+              
+            />
           </Stack>
 
           <Stack>
@@ -239,8 +252,8 @@ const Footer = () => {
                       : theme.palette.background.paper,
                 }}
               >
-                <IconButton>
-                  <PaperPlaneTilt color="white" onClick={HandleSend} />
+                <IconButton onClick={HandleSend}>
+                  <PaperPlaneTilt color="white" />
                 </IconButton>
               </Stack>
             </Box>
