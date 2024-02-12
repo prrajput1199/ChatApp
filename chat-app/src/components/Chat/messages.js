@@ -17,7 +17,6 @@ const Messages = ({Menu}) => {
       const MessData=onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
         doc.exists() && setMessages(doc.data().messages);
       })
-
       return ()=>{
         return MessData;
       }
