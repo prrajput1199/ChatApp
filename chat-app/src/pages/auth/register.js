@@ -10,7 +10,7 @@ const Register = () => {
       <Stack spacing={2} sx={{ mb: 5, position: "relative" }} direction={"column"}>
         <Typography variant="h4">Get started with chat-chat?</Typography>
         <Stack direction={"row"} spacing={0.5}>
-          <Typography variant="body2">Alredy have an account?</Typography>
+          <Typography variant="body2">Already have an account?</Typography>
           <Link component={Routerlink} to="/auth/login" variant="subtitle2">
             Sign in
           </Link>

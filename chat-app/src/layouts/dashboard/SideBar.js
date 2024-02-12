@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useTheme } from "@emotion/react";
 import {
   Avatar,
@@ -10,6 +10,7 @@ import {
   Menu,
   MenuItem,
   Stack,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { Nav_Buttons, Profile_Menu } from "../../data";
@@ -20,12 +21,14 @@ import MaterialUISwitch from "../../components/MaterialUISwitch";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
+import { AuthContext } from "../../contexts/AuthContext";
 const SideBar = () => {
   const theme = useTheme();
   const [selectedButton, setSelectedButton] = useState();
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [avatarIndex, setAvatarIndex] = useState();
+  const {currentUser}=useContext(AuthContext);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const handleClick = (event) => {
@@ -178,7 +181,7 @@ const SideBar = () => {
               </IconButton>
             )}
           </Stack>
-          <Stack alignItems={"center"} spacing={"20px"} marginTop={"50px"}>
+          <Stack direction={"column"} alignItems={"center"} spacing={"20px"} marginTop={"50px"}>
             <MaterialUISwitch
               {...FormLabel}
               defaultChecked

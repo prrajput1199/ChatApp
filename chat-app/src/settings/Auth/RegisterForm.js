@@ -21,10 +21,12 @@ import { useNavigate } from "react-router-dom";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import profilePhoto from "../../Images/ProfileImage.jpeg"
+import { v4 } from "uuid";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
-  const [photo,setPhoto]=useState(null);
+  const [photo, setPhoto] = useState(null);
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
@@ -62,7 +64,6 @@ const RegisterForm = () => {
   } = methods;
 
   const onSubmit = async (data) => {
-
     try {
       const { email, Newpassword, name } = data;
       const res = await createUserWithEmailAndPassword(
@@ -71,7 +72,7 @@ const RegisterForm = () => {
         Newpassword
       );
       navigate("/app");
-
+      console.log(data);
       const storageRef = ref(storage, name);
 
       const uploadTask = uploadBytesResumable(storageRef,photo);
@@ -79,7 +80,7 @@ const RegisterForm = () => {
         "state_changed",
 
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateProfile(res.user, {
               name,
               photoURL: downloadURL,
@@ -92,9 +93,7 @@ const RegisterForm = () => {
               uid: res.user.uid,
             });
 
-            await setDoc(doc(db, "userChats", res.user.uid), {
-
-            });
+            await setDoc(doc(db, "userChats", res.user.uid), {});
           });
         }
       );
@@ -106,7 +105,7 @@ const RegisterForm = () => {
       });
     }
   };
- 
+
   return (
     <>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -160,13 +159,16 @@ const RegisterForm = () => {
             <input
               type="file"
               id="file"
-              style={{ display: "none" }}
+              // style={{ display: "none" }}
               src={photo}
-              onChange={(e)=>setPhoto(e.target.files[0])}
+              onChange={(e) => setPhoto(e.target.files[0])}
             />
             <label htmlFor="file">
               <Stack direction={"row"} alignItems={"center"} spacing={3}>
-                <Avatar src="ProfileImage.jpeg" />
+                <Avatar
+                  src={profilePhoto}
+                  alt="Sampleprofile"
+                />
                 <p>Add an Avatar</p>
               </Stack>
             </label>

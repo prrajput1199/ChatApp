@@ -5,14 +5,12 @@ import {
 } from "@mui/material";
 import React from "react";
 import Header from "./Header";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 import Messages from "./messages";
 import Footer_New from "./Footer(new)";
 
 const Communication = () => {
   const theme = useTheme();
-
-  console.log(theme);
 
   return (
     <Stack

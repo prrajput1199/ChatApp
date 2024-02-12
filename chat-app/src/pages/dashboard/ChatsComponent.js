@@ -131,8 +131,7 @@ const Chats = () => {
 
     currentUser.uid && getchatdata();
   }, [currentUser.uid]);
-
-  
+ 
 
   const HandleClick=(u)=>{
     dispatch({type:"CHANGE_USER",payload:u});
@@ -266,7 +265,7 @@ const Chats = () => {
                       </Box>
                     </Stack>
                   )}
-                  {Object.entries(chats).map((chat) => {
+                  { Object.entries(chats).sort((a,b)=>b[1].date-a[1].date).map((chat) => {
                     //chatsection paste here
                     return (
                       <Box
@@ -280,6 +279,7 @@ const Chats = () => {
                           height: "57px",
                           borderRadius: "20px",
                           cursor:"pointer"
+                          
                         }}
                         key={chat[0]}
                         onClick={()=>HandleClick(chat[1].userinfo)}
@@ -316,7 +316,7 @@ const Chats = () => {
                             ) : ( */}
                             <Avatar
                               alt="Remy Sharp"
-                              src={faker.image.avatar()}
+                              src={chat[1].userinfo.photoURL}
                             />
                             {/* )} */}
                             <Stack direction={"column"}>
@@ -332,7 +332,7 @@ const Chats = () => {
                                   textOverflow: "ellipsis",
                                 }}
                               >
-                                {/* {chat[1].userinfo.lastMessage?text} */}
+                                {chat[1].LastMessage?.textData}
                               </Typography>
                             </Stack>
                           </Stack>

@@ -32,6 +32,7 @@ import {
   Timestamp,
   arrayUnion,
   doc,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -56,7 +57,8 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
       Icon: <Image size={24} />,
       Y: "102",
       title: "photo/video",
-    },
+      onclick:()=>{}
+      },
     {
       color: "#4da5fe",
       Icon: <Sticker size={24} />,
@@ -115,7 +117,25 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
         }),
       });
     }
+
+    await updateDoc(doc(db, "userChats", currentUser.uid), {
+      [data.chatId +".LastMessage"]:{
+       textData
+      },
+      [data.chatId + ".date"]:serverTimestamp()
+     });
+   
+    await updateDoc(doc(db, "userChats",data.user.uid), {
+       [data.chatId +".LastMessage"]:{
+        textData
+       },
+       [data.chatId + ".date"]:serverTimestamp()
+      });
+   
+     setTextData("");
   };
+  
+ 
 
   return (
     <Box
@@ -135,14 +155,10 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
           spacing={5}
         >
           <TextField
-            //   id="outlined-basic"
-            //   label="Search"
-            //   variant="outlined"
             fullWidth
             onChange={(e) => setTextData(e.target.value)}
             value={textData}
             InputProps={{
-              // disableUnderline: "true",
 
               startAdornment: (
                 <Stack sx={{ width: "max-content" }}>
@@ -162,6 +178,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                             >
                               {Element.Icon}
                             </Fab>
+
                           </Tooltip>
                         </>
                       );
