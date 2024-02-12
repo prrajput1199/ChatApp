@@ -131,12 +131,10 @@ const Chats = () => {
 
     currentUser.uid && getchatdata();
   }, [currentUser.uid]);
- 
 
-  const HandleClick=(u)=>{
-    dispatch({type:"CHANGE_USER",payload:u});
-  }
-
+  const HandleClick = (u) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  };
 
   return (
     <>
@@ -233,7 +231,7 @@ const Chats = () => {
                             spacing={2}
                             marginTop={"2px"}
                           >
-                            <Avatar alt="Remy Sharp" src={user.photoURL}/>
+                            <Avatar alt="Remy Sharp" src={user.photoURL} />
 
                             <Stack direction={"column"}>
                               <Typography variant="subtitle2">
@@ -265,40 +263,41 @@ const Chats = () => {
                       </Box>
                     </Stack>
                   )}
-                  { Object.entries(chats).sort((a,b)=>b[1].date-a[1].date).map((chat) => {
-                    //chatsection paste here
-                    return (
-                      <Box
-                        sx={{
-                          backgroundColor:
-                            theme.palette.mode === "Light"
-                              ? "white"
-                              : theme.palette.background.paper,
+                  {Object.entries(chats)
+                    .sort((a, b) => b[1].date - a[1].date)
+                    .map((chat) => {
+                      //chatsection paste here
+                      return (
+                        <Box
+                          sx={{
+                            backgroundColor:
+                              theme.palette.mode === "Light"
+                                ? "white"
+                                : theme.palette.background.paper,
 
-                          // width: "100%",
-                          height: "57px",
-                          borderRadius: "20px",
-                          cursor:"pointer"
-                          
-                        }}
-                        key={chat[0]}
-                        onClick={()=>HandleClick(chat[1].userinfo)}
-                      >
-                        <Stack
-                          direction={"row"}
-                          justifyContent={"space-between"}
-                          alignItems={"center"}
-                          marginTop={"6px"}
-                          width={"100%"}
+                            // width: "100%",
+                            height: "57px",
+                            borderRadius: "20px",
+                            cursor: "pointer",
+                          }}
+                          key={chat[0]}
+                          onClick={() => HandleClick(chat[1].userinfo)}
                         >
                           <Stack
                             direction={"row"}
-                            width={"80%"}
+                            justifyContent={"space-between"}
                             alignItems={"center"}
-                            spacing={2}
-                            marginTop={"2px"}
+                            marginTop={"6px"}
+                            width={"100%"}
                           >
-                            {/* {online ? (
+                            <Stack
+                              direction={"row"}
+                              width={"80%"}
+                              alignItems={"center"}
+                              spacing={2}
+                              marginTop={"2px"}
+                            >
+                              {/* {online ? (
                               <StyledBadge
                                 overlap="circular"
                                 anchorOrigin={{
@@ -314,44 +313,44 @@ const Chats = () => {
                                 />
                               </StyledBadge>
                             ) : ( */}
-                            <Avatar
-                              alt="Remy Sharp"
-                              src={chat[1].userinfo.photoURL}
-                            />
-                            {/* )} */}
-                            <Stack direction={"column"}>
-                              <Typography variant="subtitle2">
-                                {chat[1].userinfo.name}
-                              </Typography>
-                              <Typography
-                                variant="caption"
-                                noWrap
-                                sx={{
-                                  width: "60%",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
-                                {chat[1].LastMessage?.textData}
-                              </Typography>
+                              <Avatar
+                                alt="Remy Sharp"
+                                src={chat[1].userinfo.photoURL}
+                              />
+                              {/* )} */}
+                              <Stack direction={"column"}>
+                                <Typography variant="subtitle2">
+                                  {chat[1].userinfo.name}
+                                </Typography>
+                                <Typography
+                                  variant="caption"
+                                  noWrap
+                                  sx={{
+                                    width: "60%",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  {chat[1].LastMessage?.textData}
+                                </Typography>
+                              </Stack>
+                            </Stack>
+                            <Stack
+                              direction={"column"}
+                              alignItems={"center"}
+                              spacing={1.2}
+                              marginRight={"15px"}
+                            >
+                              <Typography variant="caption">{}</Typography>
+                              <Badge
+                                color="primary"
+                                // badgeContent={}
+                              ></Badge>
                             </Stack>
                           </Stack>
-                          <Stack
-                            direction={"column"}
-                            alignItems={"center"}
-                            spacing={1.2}
-                            marginRight={"15px"}
-                          >
-                            <Typography variant="caption">{}</Typography>
-                            <Badge
-                              color="primary"
-                              // badgeContent={}
-                            ></Badge>
-                          </Stack>
-                        </Stack>
-                      </Box>
-                    );
-                  })}
+                        </Box>
+                      );
+                    })}
                   {/* {ChatList.filter((Element) => {
                     return !Element.pinned;
                   }).map((Element) => {

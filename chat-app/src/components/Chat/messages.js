@@ -10,7 +10,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase.js";
 
 const Messages = ({Menu}) => {
-   const [messages,setMessages]=useState();
+   const [messages,setMessages]=useState([]);
    const {data} =useContext(ChatContext);
 
    useEffect(()=>{
@@ -22,7 +22,7 @@ const Messages = ({Menu}) => {
         return MessData;
       }
    },[data.chatId])
-
+   
   return (
     <>
       <Box p={3}>
@@ -51,8 +51,8 @@ const Messages = ({Menu}) => {
               } 
             }
           })} */}
-          {messages?.map((m)=>{
-             return <TextMsg element={m} key={m.id}/>
+          {messages?.map((message)=>{
+             return <TextMsg message={message}/>
           })}
         </Stack>
       </Box>

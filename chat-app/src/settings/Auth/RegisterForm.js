@@ -15,13 +15,16 @@ import {
 import RHFTextField from "../../components/hookform/ReacthookFormTextField";
 import { Eye, EyeSlash } from "phosphor-react";
 // import firebase from 'firebase/app';
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import profilePhoto from "../../Images/ProfileImage.jpeg"
+import profilePhoto from "../../Images/ProfileImage.jpeg";
 import { v4 } from "uuid";
 
 const RegisterForm = () => {
@@ -69,13 +72,16 @@ const RegisterForm = () => {
       const res = await createUserWithEmailAndPassword(
         auth,
         email,
-        Newpassword
+        Newpassword,
+
       );
+
       navigate("/app");
-      console.log(data);
+
       const storageRef = ref(storage, name);
 
       const uploadTask = uploadBytesResumable(storageRef,photo);
+
       uploadTask.on(
         "state_changed",
 
@@ -157,18 +163,17 @@ const RegisterForm = () => {
           />
           <Stack>
             <input
+              src={photo}
+              onChange={(e)=>setPhoto(e.target.files[0])}
               type="file"
               id="file"
               // style={{ display: "none" }}
-              src={photo}
-              onChange={(e) => setPhoto(e.target.files[0])}
+       
             />
+
             <label htmlFor="file">
               <Stack direction={"row"} alignItems={"center"} spacing={3}>
-                <Avatar
-                  src={profilePhoto}
-                  alt="Sampleprofile"
-                />
+                <Avatar src={profilePhoto} alt="Sampleprofile" />
                 <p>Add an Avatar</p>
               </Stack>
             </label>

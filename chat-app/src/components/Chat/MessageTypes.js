@@ -217,7 +217,7 @@ const MediaMsg = ({ element,Menu }) => {
   );
 };
 
-const TextMsg = ({ element,Menu }) => {
+const TextMsg = ({ message,Menu}) => {
   const theme = useTheme();
   const {currentUser}=useContext(AuthContext);
   const {data}=useContext(ChatContext);
@@ -227,13 +227,13 @@ const TextMsg = ({ element,Menu }) => {
     <div>
       <Stack
         direction={"row"}
-        justifyContent={element.incoming ? "start" : "end"}
-        spacing={1}
+        justifyContent={message.senderId == currentUser.uid ? "start" : "end"}
+        spacing={1} 
       >
         <Box
           p={1.5}
           sx={{
-            backgroundColor: element.incoming
+            backgroundColor: message.senderId==currentUser.uid
               ? theme.palette.background.default
               : theme.palette.primary.main,
             borderRadius: 1.5,
@@ -242,9 +242,9 @@ const TextMsg = ({ element,Menu }) => {
         >
           <Typography
             variant="body"
-            color={element.incoming ? theme.palette.text : "white"}
+            color={message.senderId == currentUser.uid ? theme.palette.text : "white"}
           >
-            {element.message}
+            {message.textData}
           </Typography>
         </Box>
         {Menu &&  <MessagesMenu/>}

@@ -86,7 +86,7 @@ const Header = () => {
                 variant="dot"
                 sx={{ marginLeft: "0px" }}
               >
-                <Avatar src={faker.image.avatar()} alt={faker.name.fullName} />
+                <Avatar src={data.user?.photoURL} alt={faker.name.fullName} />
               </StyledBadge>
             </Box>
             <Stack direction={"column"}>
