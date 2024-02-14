@@ -190,7 +190,7 @@ const SideBar = () => {
               }}
             />
             <Avatar
-              src={faker.image.avatar()}
+              src={currentUser.photoURL}
               sx={{ marginBottom: "30px" }}
               id="basic-buttton"
               aria-controls={open ? "basic-menu" : undefined}

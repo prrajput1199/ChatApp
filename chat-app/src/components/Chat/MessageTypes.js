@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import {
+  Avatar,
   Box,
   Divider,
   IconButton,
@@ -11,7 +12,7 @@ import {
 } from "@mui/material";
 import { DotsThreeCircleVertical, DownloadSimple, Image } from "phosphor-react";
 import { element } from "prop-types";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Message_options } from "../../data";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -60,13 +61,13 @@ const DocMsg = ({ element }) => {
             </Typography>
           </Stack>
         </Box>
-        <MessagesMenu/>
+        <MessagesMenu />
       </Stack>
     </div>
   );
 };
 
-const LinkMsg = ({ element,Menu }) => {
+const LinkMsg = ({ element, Menu }) => {
   const theme = useTheme();
   return (
     <div>
@@ -123,13 +124,13 @@ const LinkMsg = ({ element,Menu }) => {
             </Stack>
           </Stack>
         </Box>
-        {Menu &&  <MessagesMenu/>}
+        {Menu && <MessagesMenu />}
       </Stack>
     </div>
   );
 };
 
-const ReplyMsg = ({ element,Menu }) => {
+const ReplyMsg = ({ element, Menu }) => {
   const theme = useTheme();
   return (
     <div>
@@ -171,13 +172,13 @@ const ReplyMsg = ({ element,Menu }) => {
             </Typography>
           </Stack>
         </Box>
-        {Menu &&  <MessagesMenu/>}
+        {Menu && <MessagesMenu />}
       </Stack>
     </div>
   );
 };
 
-const MediaMsg = ({ element,Menu }) => {
+const MediaMsg = ({ element, Menu }) => {
   const theme = useTheme();
   return (
     <div>
@@ -211,43 +212,63 @@ const MediaMsg = ({ element,Menu }) => {
             </Typography>
           </Stack>
         </Box>
-        {Menu &&  <MessagesMenu/>}
+        {Menu && <MessagesMenu />}
       </Stack>
     </div>
   );
 };
 
-const TextMsg = ({ message,Menu}) => {
+const TextMsg = ({ message, Menu }) => {
   const theme = useTheme();
-  const {currentUser}=useContext(AuthContext);
-  const {data}=useContext(ChatContext);
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+  const ref = useRef();
 
+  useEffect(()=>{
+      ref.current?.scrollIntoView({
+        behaviour:"smooth"
+      })
+  },[message])
 
   return (
     <div>
       <Stack
         direction={"row"}
         justifyContent={message.senderId == currentUser.uid ? "start" : "end"}
-        spacing={1} 
+        spacing={1}
       >
         <Box
           p={1.5}
           sx={{
-            backgroundColor: message.senderId==currentUser.uid
-              ? theme.palette.background.default
-              : theme.palette.primary.main,
+            backgroundColor:
+              message.senderId == currentUser.uid
+                ? theme.palette.background.default
+                : theme.palette.primary.main,
             borderRadius: 1.5,
             width: "max-content",
           }}
         >
-          <Typography
-            variant="body"
-            color={message.senderId == currentUser.uid ? theme.palette.text : "white"}
-          >
-            {message.textData}
-          </Typography>
+          <Stack direction={"row"} spacing={3} alignItems={"center"}>
+            <Avatar
+              src={
+                message.senderId === currentUser.uid
+                  ? currentUser.photoURL
+                  : data.user.photoURL
+              }
+            />
+            <Typography
+              variant="body"
+              color={
+                message.senderId == currentUser.uid
+                  ? theme.palette.text
+                  : "white"
+              }
+            >
+              {message.textData}
+            </Typography>
+          </Stack>
         </Box>
-        {Menu &&  <MessagesMenu/>}
+        {Menu && <MessagesMenu />}
       </Stack>
     </div>
   );

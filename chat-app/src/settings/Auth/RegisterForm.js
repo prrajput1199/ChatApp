@@ -15,10 +15,7 @@ import {
 import RHFTextField from "../../components/hookform/ReacthookFormTextField";
 import { Eye, EyeSlash } from "phosphor-react";
 // import firebase from 'firebase/app';
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -72,15 +69,14 @@ const RegisterForm = () => {
       const res = await createUserWithEmailAndPassword(
         auth,
         email,
-        Newpassword,
-
+        Newpassword
       );
 
       navigate("/app");
-
+      
       const storageRef = ref(storage, name);
 
-      const uploadTask = uploadBytesResumable(storageRef,photo);
+      const uploadTask = uploadBytesResumable(storageRef, photo);
 
       uploadTask.on(
         "state_changed",
@@ -99,10 +95,13 @@ const RegisterForm = () => {
               uid: res.user.uid,
             });
 
+            //  create userchat folder
             await setDoc(doc(db, "userChats", res.user.uid), {});
           });
         }
       );
+
+     
     } catch (error) {
       reset();
       setError("afterSubmit", {
@@ -164,11 +163,10 @@ const RegisterForm = () => {
           <Stack>
             <input
               src={photo}
-              onChange={(e)=>setPhoto(e.target.files[0])}
+              onChange={(e) => setPhoto(e.target.files[0])}
               type="file"
               id="file"
-              // style={{ display: "none" }}
-       
+              style={{ display: "none" }}
             />
 
             <label htmlFor="file">

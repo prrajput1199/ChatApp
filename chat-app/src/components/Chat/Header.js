@@ -80,29 +80,23 @@ const Header = () => {
             }}
           >
             <Box padding={2}>
-              <StyledBadge
+              {/* <StyledBadge
                 overlap="circular"
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 variant="dot"
                 sx={{ marginLeft: "0px" }}
               >
-                <Avatar src={data.user?.photoURL} alt={faker.name.fullName} />
-              </StyledBadge>
+                </StyledBadge> */}
+                {data.user.photoURL && <Avatar src={data.user?.photoURL}/>}
+              
             </Box>
             <Stack direction={"column"}>
               <Typography variant="subtitle2">
                 {data.user?.name}
               </Typography>
-              <Typography variant="caption">Online</Typography>
             </Stack>
           </Stack>
           <Stack direction={"row"} spacing={1}>
-            <IconButton>
-              <VideoCamera />
-            </IconButton>
-            <IconButton>
-              <Phone />
-            </IconButton>
             <IconButton>
               <MagnifyingGlass />
             </IconButton>
