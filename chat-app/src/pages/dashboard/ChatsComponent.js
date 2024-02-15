@@ -48,7 +48,6 @@ const Chats = () => {
 
   //styledbadge
 
-  console.log(data);
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",

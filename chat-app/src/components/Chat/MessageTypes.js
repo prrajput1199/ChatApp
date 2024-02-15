@@ -236,6 +236,7 @@ const TextMsg = ({ message, Menu }) => {
         direction={"row"}
         justifyContent={message.senderId == currentUser.uid ? "start" : "end"}
         spacing={1}
+        ref={ref}
       >
         <Box
           p={1.5}
@@ -256,7 +257,7 @@ const TextMsg = ({ message, Menu }) => {
                   : data.user.photoURL
               }
             />
-            <Typography
+            {message.textData &&  <Typography
               variant="body"
               color={
                 message.senderId == currentUser.uid
@@ -264,8 +265,12 @@ const TextMsg = ({ message, Menu }) => {
                   : "white"
               }
             >
-              {message.textData}
-            </Typography>
+              {  message.textData}
+            </Typography>}
+        
+            {message.img && <img src={message.img} style={{
+              width:"200px"
+            }}></img>}
           </Stack>
         </Box>
         {Menu && <MessagesMenu />}

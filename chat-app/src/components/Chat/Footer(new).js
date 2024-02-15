@@ -87,7 +87,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
 
   const HandleSend = async () => {
     if (img) {
-      const storageRef = ref(storage, uuid);
+      const storageRef = ref(storage, uuid());
 
       const uploadTask = uploadBytesResumable(storageRef, img);
       uploadTask.on(
@@ -133,6 +133,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
     });
 
     setTextData("");
+    setImg(null);
   };
 
   return (
@@ -159,7 +160,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
             InputProps={{
               startAdornment: (
                 <Stack sx={{ width: "max-content" }}>
-                  <Stack sx={{ position: "relative" }}>
+                  {/* <Stack sx={{ position: "relative" }}>
                     {AddDocument.map((Element) => {
                       return (
                         <>
@@ -179,30 +180,27 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                         </>
                       );
                     })}
-                  </Stack>
+                  </Stack> */}
                   <InputAdornment>
-                    {/* <IconButton>
-                    <LinkSimple
-                        onClick={() => {
-                          setClickActions((prev) => !prev);
+                    <Stack>
+                      <input
+                        type="file"
+                        id="file"
+                        onChange={(e) => setImg(e.target.files[0])}
+                        src={img}
+                        style={{
+                          display: "none",
                         }}
                       />
-                  </IconButton> */}
-                    <input
-                      type="file"
-                      id="file"
-                      style={{ display: "none" }}
-                      onChange={(e) => setImg(e.target.files[0])}
-                    />
-
-                    <label htmlFor="file">
-                      <LinkSimple
-                        // onClick={() => {
-                        //   setClickActions((prev) => !prev);
-                        // }}
-                        size={25}
-                      />
-                    </label>
+                      <label htmlFor="file">
+                        <LinkSimple
+                          // onClick={() => {
+                          //   setClickActions((prev) => !prev);
+                          // }}
+                          size={25}
+                        />
+                      </label>
+                    </Stack>
                   </InputAdornment>
                 </Stack>
               ),
@@ -262,6 +260,10 @@ const Footer_New = () => {
             right: "95px",
             zIndex: "10",
             display: openPicker ? "inline" : "none",
+            backgroundColor:
+            theme.palette.mode === "light"
+              ? "#F8FAFF"
+              : theme.palette.background.paper,
           }}
         >
           <EmojiPicker

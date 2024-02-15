@@ -21,7 +21,10 @@ const Communication = () => {
     >
       <Header/>
 
-      <Box sx={{ width: "100%", flexFlow: "8px", height:"100%" , overflowY:"scroll"}}>
+      <Box sx={{ width: "100%", flexFlow: "8px", height:"100%" , overflowY:"scroll",backgroundColor:
+            theme.palette.mode === "light"
+              ? "#F8FAFF"
+              : theme.palette.background,}}>
         <Messages Menu={true}/>
       </Box>
 
