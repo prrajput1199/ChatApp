@@ -87,7 +87,7 @@ const Header = () => {
                 sx={{ marginLeft: "0px" }}
               >
                 </StyledBadge> */}
-                {data.user.photoURL && <Avatar src={data.user?.photoURL}/>}
+                {data.user.photoURL && <Avatar src={data.user.photoURL}/>}
               
             </Box>
             <Stack direction={"column"}>

@@ -10,7 +10,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import TextField from "@mui/material/TextField";
-import { Archive, MagnifyingGlass } from "phosphor-react";
+import { Archive, List, MagnifyingGlass } from "phosphor-react";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import styled from "@emotion/styled";
@@ -40,12 +40,15 @@ const Chats = () => {
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState({});
+  const [list, setList] = useState(null);
 
   // paste here
   const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(ChatContext);
+  const { data,dispatch } = useContext(ChatContext);
 
   //styledbadge
+
+  console.log(data);
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -108,7 +111,6 @@ const Chats = () => {
         });
       }
 
-      
       setUserName("");
     } catch (error) {
       setErr(true);
@@ -129,7 +131,7 @@ const Chats = () => {
         getRes();
       };
     };
-
+    
     currentUser.uid && getchatdata();
   }, [currentUser.uid]);
 
@@ -356,6 +358,14 @@ const Chats = () => {
                           </Box>
                         );
                       })}
+
+                  <Divider />
+
+                  <Typography variant="caption" color={"#676767"} spacing={3}>
+                    Select a person
+                  </Typography>
+
+                 
                   {/* {ChatList.filter((Element) => {
                     return !Element.pinned;
                   }).map((Element) => {

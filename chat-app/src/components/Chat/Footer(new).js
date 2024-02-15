@@ -57,8 +57,8 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
       Icon: <Image size={24} />,
       Y: "102",
       title: "photo/video",
-      onclick:()=>{}
-      },
+      onclick: () => {},
+    },
     {
       color: "#4da5fe",
       Icon: <Sticker size={24} />,
@@ -119,23 +119,21 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
     }
 
     await updateDoc(doc(db, "userChats", currentUser.uid), {
-      [data.chatId +".LastMessage"]:{
-       textData
+      [data.chatId + ".LastMessage"]: {
+        textData,
       },
-      [data.chatId + ".date"]:serverTimestamp()
-     });
-   
-    await updateDoc(doc(db, "userChats",data.user.uid), {
-       [data.chatId +".LastMessage"]:{
-        textData
-       },
-       [data.chatId + ".date"]:serverTimestamp()
-      });
-   
-     setTextData("");
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    await updateDoc(doc(db, "userChats", data.user.uid), {
+      [data.chatId + ".LastMessage"]: {
+        textData,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    setTextData("");
   };
-  
- 
 
   return (
     <Box
@@ -159,7 +157,6 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
             onChange={(e) => setTextData(e.target.value)}
             value={textData}
             InputProps={{
-
               startAdornment: (
                 <Stack sx={{ width: "max-content" }}>
                   <Stack sx={{ position: "relative" }}>
@@ -178,20 +175,34 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                             >
                               {Element.Icon}
                             </Fab>
-
                           </Tooltip>
                         </>
                       );
                     })}
                   </Stack>
                   <InputAdornment>
-                    <IconButton>
-                      <LinkSimple
+                    {/* <IconButton>
+                    <LinkSimple
                         onClick={() => {
                           setClickActions((prev) => !prev);
                         }}
                       />
-                    </IconButton>
+                  </IconButton> */}
+                    <input
+                      type="file"
+                      id="file"
+                      style={{ display: "none" }}
+                      onChange={(e) => setImg(e.target.files[0])}
+                    />
+
+                    <label htmlFor="file">
+                      <LinkSimple
+                        // onClick={() => {
+                        //   setClickActions((prev) => !prev);
+                        // }}
+                        size={25}
+                      />
+                    </label>
                   </InputAdornment>
                 </Stack>
               ),

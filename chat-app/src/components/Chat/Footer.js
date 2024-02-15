@@ -124,17 +124,16 @@ const Footer = () => {
   // }));
 
   const ChatInput = ({ setOpenPicker, textData, setTextData }) => {
-    const [clickActions, setClickActions] = useState(false);
+    // const [clickActions, setClickActions] = useState(false);
 
     const handleChange = (e) => {
-     setTextData(e.target.value);
+      setTextData(e.target.value);
     };
     return (
       <>
         <TextField
-         id="outlined-basic"
-      
-         variant="outlined"
+          id="outlined-basic"
+          variant="outlined"
           fullWidth
           placeholder="Write a message"
           // onChange={handleChange}
@@ -167,11 +166,19 @@ const Footer = () => {
                 </Stack>
                 <InputAdornment>
                   <IconButton>
-                    <LinkSimple
-                      onClick={() => {
-                        setClickActions((prev) => !prev);
+                    <input
+                      type="file"
+                      style={{
+                        display: "none",
                       }}
-                    />
+                      id="file"
+                    >
+                      <LinkSimple
+                        onClick={() => {
+                          setClickActions((prev) => !prev);
+                        }}
+                      />
+                    </input>
                   </IconButton>
                 </InputAdornment>
               </Stack>
@@ -227,10 +234,7 @@ const Footer = () => {
             >
               <EmojiPicker Theme={theme.palette.mode} />
             </Box>
-            <ChatInput
-         
-              
-            />
+            <ChatInput />
           </Stack>
 
           <Stack>
