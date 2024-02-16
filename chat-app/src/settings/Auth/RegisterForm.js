@@ -30,7 +30,7 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
-    name: Yup.string().required("Last Name is required"),
+    displayName: Yup.string().required("Name is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -43,8 +43,6 @@ const RegisterForm = () => {
   });
 
   const defaultvalues = {
-    // FirstName: "",
-    // LastName: "",
     email: "demo@chat.com",
     Newpassword: "",
     Confirmpassword: "",
@@ -65,7 +63,7 @@ const RegisterForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const { email, Newpassword, name } = data;
+      const { email, Newpassword, displayName} = data;
       const res = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -74,7 +72,7 @@ const RegisterForm = () => {
 
       navigate("/app");
       
-      const storageRef = ref(storage, name);
+      const storageRef = ref(storage, displayName);
 
       const uploadTask = uploadBytesResumable(storageRef, photo);
 
@@ -84,12 +82,12 @@ const RegisterForm = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateProfile(res.user, {
-              name,
+              displayName,
               photoURL: downloadURL,
             });
 
             await setDoc(doc(db, "users", res.user.uid), {
-              name,
+              displayName,
               email,
               photoURL: downloadURL,
               uid: res.user.uid,
@@ -119,7 +117,7 @@ const RegisterForm = () => {
             <Alert severity="error">{errors.afterSubmit.message}</Alert>
           )}
 
-          <RHFTextField name="name" label="Name" />
+          <RHFTextField name="displayName" label="Name" />
 
           <RHFTextField name="email" label="Email address" />
 

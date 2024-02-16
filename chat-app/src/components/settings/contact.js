@@ -15,7 +15,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Bell,
   CaretRight,
@@ -31,12 +31,13 @@ import { useDispatch } from "react-redux";
 import { faker } from "@faker-js/faker";
 import MaterialUISwitch from "../MaterialUISwitch";
 import AntSwitch from "../AntSwitch";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const BlockDialog = ({open,handleClose}) => {
+const BlockDialog = ({ open, handleClose }) => {
   return (
     <Dialog
       open={open}
@@ -59,7 +60,7 @@ const BlockDialog = ({open,handleClose}) => {
   );
 };
 
-const DeleteDialog = ({open,handleClose}) => {
+const DeleteDialog = ({ open, handleClose }) => {
   return (
     <Dialog
       open={open}
@@ -71,7 +72,7 @@ const DeleteDialog = ({open,handleClose}) => {
       <DialogTitle>{"Delete this Contact"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
-        Are you sure You want to delete this contact?
+          Are you sure You want to delete this contact?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -86,8 +87,11 @@ const Contact = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const [openBlock,setopenBlock]=useState(false);
-  const [openDelete,setopenDelete]=useState(false);
+  const [openBlock, setopenBlock] = useState(false);
+  const [openDelete, setopenDelete] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+
+  console.log(currentUser);
 
   const handleCloseBlock = () => {
     setopenBlock(false);
@@ -126,7 +130,7 @@ const Contact = () => {
                   dispatch(ToggleSidebar());
                 }}
               >
-                <X/>
+                <X />
               </IconButton>
             </Stack>
           </Box>
@@ -142,66 +146,21 @@ const Contact = () => {
             <Stack
               sx={{
                 alignItems: "center",
-                justifyContent: "center",
               }}
               direction={"row"}
               p={2}
               spacing={5}
             >
-              <Stack>
-                <Avatar
-                  src={faker.image.avatar()}
-                  sx={{
-                    width: "64px",
-                    height: "64px",
-                  }}
-                />
-              </Stack>
-
-              <Stack
-                direction="column"
+              <Avatar
+                src={currentUser.photoURL}
                 sx={{
-                  alignItems: "center",
+                  width: "64px",
+                  height: "64px",
                 }}
-                spacing={1}
-              >
-                <Typography variant="article" fontWeight={600}>
-                  {faker.name.fullName()}
-                </Typography>
-                <Typography variant="body2" fontWeight={600}>
-                  {"91 8398174713"}
-                </Typography>
-              </Stack>
-            </Stack>
-
-            {/* audiovideo */}
-            <Stack
-              direction={"row"}
-              sx={{
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              spacing={4}
-              // p={1}
-            >
-              <Stack
-                direction={"column"}
-                sx={{
-                  alignItems: "center",
-                }}
-                spacing={1}
-              >
-                <IconButton>
-                  <Phone />
-                </IconButton>
-                <Typography variant="overline">Audio</Typography>
-              </Stack>
-              <Stack spacing={1}>
-                <IconButton>
-                  <VideoCamera />
-                </IconButton>
-                <Typography variant="overline">Video</Typography>
-              </Stack>
+              />
+              <Typography variant="article" fontWeight={600}>
+              {currentUser.displayName}
+              </Typography>
             </Stack>
 
             <Divider
@@ -381,12 +340,23 @@ const Contact = () => {
               spacing={3}
               justifyContent={"center"}
             >
-              <Button startIcon={<Prohibit/>} onClick={()=>setopenBlock(true)}>Block</Button>
-              <Button startIcon={<Trash />} onClick={()=>setopenBlock(true)}>Delete</Button>
+              <Button
+                startIcon={<Prohibit />}
+                onClick={() => setopenBlock(true)}
+              >
+                Block
+              </Button>
+              <Button startIcon={<Trash />} onClick={() => setopenBlock(true)}>
+                Delete
+              </Button>
             </Stack>
           </Stack>
-          {openBlock && <BlockDialog open={openBlock} handleClose={handleCloseBlock}/>}
-          {openDelete && <DeleteDialog open={openDelete} handleClose={handleCloseDelete}/>}
+          {openBlock && (
+            <BlockDialog open={openBlock} handleClose={handleCloseBlock} />
+          )}
+          {openDelete && (
+            <DeleteDialog open={openDelete} handleClose={handleCloseDelete} />
+          )}
         </Stack>
       </Box>
     </div>

@@ -19,7 +19,7 @@ export default function BasicTextFields({
   setUserName,
 }) {
   const HandleSearch = async () => {
-    const q = query(collection(db, "users"), where("name", "==", username));
+    const q = query(collection(db, "users"), where("displayName", "==", username));
 
     const querySnapshot = await getDocs(q);
 

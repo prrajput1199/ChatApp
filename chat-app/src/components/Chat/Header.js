@@ -92,7 +92,7 @@ const Header = () => {
             </Box>
             <Stack direction={"column"}>
               <Typography variant="subtitle2">
-                {data.user?.name}
+                {data.user.displayName}
               </Typography>
             </Stack>
           </Stack>
