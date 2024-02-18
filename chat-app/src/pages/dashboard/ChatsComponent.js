@@ -34,6 +34,7 @@ import {
 import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChatContext } from "../../contexts/ChatContext";
+import ChatsAll from "./chatsAll";
 
 const Chats = () => {
   const theme = useTheme();
@@ -41,8 +42,8 @@ const Chats = () => {
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState({});
-  const [list, setList] = useState(null);
-  const [allUser, setAlluser] = useState();
+
+
 
   // paste here
   const { currentUser } = useContext(AuthContext);
@@ -85,6 +86,7 @@ const Chats = () => {
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
+
     try {
       const res = await getDoc(doc(db, "chats", CombinedId));
 
@@ -113,6 +115,7 @@ const Chats = () => {
       }
 
       setUserName("");
+      // setAlluser();
     } catch (error) {
       setErr(true);
     }
@@ -136,14 +139,14 @@ const Chats = () => {
 
     const getalluser = async () => {
       const querySnapshot = await getDocs(collection(db, "users"));
-      const user = [];
+      const userdata = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
-        user.push({ ...doc.data() });
+        userdata.push({ ...doc.data() });
       });
-      console.log(allUser);
-      setAlluser(user);
+   
+      console.log("alluser", "=>", allUser);
     };
     return () => {
       getalluser();
@@ -377,84 +380,8 @@ const Chats = () => {
                       })}
 
                   <Divider />
-
-                  <Typography variant="caption" color={"#676767"} spacing={3}>
-                    Select a person
-                  </Typography>
-
-                  {allUser &&
-                    allUser.map((user) => {
-                      //chatsection paste here
-                      return (
-                        <Box
-                          sx={{
-                            backgroundColor:
-                              theme.palette.mode === "Light"
-                                ? "white"
-                                : theme.palette.background.paper,
-
-                            // width: "100%",
-                            height: "57px",
-                            borderRadius: "20px",
-                            cursor: "pointer",
-                          }}
-                          key={user.id}
-                        >
-                          <Stack
-                            direction={"row"}
-                            justifyContent={"space-between"}
-                            alignItems={"center"}
-                            marginTop={"6px"}
-                            width={"100%"}
-                          >
-                            <Stack
-                              direction={"row"}
-                              width={"80%"}
-                              alignItems={"center"}
-                              spacing={2}
-                              marginTop={"2px"}
-                            >
-                              {/* {online ? (
-                              <StyledBadge
-                                overlap="circular"
-                                anchorOrigin={{
-                                  vertical: "bottom",
-                                  horizontal: "right",
-                                }}
-                                variant="dot"
-                                sx={{ marginLeft: "0px" }}
-                              >
-                                <Avatar
-                                  alt="Remy Sharp"
-                                  src={faker.image.avatar()}
-                                />
-                              </StyledBadge>
-                            ) : ( */}
-                              <Avatar alt="Remy Sharp" src={user.photoURL} />
-                              {/* )} */}
-                              <Stack direction={"column"}>
-                                <Typography variant="subtitle2">
-                                  {user.displayName}
-                                </Typography>
-                              </Stack>
-                            </Stack>
-                            <Stack
-                              direction={"column"}
-                              alignItems={"center"}
-                              spacing={1.2}
-                              marginRight={"15px"}
-                            >
-                              <Typography variant="caption">{}</Typography>
-                              <Badge
-                                color="primary"
-                                // badgeContent={}
-                              ></Badge>
-                            </Stack>
-                          </Stack>
-                        </Box>
-                      );
-                    })}
-
+                 
+                 <ChatsAll chat={chats} setChats={setChats} user={user} setuser={setUser}/>
                   {/* {ChatList.filter((Element) => {
                     return !Element.pinned;
                   }).map((Element) => {

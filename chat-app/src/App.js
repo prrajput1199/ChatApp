@@ -6,17 +6,20 @@ import ThemeProvider from "./theme";
 import ThemeSettings from "./components/settings";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import { ChatContextProvider } from "./contexts/ChatContext";
+import { ChatAllContextProvider } from "./contexts/ChatAllcontext";
 
 function App() {
   return (
     <AuthContextProvider>
       <ChatContextProvider>
-        <ThemeProvider>
-          <ThemeSettings>
-            {" "}
-            <Router />{" "}
-          </ThemeSettings>
-        </ThemeProvider>
+        <ChatAllContextProvider>
+          <ThemeProvider>
+            <ThemeSettings>
+              {" "}
+              <Router />{" "}
+            </ThemeSettings>
+          </ThemeProvider>
+        </ChatAllContextProvider>
       </ChatContextProvider>
     </AuthContextProvider>
   );
