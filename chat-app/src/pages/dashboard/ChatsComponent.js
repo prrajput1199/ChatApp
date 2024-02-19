@@ -137,20 +137,6 @@ const Chats = () => {
     };
     currentUser.uid && getchatdata();
 
-    const getalluser = async () => {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      const userdata = [];
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
-        userdata.push({ ...doc.data() });
-      });
-   
-      console.log("alluser", "=>", allUser);
-    };
-    return () => {
-      getalluser();
-    };
   }, [currentUser.uid]);
 
   const HandleClick = (u) => {
