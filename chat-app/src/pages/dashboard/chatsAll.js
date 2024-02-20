@@ -46,8 +46,11 @@ const ChatsAll = ({ setChats, chats, user, setUser }) => {
   const [username, setUserName] = useState();
   const theme = useTheme();
 
-  const Handleselect = async () => {
+  const Handleselect = async (el, u ) => {
     //check whether the group exist(in firebase) ,if not then create
+    setUserName(el.name);
+    dispatch({ type: "CHANGE_USER", payload: u });
+
     const q = query(
       collection(db, "users"),
       where("displayName", "==", username)
@@ -134,9 +137,9 @@ const ChatsAll = ({ setChats, chats, user, setUser }) => {
     };
   }, [currentUser.uid]);
 
-  const HandleClick = (u) => {
-    dispatch({ type: "CHANGE_USER", payload: u });
-  };
+  // const HandleClick = (u) => {
+  //   dispatch({ type: "CHANGE_USER", payload: u });
+  // };
 
   return (
     <div>
@@ -145,7 +148,7 @@ const ChatsAll = ({ setChats, chats, user, setUser }) => {
       </Typography>
 
       {allUser &&
-        allUser.map((user) => {
+        allUser.map((el) => {
           //chatsection paste here
           return (
             <Box
@@ -159,12 +162,8 @@ const ChatsAll = ({ setChats, chats, user, setUser }) => {
                 borderRadius: "20px",
                 cursor: "pointer",
               }}
-              key={user.uid}
-              onClick={(user) => {
-                setUserName(user.name);
-                HandleClick();
-                Handleselect();
-              }}
+              key={el.uid}
+              onClick={()=>Handleselect(el)}
             >
               <Stack
                 direction={"row"}
@@ -196,11 +195,11 @@ const ChatsAll = ({ setChats, chats, user, setUser }) => {
                                 />
                               </StyledBadge>
                             ) : ( */}
-                  <Avatar alt="Remy Sharp" src={user.photoURL} />
+                  <Avatar alt="Remy Sharp" src={el.photoURL} />
                   {/* )} */}
                   <Stack direction={"column"}>
                     <Typography variant="subtitle2">
-                      {user.displayName}
+                      {el.displayName}
                     </Typography>
                   </Stack>
                 </Stack>

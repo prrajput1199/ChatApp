@@ -269,6 +269,8 @@ const Chats = () => {
 
                   {user && <Divider />}
 
+                  <ChatsAll chat={chats} setChats={setChats} user={user} setuser={setUser}/>
+
                   <Typography variant="caption" color={"#676767"} spacing={2}>
                     All Chats
                   </Typography>
@@ -367,7 +369,7 @@ const Chats = () => {
 
                   <Divider />
                  
-                 <ChatsAll chat={chats} setChats={setChats} user={user} setuser={setUser}/>
+                 
                   {/* {ChatList.filter((Element) => {
                     return !Element.pinned;
                   }).map((Element) => {
