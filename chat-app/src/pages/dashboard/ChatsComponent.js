@@ -43,8 +43,6 @@ const Chats = () => {
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState({});
 
-
-
   // paste here
   const { currentUser } = useContext(AuthContext);
   const { data, dispatch } = useContext(ChatContext);
@@ -136,7 +134,6 @@ const Chats = () => {
       };
     };
     currentUser.uid && getchatdata();
-
   }, [currentUser.uid]);
 
   const HandleClick = (u) => {
@@ -182,19 +179,6 @@ const Chats = () => {
               spacing={1}
               direction={"column"}
             >
-              {/* <Stack direction={"column"} spacing={2}>
-                <Typography variant="caption" color={"#676767"}>
-                  Pinned
-                </Typography>
-                <Stack width={"100%"} direction={"column"} spacing={2}>
-                  {ChatList.filter((Element) => {
-                    return Element.pinned;
-                  }).map((Element) => {
-                    return <ChatSection {...Element} />;
-                  })}
-                </Stack>
-              </Stack> */}
-
               <Stack direction={"column"} spacing={2} mt={2}>
                 <Stack width={"100%"} direction={"column"} spacing={2}>
                   {user && (
@@ -240,28 +224,8 @@ const Chats = () => {
                               <Typography variant="subtitle2">
                                 {user.displayName}
                               </Typography>
-                              {/* <Typography
-                            variant="caption"
-                            noWrap
-                            sx={{
-                              width: "60%",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {msg}
-                          </Typography> */}
                             </Stack>
                           </Stack>
-                          {/* <Stack
-                        direction={"column"}
-                        alignItems={"center"}
-                        spacing={1.2}
-                        marginRight={"15px"}
-                      >
-                        <Typography variant="caption">{time}</Typography>
-                        <Badge color="primary" badgeContent={unread}></Badge>
-                      </Stack> */}
                         </Stack>
                       </Box>
                     </Stack>
@@ -269,11 +233,16 @@ const Chats = () => {
 
                   {user && <Divider />}
 
-                  <ChatsAll chat={chats} setChats={setChats} user={user} setuser={setUser}/>
-
-                  <Typography variant="caption" color={"#676767"} spacing={2}>
-                    All Chats
-                  </Typography>
+                  {chats && (
+                    <Typography
+                      variant="caption"
+                      color={"#676767"}
+                      spacing={2}
+                      
+                    >
+                      Your chats
+                    </Typography>
+                  )}
 
                   {chats &&
                     Object.entries(chats)
@@ -293,6 +262,7 @@ const Chats = () => {
                                 height: "57px",
                                 borderRadius: "20px",
                                 cursor: "pointer",
+                                m: "16px",
                               }}
                               key={chat[0]}
                               onClick={() => HandleClick(chat[1].userinfo)}
@@ -311,22 +281,6 @@ const Chats = () => {
                                   spacing={2}
                                   marginTop={"2px"}
                                 >
-                                  {/* {online ? (
-                              <StyledBadge
-                                overlap="circular"
-                                anchorOrigin={{
-                                  vertical: "bottom",
-                                  horizontal: "right",
-                                }}
-                                variant="dot"
-                                sx={{ marginLeft: "0px" }}
-                              >
-                                <Avatar
-                                  alt="Remy Sharp"
-                                  src={faker.image.avatar()}
-                                />
-                              </StyledBadge>
-                            ) : ( */}
                                   <Avatar
                                     alt="Remy Sharp"
                                     src={chat[1].userinfo.photoURL}
@@ -356,10 +310,7 @@ const Chats = () => {
                                   marginRight={"15px"}
                                 >
                                   <Typography variant="caption">{}</Typography>
-                                  <Badge
-                                    color="primary"
-                                    // badgeContent={}
-                                  ></Badge>
+                                  <Badge color="primary"></Badge>
                                 </Stack>
                               </Stack>
                             </Box>
@@ -368,13 +319,13 @@ const Chats = () => {
                       })}
 
                   <Divider />
-                 
-                 
-                  {/* {ChatList.filter((Element) => {
-                    return !Element.pinned;
-                  }).map((Element) => {
-                    return <ChatSection {...Element} user={user} />;
-                  })} */}
+
+                  <ChatsAll
+                    chat={chats}
+                    setChats={setChats}
+                    user={user}
+                    setuser={setUser}
+                  />
                 </Stack>
               </Stack>
             </Stack>
