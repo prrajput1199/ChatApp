@@ -50,7 +50,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
   const [clickActions, setClickActions] = useState(false);
 
   const theme = useTheme();
-
+  console.log(theme);
   const AddDocument = [
     {
       color: "#4da5fe",
@@ -141,6 +141,10 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
       component="form"
       sx={{
         "& > :not(style)": { m: 1, width: "90%", borderRadius: 2 },
+        backgroundColor:
+          theme.palette.mode === "Light"
+            ? "white"
+            : theme.palette.background.default,
       }}
       noValidate
       autoComplete="off"
@@ -231,13 +235,19 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
               alignItems={"center"}
               sx={{
                 backgroundColor:
-                  theme.palette.mode === "light"
-                    ? theme.palette.primary.main
+                  theme.palette.mode === "Light"
+                    ? theme.palette.background.paper
                     : theme.palette.background.paper,
               }}
             >
               <IconButton onClick={HandleSend}>
-                <PaperPlaneTilt color="white" />
+                <PaperPlaneTilt
+                  color={
+                    theme.palette.mode === "light"
+                      ? "black"
+                      : "white"
+                  }
+                />
               </IconButton>
             </Stack>
           </Box>
@@ -261,9 +271,9 @@ const Footer_New = () => {
             zIndex: "10",
             display: openPicker ? "inline" : "none",
             backgroundColor:
-            theme.palette.mode === "light"
-              ? "#F8FAFF"
-              : theme.palette.background.paper,
+              theme.palette.mode === "Light"
+                ? "white"
+                : theme.palette.background.default,
           }}
         >
           <EmojiPicker

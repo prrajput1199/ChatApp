@@ -32,6 +32,7 @@ import { faker } from "@faker-js/faker";
 import MaterialUISwitch from "../MaterialUISwitch";
 import AntSwitch from "../AntSwitch";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ChatContext } from "../../contexts/ChatContext";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -89,9 +90,7 @@ const Contact = () => {
 
   const [openBlock, setopenBlock] = useState(false);
   const [openDelete, setopenDelete] = useState(false);
-  const { currentUser } = useContext(AuthContext);
-
-  console.log(currentUser);
+  const { data } = useContext(ChatContext);
 
   const handleCloseBlock = () => {
     setopenBlock(false);
@@ -152,14 +151,14 @@ const Contact = () => {
               spacing={5}
             >
               <Avatar
-                src={currentUser.photoURL}
+                src={data.user.photoURL}
                 sx={{
                   width: "64px",
                   height: "64px",
                 }}
               />
               <Typography variant="article" fontWeight={600}>
-              {currentUser.displayName}
+              {data.user.displayName}
               </Typography>
             </Stack>
 
@@ -185,6 +184,7 @@ const Contact = () => {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
+                mt:"24px",
               }}
             >
               <Typography fontSize={"13px"}>Media,links and docs</Typography>
@@ -202,9 +202,11 @@ const Contact = () => {
               direction={"row"}
               sx={{
                 alignItems: "center",
+                mb:"16px"
               }}
               spacing={2}
               p={1}
+      
             >
               {[1, 2, 3].map((element) => {
                 return (
@@ -221,7 +223,7 @@ const Contact = () => {
               })}
             </Stack>
 
-            <Divider />
+            <Divider/>
 
             <Stack
               direction={"row"}
@@ -236,6 +238,8 @@ const Contact = () => {
                 sx={{
                   alignItems: "center",
                   p: "4px",
+                  mt:"16px",
+                  mb:"16px"
                 }}
               >
                 <IconButton>
@@ -261,7 +265,7 @@ const Contact = () => {
 
             <Divider />
 
-            <Stack
+            {/* <Stack
               direction={"row"}
               sx={{
                 alignItems: "center",
@@ -331,7 +335,7 @@ const Contact = () => {
                   Owl,parrot,rabbit,
                 </Typography>
               </Stack>
-            </Stack>
+            </Stack> */}
 
             <Stack
               direction={"row"}
@@ -340,12 +344,12 @@ const Contact = () => {
               spacing={3}
               justifyContent={"center"}
             >
-              <Button
+              {/* <Button
                 startIcon={<Prohibit />}
                 onClick={() => setopenBlock(true)}
               >
                 Block
-              </Button>
+              </Button> */}
               <Button startIcon={<Trash />} onClick={() => setopenBlock(true)}>
                 Delete
               </Button>

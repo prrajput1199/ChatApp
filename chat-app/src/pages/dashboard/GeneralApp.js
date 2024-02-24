@@ -25,7 +25,7 @@ const GeneralApp = () => {
           sx={{
             height: "100%",
             width: sidebar.open ? "80%":"100%",
-            backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
+            // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
           }}
         >
           <Communication/>

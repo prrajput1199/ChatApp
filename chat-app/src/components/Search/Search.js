@@ -46,8 +46,9 @@ export default function BasicTextFields({
       <FormControl>
         <TextField
           id="outlined-basic"
-          label="Search"
+          label="Search Name"
           variant="outlined"
+          
           onChange={(e) => setUserName(e.target.value)}
           onKeyDown={handleKey}
           value={username}
