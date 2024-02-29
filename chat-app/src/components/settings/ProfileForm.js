@@ -16,7 +16,8 @@ import { Eye, EyeSlash } from "phosphor-react";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { db } from "../../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
 
 const ProfileForm = () => {
   const LoginSchema = Yup.object().shape({
@@ -58,16 +59,15 @@ const ProfileForm = () => {
   //   },
   //   [setValue]
   // );
-  
-  const {currentUser}=useContext(AuthContext);
-  // console.log(currentUser);
+
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
   const onSubmit = async (data) => {
     try {
-       const {About} = data;
-      await setDoc(doc(db, "users", currentUser), {
-        About
-        });
-
+      const { About } = data;
+      await updateDoc(doc(db, "users", currentUser.uid), {
+       About
+      });
     } catch (error) {
       console.log(error);
       reset();
@@ -94,12 +94,7 @@ const ProfileForm = () => {
             maxRows={5}
           />
 
-          <Button
-            color="primary"
-            size="large"
-            type="submit"
-            variant="outlined"
-          >
+          <Button color="primary" size="large" type="submit" variant="outlined">
             Save
           </Button>
         </Stack>

@@ -8,6 +8,7 @@ import Contact from "../../components/settings/contact";
 import { useSelector } from "react-redux";
 import SharedMessages from "../../components/settings/SharedMessages.js";
 import StarredMessages from "../../components/settings/StarredMessage.js";
+import { Outlet } from "react-router-dom";
 
 const GeneralApp = () => {
   const theme = useTheme();
@@ -29,6 +30,7 @@ const GeneralApp = () => {
           }}
         >
           <Communication/>
+          <Outlet/>
         </Box>
 
         {/* last section */}

@@ -60,7 +60,7 @@ const SideBar = () => {
         return "/app";
 
       case 1:
-        return "/group";
+        return "/profile";
 
       case 2:
         return "/settings";
