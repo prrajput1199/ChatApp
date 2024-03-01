@@ -80,17 +80,24 @@ const SideBar = () => {
               ? "white"
               : theme.palette.background.paper,
           boxShadow: "0px 1px 2px rgba(0,0,0,0.25)",
-          height: "100%",
+          height: {
+            xs:"20px",
+            lg:"100%"
+          },
           width: "100px",
         }}
       >
         <Stack
-          sx={{ width: "100%" }}
+          sx={{ width: "100%",
+          
+        
+        }}
           direction="column"
           alignItems={"center"}
           spacing={3}
           justifyContent={"space-between"}
           height={"100%"}
+          
         >
           <Stack
             spacing={3}

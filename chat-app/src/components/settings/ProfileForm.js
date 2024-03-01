@@ -16,21 +16,17 @@ import { Eye, EyeSlash } from "phosphor-react";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { db } from "../../firebase";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
 const ProfileForm = () => {
   const LoginSchema = Yup.object().shape({
-    about: Yup.string().required("About is required"),
+    About: Yup.string().required("About is required"),
   });
 
-  const defaultvalues = {
-    name: "Pratik Rajput",
-  };
-
+ 
   const methods = useForm({
     resolver: yupResolver(LoginSchema),
-    defaultvalues,
   });
 
   const {
@@ -61,13 +57,18 @@ const ProfileForm = () => {
   // );
 
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
+
   const onSubmit = async (data) => {
     try {
       const { About } = data;
+      console.log("about","=>",About);
       await updateDoc(doc(db, "users", currentUser.uid), {
-       About
+        [currentUser.uid + ".About"]: {
+         about:About
+        },
       });
+      reset();
+
     } catch (error) {
       console.log(error);
       reset();
@@ -90,8 +91,6 @@ const ProfileForm = () => {
             name="About"
             label="About"
             multiline
-            rows={3}
-            maxRows={5}
           />
 
           <Button color="primary" size="large" type="submit" variant="outlined">

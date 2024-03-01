@@ -43,7 +43,7 @@ const Profile = () => {
             <ProfileForm />
           </Stack>
         </Box>
-        {/* <Box
+        <Box
           sx={{
             height: "100%",
             width: "100%",
@@ -54,7 +54,7 @@ const Profile = () => {
           }}
         >
           <Communication />
-        </Box> */}
+        </Box>
       </Stack>
     </>
   );

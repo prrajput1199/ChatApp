@@ -30,7 +30,6 @@ const GeneralApp = () => {
           }}
         >
           <Communication/>
-          <Outlet/>
         </Box>
 
         {/* last section */}

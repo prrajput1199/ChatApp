@@ -172,7 +172,9 @@ const Contact = () => {
 
             <Stack direction={"column"} p={2} spacing={2}>
               <Typography variant="article">Hi</Typography>
-              <Typography variant="body2">Hi there ,I am using</Typography>
+              {data.user.About ? <Typography variant="body2">{data.user.About.about}</Typography> :
+              <Typography variant="body2">Hi,I am {data.user.displayName}</Typography>
+              }
             </Stack>
 
             <Divider />
