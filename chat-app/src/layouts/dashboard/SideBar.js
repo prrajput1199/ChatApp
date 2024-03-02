@@ -28,7 +28,7 @@ const SideBar = () => {
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [avatarIndex, setAvatarIndex] = useState();
-  const {currentUser}=useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const handleClick = (event) => {
@@ -81,29 +81,54 @@ const SideBar = () => {
               : theme.palette.background.paper,
           boxShadow: "0px 1px 2px rgba(0,0,0,0.25)",
           height: {
-            xs:"20px",
-            lg:"100%"
+            xs: "180px",
+            sm: "100%",
           },
-          width: "100px",
+          zIndex: {
+            xs: 1,
+          },
+          position: {
+            xs: "fixed",
+            sm: "unset",
+          },
+          bottom: {
+            xs: "0",
+          },
+          width: {
+            xs: "100%",
+            sm: "100px",
+          },
         }}
       >
         <Stack
-          sx={{ width: "100%",
-          
-        
-        }}
-          direction="column"
+          sx={{
+            width: "100%",
+            height:"100%",
+            direction: {
+              xs: "row",
+              sm: "column",
+            },
+            justifyContent: {
+              xs: "start",
+              sm: "space-between",
+            },
+          }}
           alignItems={"center"}
           spacing={3}
-          justifyContent={"space-between"}
-          height={"100%"}
-          
         >
           <Stack
-            spacing={3}
             sx={{
-              width: "max-content",
-              direction: "column",
+              width: {
+                xs: "100%",
+                sm: "max-content",
+              },
+              height:{
+                xs:"100%"
+              },
+              direction: {
+                xs: "row",
+                sm: "column",
+              },
               alignItems: "center",
             }}
           >
@@ -113,6 +138,10 @@ const SideBar = () => {
                 height: "64px",
                 width: "64px",
                 borderRadius: 1.5,
+                display:{
+                  xs:"none",
+                  sm:"block"
+                }
               }}
             >
               <img
@@ -126,10 +155,21 @@ const SideBar = () => {
                 }}
               />
             </Box>
+            
+            <Stack sx={{
+              width:{
+             xs:"100%"
+              },
+              direction:{
+                xs:"row"
+              }
+            }}>
             {Nav_Buttons.map((Element) => {
               return (
                 <>
-                  {Element.index === selectedButton ? (
+                  {
+              
+                  Element.index === selectedButton ? (
                     <Box
                       sx={{
                         backgroundColor: "black",
@@ -157,11 +197,26 @@ const SideBar = () => {
                     >
                       {Element.icon}
                     </IconButton>
-                  )}
+                  
+                  )
+               
+                  }
                 </>
               );
             })}
-            <Divider sx={{ width: "100%", backgroundColor: "blue" }} />
+         
+
+            <Divider
+              sx={{
+                width: "100%",
+                backgroundColor: "blue",
+                display: {
+                  xs: "none",
+                  sm:"block"
+                },
+              }}
+            />
+
             {selectedButton === 2 ? (
               <Box
                 sx={{
@@ -188,7 +243,20 @@ const SideBar = () => {
               </IconButton>
             )}
           </Stack>
-          <Stack direction={"column"} alignItems={"center"} spacing={"20px"} marginTop={"50px"}>
+            </Stack>
+         
+          <Stack
+            direction={"column"}
+            alignItems={"center"}
+            spacing={"20px"}
+            marginTop={"50px"}
+            sx={{
+              display: {
+                xs: "none",
+                sm:"block"
+              },
+            }}
+          >
             <MaterialUISwitch
               {...FormLabel}
               defaultChecked

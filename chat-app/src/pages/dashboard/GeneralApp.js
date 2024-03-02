@@ -19,7 +19,10 @@ const GeneralApp = () => {
     }}>
       <Stack direction={"row"} >
         {/* 1st section */}
+     
         <Chats />
+        
+        
         
         {/* 2nd section */}
         <Box
@@ -27,6 +30,10 @@ const GeneralApp = () => {
             height: "100%",
             width: sidebar.open ? "80%":"100%",
             // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
+            display:{
+              xs:"none",
+              sm:"block"
+            }
           }}
         >
           <Communication/>
