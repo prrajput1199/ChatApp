@@ -3,21 +3,25 @@ import {
   Stack,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import Header from "./Header";
 // import Footer from "./Footer";
 import Messages from "./messages";
 import Footer_New from "./Footer(new)";
 
+
 const Communication = () => {
   const theme = useTheme();
 
+
   return (
+    <>
     <Stack
       height={"100%"}
       maxHeight={"100vh"}
       // width={"100%"}
       justifyContent={"space-between"}
+  
     >
       <Header/>
 
@@ -31,6 +35,8 @@ const Communication = () => {
 
       <Footer_New />
     </Stack>
+    </>
+    
   );
 };
 

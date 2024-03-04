@@ -81,7 +81,7 @@ const SideBar = () => {
               : theme.palette.background.paper,
           boxShadow: "0px 1px 2px rgba(0,0,0,0.25)",
           height: {
-            xs: "120px",
+            xs: "70px",
             sm: "100%",
           },
           zIndex: {
@@ -109,11 +109,13 @@ const SideBar = () => {
               sm: "column",
             },
             justifyContent: {
-              xs: "start",
+              xs: "center",
               sm: "space-between",
             },
+            alignItems:{
+              xs:"center"
+            }
           }}
-          alignItems={"center"}
         >
           <Box
             sx={{
@@ -138,91 +140,72 @@ const SideBar = () => {
               }}
             />
           </Box>
-          <Stack sx={{
-            width:{
-xs:"100%"
-            },
-            direction:{
-              xs:"row"
-            }
-          }}>
-            <Stack></Stack>
-            {Nav_Buttons.map((Element) => {
-              return (
-                <>
-                  {Element.index === selectedButton ? (
-                    <Box
-                      sx={{
-                        backgroundColor: "black",
-                        color: "white",
-                        borderRadius: 1,
-                      }}
-                    >
-                      <IconButton
-                        key={Element.index}
-                        sx={{ color: "white", width: "max-content" }}
-                      >
-                        {Element.icon}
-                      </IconButton>
-                    </Box>
-                  ) : (
-                    <IconButton
-                      sx={{
-                        color:
-                          theme.palette.mode === "light" ? "black" : "white",
-                      }}
-                      onClick={() => {
-                        setSelectedButton(Element.index);
-                        navigate(getPath(Element.index));
-                      }}
-                    >
-                      {Element.icon}
+          <Stack spacing={3}>
+              <div className="sidebarMenu">
+                {Nav_Buttons.map((Element) => {
+                  return (
+                    <>
+                      {Element.index === selectedButton ? (
+                        <Box
+                          sx={{
+                            backgroundColor: "black",
+                            color: "white",
+                            borderRadius: 1,
+                          }}
+                        >
+                          <IconButton
+                            key={Element.index}
+                            sx={{ color: "white", width: "max-content" }}
+                          >
+                            {Element.icon}
+                          </IconButton>
+                        </Box>
+                      ) : (
+                        <IconButton
+                          sx={{
+                            color:
+                              theme.palette.mode === "light"
+                                ? "black"
+                                : "white",
+                          }}
+                          onClick={() => {
+                            setSelectedButton(Element.index);
+                            navigate(getPath(Element.index));
+                          }}
+                        >
+                          {Element.icon}
+                        </IconButton>
+                      )}
+                    </>
+                  );
+                })}
+                {selectedButton === 2 ? (
+                  <Box
+                    sx={{
+                      backgroundColor: "black",
+                      color: "white",
+                      borderRadius: 1,
+                    }}
+                  >
+                    <IconButton sx={{ color: "white" }}>
+                      <Gear size={25} />
                     </IconButton>
-                  )}
-                </>
-              );
-            })}
-
-            <Divider
-              sx={{
-                width: "100%",
-                backgroundColor: "blue",
-                display: {
-                  xs: "none",
-                  sm: "block",
-                },
-              }}
-            />
-
-            {selectedButton === 2 ? (
-              <Box
-                sx={{
-                  backgroundColor: "black",
-                  color: "white",
-                  borderRadius: 1,
-                }}
-              >
-                <IconButton sx={{ color: "white" }}>
-                  <Gear size={25} />
-                </IconButton>
-              </Box>
-            ) : (
-              <IconButton
-                sx={{
-                  color: theme.palette.mode === "light" ? "black" : "white",
-                  display:{
-                    xs:"none",
-                    sm:"block"
-                  }
-                }}
-                onClick={() => {
-                  setSelectedButton(2);
-                  navigate(getPath(2));
-                }}
-              >
-                <Gear size={25} />
-              </IconButton>
-            )}
+                  </Box>
+                ) : (
+                  <IconButton
+                    sx={{
+                      color: theme.palette.mode === "light" ? "black" : "white",
+                    }}
+                    onClick={() => {
+                      setSelectedButton(2);
+                      navigate(getPath(2));
+                    }}
+                  >
+                    <Gear size={25} />
+                  </IconButton>
+                )}
+              </div>
+           
           </Stack>
 
           <Stack

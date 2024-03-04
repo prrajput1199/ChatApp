@@ -12,7 +12,10 @@ const Profile = () => {
       <Stack direction={"row"} width={"100%"}>
         <Box
           sx={{
-            width: "400px",
+            width: {
+              xs:"100%",
+              sm:"400px"
+            },
             height: "100vh",
             overflowX: "hidden",
             overflowY: "scroll",
@@ -25,13 +28,18 @@ const Profile = () => {
           }}
         >
           <Stack
-            sx={{ height: "100%", width: "100%" }}
+            sx={{ height: "100%", width: "100%"}}
             p={4}
             spacing={5}
             direction={"column"}
+
           >
             {/* Header */}
-            <Stack direction={"row"} alignItems={"center"} spacing={3}>
+            <Stack direction={"row"} alignItems={"center"} spacing={3} sx={{
+              justifyContent:{
+                xs:"center"
+              }
+            }}>
               <Link>
                 <IconButton component={RouterLink} to={"/app"}>
                   <CaretLeft />
@@ -39,12 +47,20 @@ const Profile = () => {
               </Link>
               <Typography variant="h5">Profile</Typography>
             </Stack>
-
+            
+            <Stack sx={{ height: "100%", width: "100%",overflowX:"hidden"}}>
             <ProfileForm />
+            </Stack>
+           
           </Stack>
         </Box>
         <Box
           sx={{
+            display:{
+              xs:"none",
+              sm:"block"
+            },
+         
             height: "100%",
             width: "100%",
             backgroundColor:
