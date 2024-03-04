@@ -144,7 +144,10 @@ const Chats = () => {
     <>
       <Box
         sx={{
-          width: "400px",
+          width: {
+            xs:"100%",
+            sm:"400px"
+          },
           height: "100vh",
           overflowX: "hidden",
           overflowY: "scroll",

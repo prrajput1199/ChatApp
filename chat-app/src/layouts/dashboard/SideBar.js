@@ -81,7 +81,7 @@ const SideBar = () => {
               : theme.palette.background.paper,
           boxShadow: "0px 1px 2px rgba(0,0,0,0.25)",
           height: {
-            xs: "180px",
+            xs: "120px",
             sm: "100%",
           },
           zIndex: {
@@ -103,7 +103,7 @@ const SideBar = () => {
         <Stack
           sx={{
             width: "100%",
-            height:"100%",
+            height: "100%",
             direction: {
               xs: "row",
               sm: "column",
@@ -114,62 +114,43 @@ const SideBar = () => {
             },
           }}
           alignItems={"center"}
-          spacing={3}
         >
-          <Stack
+          <Box
             sx={{
-              width: {
-                xs: "100%",
-                sm: "max-content",
+              backgroundColor: theme.palette.primary.main,
+              height: "64px",
+              width: "64px",
+              borderRadius: 1.5,
+              display: {
+                xs: "none",
+                sm: "block",
               },
-              height:{
-                xs:"100%"
-              },
-              direction: {
-                xs: "row",
-                sm: "column",
-              },
-              alignItems: "center",
             }}
           >
-            <Box
-              sx={{
-                backgroundColor: theme.palette.primary.main,
-                height: "64px",
-                width: "64px",
-                borderRadius: 1.5,
-                display:{
-                  xs:"none",
-                  sm:"block"
-                }
+            <img
+              src="chatapplogo.jpg"
+              alt=""
+              style={{
+                width: "85%",
+                height: "85%",
+                margin: "5px",
+                borderRadius: "8px",
               }}
-            >
-              <img
-                src="chatapplogo.jpg"
-                alt=""
-                style={{
-                  width: "85%",
-                  height: "85%",
-                  margin: "5px",
-                  borderRadius: "8px",
-                }}
-              />
-            </Box>
-            
-            <Stack sx={{
-              width:{
-             xs:"100%"
-              },
-              direction:{
-                xs:"row"
-              }
-            }}>
+            />
+          </Box>
+          <Stack sx={{
+            width:{
+xs:"100%"
+            },
+            direction:{
+              xs:"row"
+            }
+          }}>
+            <Stack></Stack>
             {Nav_Buttons.map((Element) => {
               return (
                 <>
-                  {
-              
-                  Element.index === selectedButton ? (
+                  {Element.index === selectedButton ? (
                     <Box
                       sx={{
                         backgroundColor: "black",
@@ -197,14 +178,10 @@ const SideBar = () => {
                     >
                       {Element.icon}
                     </IconButton>
-                  
-                  )
-               
-                  }
+                  )}
                 </>
               );
             })}
-         
 
             <Divider
               sx={{
@@ -212,7 +189,7 @@ const SideBar = () => {
                 backgroundColor: "blue",
                 display: {
                   xs: "none",
-                  sm:"block"
+                  sm: "block",
                 },
               }}
             />
@@ -233,6 +210,10 @@ const SideBar = () => {
               <IconButton
                 sx={{
                   color: theme.palette.mode === "light" ? "black" : "white",
+                  display:{
+                    xs:"none",
+                    sm:"block"
+                  }
                 }}
                 onClick={() => {
                   setSelectedButton(2);
@@ -243,8 +224,7 @@ const SideBar = () => {
               </IconButton>
             )}
           </Stack>
-            </Stack>
-         
+
           <Stack
             direction={"column"}
             alignItems={"center"}
@@ -253,7 +233,7 @@ const SideBar = () => {
             sx={{
               display: {
                 xs: "none",
-                sm:"block"
+                sm: "block",
               },
             }}
           >
