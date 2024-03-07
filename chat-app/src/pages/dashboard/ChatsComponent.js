@@ -35,6 +35,7 @@ import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChatContext } from "../../contexts/ChatContext";
 import ChatsAll from "./chatsAll";
+import Communication from "../../components/Chat/communication";
 
 const Chats = () => {
   const theme = useTheme();
@@ -46,6 +47,7 @@ const Chats = () => {
   // paste here
   const { currentUser } = useContext(AuthContext);
   const { data, dispatch } = useContext(ChatContext);
+  const [showCommunication, setshowCommunication] = useState(false);
 
   //styledbadge
 
@@ -145,8 +147,8 @@ const Chats = () => {
       <Box
         sx={{
           width: {
-            xs:"100%",
-            sm:"400px"
+            xs: "100%",
+            sm: "400px",
           },
           height: "100vh",
           overflowX: "hidden",
@@ -237,12 +239,7 @@ const Chats = () => {
                   {user && <Divider />}
 
                   {chats && (
-                    <Typography
-                      variant="caption"
-                      color={"#676767"}
-                      spacing={2}
-                      
-                    >
+                    <Typography variant="caption" color={"#676767"} spacing={2}>
                       Your chats
                     </Typography>
                   )}
@@ -268,7 +265,10 @@ const Chats = () => {
                                 m: "16px",
                               }}
                               key={chat[0]}
-                              onClick={() => HandleClick(chat[1].userinfo)}
+                              onClick={() => {
+                                HandleClick(chat[1].userinfo);
+                                setshowCommunication(!showCommunication);
+                              }}
                             >
                               <Stack
                                 direction={"row"}
@@ -335,8 +335,18 @@ const Chats = () => {
           </Stack>
         </Stack>
 
-        {/* right */}
-        <Stack></Stack>
+        <div className="communication">
+          <Box
+            sx={{
+              height: "100%",
+              width: "100%",
+              // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
+              display: { xs: showCommunication ? "block" : "none" },
+            }}
+          >
+            <Communication />
+          </Box>
+        </div>
       </Box>
     </>
   );
