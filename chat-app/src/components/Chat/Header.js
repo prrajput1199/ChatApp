@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { store } from "../../Redux/store";
 import { ChatContext } from "../../contexts/ChatContext";
 
-const Header = () => {
+const Header = ({setshowCommunication}) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const {data}=useContext(ChatContext);
@@ -101,7 +101,7 @@ const Header = () => {
               <MagnifyingGlass />
             </IconButton>
             <Divider orientation="vertical" flexItem />
-            <IconButton>
+            <IconButton onClick={()=>setshowCommunication(false)}>
               <CaretDown />
             </IconButton>
           </Stack>

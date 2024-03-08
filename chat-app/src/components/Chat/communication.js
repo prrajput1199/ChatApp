@@ -10,7 +10,7 @@ import Messages from "./messages";
 import Footer_New from "./Footer(new)";
 
 
-const Communication = () => {
+const Communication = ({setshowCommunication}) => {
   const theme = useTheme();
 
 
@@ -23,7 +23,7 @@ const Communication = () => {
       justifyContent={"space-between"}
   
     >
-      <Header/>
+      <Header setshowCommunication={setshowCommunication}/>
 
       <Box sx={{ width: "100%", flexFlow: "8px", height:"100%" , overflowY:"scroll",backgroundColor:
             theme.palette.mode === "light"

@@ -163,6 +163,10 @@ const Settings = () => {
                 ? "white"
                 : theme.palette.background.paper,
             width: "100%",
+            display:{
+              xs:"none",
+              sm:"block"
+            }
           }}
         >
           <Stack

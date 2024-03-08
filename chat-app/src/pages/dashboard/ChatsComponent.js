@@ -340,11 +340,17 @@ const Chats = () => {
             sx={{
               height: "100%",
               width: "100%",
+              position:"fixed",
+              top:0,
+              right:0,
+              zIndex:{
+                xs:1
+              },
               // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
               display: { xs: showCommunication ? "block" : "none" },
             }}
           >
-            <Communication />
+            <Communication  setshowCommunication={setshowCommunication}/>
           </Box>
         </div>
       </Box>
