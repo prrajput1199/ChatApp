@@ -339,7 +339,10 @@ const Chats = () => {
           <Box
             sx={{
               height: "100%",
-              width: "100%",
+              width: {
+                xs:"100%",
+                sm:""
+              },
               position:"fixed",
               top:0,
               right:0,

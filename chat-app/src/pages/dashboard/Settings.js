@@ -5,6 +5,7 @@ import {
   Box,
   Divider,
   IconButton,
+  Link,
   Stack,
   Typography,
 } from "@mui/material";
@@ -19,13 +20,18 @@ import {
   PencilCircle,
   WarningCircle,
 } from "phosphor-react";
-import React from "react";
+import React, { useContext } from "react";
 import Shortcuts from "../../settings/sections/Shortcuts";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ChatContext } from "../../contexts/ChatContext";
+import { Link as RouterLink } from "react-router-dom";
 
 const Settings = () => {
   const theme = useTheme();
 
   const [openShortcut, setOpenShortcut] = React.useState(false);
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
 
   const handleOpenshortcut = () => {
     setOpenShortcut(true);
@@ -96,7 +102,10 @@ const Settings = () => {
         {/* left */}
         <Box
           sx={{
-            width: "350px",
+            width: {
+              xs: "100%",
+              lg: "350px",
+            },
             backgroundColor:
               theme.palette.mode === "light"
                 ? "#F8FAFF"
@@ -105,9 +114,11 @@ const Settings = () => {
           }}
         >
           <Stack direction={"row"} alignItems={"center"} spacing={2} p={3}>
-            <IconButton>
-              <CaretLeft />
-            </IconButton>
+            <Link>
+              <IconButton component={RouterLink} to={"/app"}>
+                <CaretLeft />
+              </IconButton>
+            </Link>
             <Typography
               variant="subtitle2"
               fontSize={"24px"}
@@ -119,7 +130,7 @@ const Settings = () => {
 
           <Stack direction={"row"} alignItems={"center"} spacing={4} px={3}>
             <Avatar
-              src={faker.image.avatar()}
+              src={currentUser.photoURL}
               sx={{
                 width: "56px",
                 height: "56px",
@@ -127,9 +138,17 @@ const Settings = () => {
             />
             <Stack direction={"column"} spacing={"4px"}>
               <Typography variant="subtitle1">
-                {faker.name.fullName()}
+                {currentUser.displayName}
               </Typography>
-              <Typography variant="body2">Exploring</Typography>
+              {currentUser.About ? (
+                <Typography variant="body2">
+                  {currentUser.About.about}
+                </Typography>
+              ) : (
+                <Typography variant="body2">
+                  Hi,I am {currentUser.displayName}
+                </Typography>
+              )}
             </Stack>
           </Stack>
 
@@ -163,10 +182,10 @@ const Settings = () => {
                 ? "white"
                 : theme.palette.background.paper,
             width: "100%",
-            display:{
-              xs:"none",
-              sm:"block"
-            }
+            display: {
+              xs: "none",
+              lg: "block",
+            },
           }}
         >
           <Stack

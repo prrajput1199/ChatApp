@@ -126,7 +126,7 @@ const Shortcuts = ({ open, handleClose }) => {
             {ShortcutList.map(({ key, Title, combination }) => {
               return (
                 <>
-                  <Grid item xs={6} key={key}>
+                  <Grid item xs={10} key={key}>
                     <Stack
                       direction={"row"}
                       width={"100%"}

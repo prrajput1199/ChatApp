@@ -254,7 +254,7 @@ const SideBar = () => {
               }}
             >
               <Stack direction={"column"} spacing={1}>
-                {Profile_Menu.map((element) => {
+                {/* {Profile_Menu.map((element) => {
                   return (
                     <>
                       <MenuItem>
@@ -274,7 +274,7 @@ const SideBar = () => {
                       </MenuItem>
                     </>
                   );
-                })}
+                })} */}
                 <MenuItem>
                   <Stack
                     direction={"row"}
