@@ -20,16 +20,18 @@ import {
   PencilCircle,
   WarningCircle,
 } from "phosphor-react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Shortcuts from "../../settings/sections/Shortcuts";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChatContext } from "../../contexts/ChatContext";
 import { Link as RouterLink } from "react-router-dom";
+import Theme from "../../settings/sections/Theme";
 
 const Settings = () => {
   const theme = useTheme();
 
-  const [openShortcut, setOpenShortcut] = React.useState(false);
+  const [openShortcut, setOpenShortcut] = useState(false);
+  const [openTheme , setOpenTheme] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
@@ -39,6 +41,14 @@ const Settings = () => {
 
   const handleCloseshortcut = () => {
     setOpenShortcut(false);
+  };
+
+  const handleopenTheme = () => {
+    setOpenTheme(true);
+  };
+
+  const handlecloseTheme = () => {
+    setOpenTheme(false);
   };
 
   const SettingsList = [
@@ -64,7 +74,7 @@ const Settings = () => {
       key: 3,
       icon: <PencilCircle size={20} />,
       title: "Theme",
-      onclick: () => {},
+      onclick: handleopenTheme ,
     },
     {
       key: 4,
@@ -169,6 +179,12 @@ const Settings = () => {
             <Shortcuts
               open={handleOpenshortcut}
               handleClose={handleCloseshortcut}
+            />
+          )}
+           {openTheme && (
+            <Theme
+              open={handleopenTheme}
+              handleClose={handlecloseTheme}
             />
           )}
         </Box>

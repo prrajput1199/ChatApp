@@ -49,6 +49,10 @@ const Chats = () => {
   const { data, dispatch } = useContext(ChatContext);
   const [showCommunication, setshowCommunication] = useState(false);
 
+
+
+  console.log(currentUser);
+
   //styledbadge
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
