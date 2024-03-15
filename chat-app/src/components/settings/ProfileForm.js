@@ -22,9 +22,9 @@ import { updateProfile } from "firebase/auth";
 const ProfileForm = () => {
   const LoginSchema = Yup.object().shape({
     About: Yup.string().required("About is required"),
+    Country: Yup.string().required("About is required"),
   });
 
- 
   const methods = useForm({
     resolver: yupResolver(LoginSchema),
   });
@@ -60,15 +60,19 @@ const ProfileForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const { About } = data;
-      console.log("about","=>",About);
+      const { About, Country} = data;
+      console.log("about", "=>", About);
       await updateDoc(doc(db, "users", currentUser.uid), {
         [currentUser.uid + ".About"]: {
-         about:About
+          about: About,
+        },
+      });
+      await updateDoc(doc(db, "users", currentUser.uid), {
+        [currentUser.uid + ".Country"]: {
+          Country: Country,
         },
       });
       reset();
-
     } catch (error) {
       console.log(error);
       reset();
@@ -87,11 +91,9 @@ const ProfileForm = () => {
             <Alert severity="error">{errors.afterSubmit.message}</Alert>
           )}
 
-          <RHFTextField
-            name="About"
-            label="About"
-            multiline
-          />
+          <RHFTextField name="About" label="About" multiline />
+
+          <RHFTextField name="Country" label="Country" multiline />
 
           <Button color="primary" size="large" type="submit" variant="outlined">
             Save

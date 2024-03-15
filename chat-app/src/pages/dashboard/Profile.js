@@ -37,7 +37,7 @@ const Profile = () => {
             {/* Header */}
             <Stack direction={"row"} alignItems={"center"} spacing={3} sx={{
               justifyContent:{
-                xs:"center"
+                xs:"flex-start"
               }
             }}>
               <Link>

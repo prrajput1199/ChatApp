@@ -15,17 +15,18 @@ import {
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import React from "react";
+import React, { useState } from "react";
 import useSettings from "../../hooks/useSettings";
 
 const Theme = ({ open, handleClose }) => {
-  const [value, setValue] = React.useState('female');
-const { onToggleMode } = useSettings();
+  const [value, setvalue] = useState();
+
+
+  const { onChangeMode } = useSettings();
 
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-
 
   return (
     <>
@@ -38,20 +39,29 @@ const { onToggleMode } = useSettings();
         TransitionComponent={Transition}
         sx={{ p: 4 }}
       >
-        <DialogTitle>Shortcuts</DialogTitle>
+        <DialogTitle>Theme mode</DialogTitle>
         <DialogContent sx={{ mt: 3 }}>
-        <FormControl component="fieldset">
-      <FormLabel component="legend">Gender</FormLabel>
-      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={ onToggleMode()}>
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
-        <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
-      </RadioGroup>
-    </FormControl>
+          <FormControl component="fieldset">
+            <RadioGroup
+              aria-label="mode"
+              name="mode1"
+              value={value}
+              onChange={(e) => onChangeMode(e)}
+            >
+              <FormControlLabel value="light" control={<Radio />} label="Light" checked={value ==="light"}/>
+              <FormControlLabel
+                value="dark"
+                control={<Radio />}
+                label="Dark"
+                checked={value==="dark"}
+              />
+            </RadioGroup>
+          </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" onClick={handleClose}>Ok</Button>
+          <Button variant="contained" onClick={handleClose}>
+            Ok
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -59,4 +69,3 @@ const { onToggleMode } = useSettings();
 };
 
 export default Theme;
-

@@ -74,7 +74,7 @@ const Settings = () => {
       key: 3,
       icon: <PencilCircle size={20} />,
       title: "Theme",
-      onclick: handleopenTheme ,
+      onclick: handleopenTheme,
     },
     {
       key: 4,
