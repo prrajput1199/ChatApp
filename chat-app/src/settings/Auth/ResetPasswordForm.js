@@ -3,16 +3,12 @@ import FormProvider from "../../components/hookform/FormProvider";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import {
-  Alert,
-  Button,
-  Stack,
-} from "@mui/material";
+import { Alert, Button, Stack } from "@mui/material";
 import RHFTextField from "../../components/hookform/ReacthookFormTextField";
-
+import { auth, db } from "../../firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const ResetPasswordForm = () => {
-
   const ResetpasswordSchema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")
@@ -38,6 +34,17 @@ const ResetPasswordForm = () => {
   const onSubmit = async (data) => {
     try {
       //submit data to backend
+      const { email } = data;
+      await sendPasswordResetEmail(auth, email)
+        .then(() => {
+          alert("Password reset email sent!");
+          reset();
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
     } catch (error) {
       console.log(error);
       reset();

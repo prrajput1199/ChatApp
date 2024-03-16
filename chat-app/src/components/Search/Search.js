@@ -25,7 +25,7 @@ export default function BasicTextFields({
 
     try {
       querySnapshot.forEach((doc) => {
-        setUser(doc.data());
+        !user && setUser(doc.data());
       });
     } catch (error) {
       setErr(true);
@@ -38,7 +38,7 @@ export default function BasicTextFields({
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 1, width: "90%", borderRadius: 2 },
+        "& > :not(style)": { m: 1, width: "100%", borderRadius: 2 },
       }}
       noValidate
       autoComplete="off"
@@ -46,7 +46,7 @@ export default function BasicTextFields({
       <FormControl>
         <TextField
           id="outlined-basic"
-          label="Search Name"
+          label="Search Name from User List"
           variant="outlined"
           
           onChange={(e) => setUserName(e.target.value)}

@@ -88,9 +88,10 @@ const Chats = () => {
     //check whether the group exist(in firebase) ,if not then create
     const CombinedId =
       currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
-
+        ? currentUser.uid + "-" + user.uid
+        : user.uid + "-" + currentUser.uid;
+     
+    console.log("CombinedId =>",CombinedId)
     try {
       const res = await getDoc(doc(db, "chats", CombinedId));
 
@@ -191,6 +192,7 @@ const Chats = () => {
               <Stack direction={"column"} spacing={2} mt={2}>
                 <Stack width={"100%"} direction={"column"} spacing={2}>
                   {user && (
+                
                     <Stack
                       width={"100%"}
                       sx={{
@@ -201,6 +203,7 @@ const Chats = () => {
                       onClick={Handleselect}
                     >
                       {/* used for testing purpose */}
+                      <Typography variant="caption" color={"#676767"}>Add the user in your chatlist and start chatting</Typography>
                       <Box
                         sx={{
                           backgroundColor:
@@ -244,7 +247,7 @@ const Chats = () => {
 
                   {chats && (
                     <Typography variant="caption" color={"#676767"} spacing={2}>
-                      Your chats
+                      Chat List
                     </Typography>
                   )}
 
