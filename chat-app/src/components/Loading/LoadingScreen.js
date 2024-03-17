@@ -2,7 +2,10 @@ import React from "react";
 import "./Loading.css"
 const LoadingScreen = () => {
   return <>
-  <div className="Loader"></div>
+  <div className="Loader">
+
+    hiiiiiii
+  </div>
   </>;
 };
 

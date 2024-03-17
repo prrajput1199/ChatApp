@@ -8,12 +8,12 @@ import MainLayout from "../layouts/main";
 
 // config
 import { DEFAULT_PATH } from "../config";
-import LoadingScreen from "../components/LoadingScreen";
 import { AuthContext } from "../contexts/AuthContext";
+import LoadingScreen from "../components/Loading/LoadingScreen";
 
 const Loadable = (Component) => (props) => {
   return (
-    <Suspense fallback={<LoadingScreen />}>
+    <Suspense fallback={<LoadingScreen/>}>
       <Component {...props} />
     </Suspense>
   );

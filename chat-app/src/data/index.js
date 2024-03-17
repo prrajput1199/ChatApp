@@ -37,13 +37,6 @@ const Nav_Buttons = [
     index: 1,
     icon: <Users />,
   },
-  // {
-  //   index: 2,
-  //   icon: <Phone />,
-  // },
-];
-
-const Nav_Setting = [
   {
     index: 2,
     icon: <GearSix />,
@@ -307,7 +300,6 @@ const Message_options = [
 
 export {
   Profile_Menu,
-  Nav_Setting,
   Nav_Buttons,
   ChatList,
   Chat_History,

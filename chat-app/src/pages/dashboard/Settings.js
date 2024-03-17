@@ -54,15 +54,16 @@ const Settings = () => {
   const SettingsList = [
     {
       key: 0,
-      icon: <Bell size={20} />,
-      title: "Notification",
-      onclick: () => {},
+      icon: <PencilCircle size={20} />,
+      title: "Theme",
+      onclick: handleopenTheme,
+     
     },
     {
       key: 1,
-      icon: <Lock size={20} />,
-      title: "Privacy",
-      onclick: () => {},
+      icon: <Article size={20} />,
+      title: "Keyboard shortcuts",
+      onclick: handleOpenshortcut,
     },
     {
       key: 2,
@@ -72,9 +73,9 @@ const Settings = () => {
     },
     {
       key: 3,
-      icon: <PencilCircle size={20} />,
-      title: "Theme",
-      onclick: handleopenTheme,
+      icon: <Bell size={20} />,
+      title: "Notification",
+      onclick: () => {},
     },
     {
       key: 4,
@@ -90,9 +91,9 @@ const Settings = () => {
     },
     {
       key: 6,
-      icon: <Article size={20} />,
-      title: "Keyboard shortcuts",
-      onclick: handleOpenshortcut,
+      icon: <Lock size={20} />,
+      title: "Privacy",
+      onclick: () => {},
     },
     {
       key: 7,

@@ -22,9 +22,10 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
+import "./sidebar.css";
 const SideBar = () => {
   const theme = useTheme();
-  const [selectedButton, setSelectedButton] = useState();
+  const [selectedButton, setSelectedButton] = useState(0);
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [avatarIndex, setAvatarIndex] = useState();
@@ -36,22 +37,6 @@ const SideBar = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const getAvatarPath = (index) => {
-    switch (index) {
-      case 0:
-        return "./profile";
-
-      case 1:
-        return "./settings";
-
-      // case 2:
-      //   return "./auth/login";
-
-      // default:
-      //   return "./app";
-    }
   };
 
   const getPath = (index) => {
@@ -112,9 +97,9 @@ const SideBar = () => {
               xs: "center",
               sm: "space-between",
             },
-            alignItems:{
-              xs:"center"
-            }
+            alignItems: {
+              xs: "center",
+            },
           }}
         >
           <Box
@@ -140,15 +125,17 @@ const SideBar = () => {
               }}
             />
           </Box>
-          <Stack spacing={3}>
-              <div className="sidebarMenu">
-                {Nav_Buttons.map((Element) => {
-                  return (
-                    <>
+          <Stack spacing={5}>
+            <div className="sidebarMenu">
+              {Nav_Buttons.map((Element) => {
+                return (
+                  <>
                       {Element.index === selectedButton ? (
                         <Box
                           sx={{
-                            backgroundColor: "black",
+                            backgroundColor:  theme.palette.mode === "light"
+                            ? "black"
+                            : theme.palette.primary.main,
                             color: "white",
                             borderRadius: 1,
                           }}
@@ -176,36 +163,10 @@ const SideBar = () => {
                           {Element.icon}
                         </IconButton>
                       )}
-                    </>
-                  );
-                })}
-                {selectedButton === 2 ? (
-                  <Box
-                    sx={{
-                      backgroundColor: "black",
-                      color: "white",
-                      borderRadius: 1,
-                    }}
-                  >
-                    <IconButton sx={{ color: "white" }}>
-                      <Gear size={25} />
-                    </IconButton>
-                  </Box>
-                ) : (
-                  <IconButton
-                    sx={{
-                      color: theme.palette.mode === "light" ? "black" : "white",
-                    }}
-                    onClick={() => {
-                      setSelectedButton(2);
-                      navigate(getPath(2));
-                    }}
-                  >
-                    <Gear size={25} />
-                  </IconButton>
-                )}
-              </div>
-           
+                  </>
+                );
+              })}
+            </div>
           </Stack>
 
           <Stack

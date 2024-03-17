@@ -192,9 +192,9 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                         id="file"
                         onChange={(e) => setImg(e.target.files[0])}
                         src={img}
-                        style={{
-                          display: "none",
-                        }}
+                        // style={{
+                        //   display: "none",
+                        // }}
                       />
                       <label htmlFor="file">
                         <LinkSimple
