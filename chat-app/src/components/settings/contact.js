@@ -171,8 +171,9 @@ const Contact = () => {
             {/* about */}
 
             <Stack direction={"column"} p={2} spacing={2}>
-              <Typography variant="article">Hi</Typography>
-              {data.user.About ? <Typography variant="body2">{data.user.About.about}</Typography> :
+            {console.log("data.user=>",data.user)}
+              {console.log("data.user.Profile=>",data.user.Profile)}
+              {data.user.Profile? <Typography variant="body2">{data.user.displayName}</Typography> :
               <Typography variant="body2">Hi,I am {data.user.displayName}</Typography>
               }
             </Stack>

@@ -48,7 +48,7 @@ const Profile = () => {
               <Typography variant="h5">Profile</Typography>
             </Stack>
             
-            <Stack sx={{ height: "100%", width: "100%",overflowX:"hidden"}}>
+            <Stack sx={{ height: "100%", width: "100%",overflowX:"hidden",paddingTop:"20px"}}>
             <ProfileForm />
             </Stack>
            

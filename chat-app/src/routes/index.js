@@ -13,7 +13,7 @@ import LoadingScreen from "../components/Loading/LoadingScreen";
 
 const Loadable = (Component) => (props) => {
   return (
-    <Suspense fallback={<LoadingScreen/>}>
+    <Suspense fallback={<LoadingScreen />}>
       <Component {...props} />
     </Suspense>
   );
@@ -21,7 +21,6 @@ const Loadable = (Component) => (props) => {
 
 export default function Router() {
   const { currentUser } = useContext(AuthContext);
-
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
@@ -51,7 +50,8 @@ export default function Router() {
       ),
       children: [
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
-        {
+        { 
+        
           path: "app",
           element: <GeneralApp />,
         },

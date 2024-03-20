@@ -25,7 +25,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import "./sidebar.css";
 const SideBar = () => {
   const theme = useTheme();
-  const [selectedButton, setSelectedButton] = useState(0);
+  const [selectedButton, setSelectedButton] = useState();
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [avatarIndex, setAvatarIndex] = useState();
@@ -125,17 +125,27 @@ const SideBar = () => {
               }}
             />
           </Box>
-          <Stack spacing={5}>
+          <Stack
+            spacing={5}
+            sx={{
+              height: "100%",
+              direction: {
+                sm: "column",
+              },
+            }}
+          >
             <div className="sidebarMenu">
               {Nav_Buttons.map((Element) => {
                 return (
                   <>
+                    <div className="menuItem">
                       {Element.index === selectedButton ? (
                         <Box
                           sx={{
-                            backgroundColor:  theme.palette.mode === "light"
-                            ? "black"
-                            : theme.palette.primary.main,
+                            backgroundColor:
+                              theme.palette.mode === "light"
+                                ? "black"
+                                : theme.palette.primary.main,
                             color: "white",
                             borderRadius: 1,
                           }}
@@ -163,6 +173,7 @@ const SideBar = () => {
                           {Element.icon}
                         </IconButton>
                       )}
+                    </div>
                   </>
                 );
               })}
@@ -215,27 +226,6 @@ const SideBar = () => {
               }}
             >
               <Stack direction={"column"} spacing={1}>
-                {/* {Profile_Menu.map((element) => {
-                  return (
-                    <>
-                      <MenuItem>
-                        <Stack
-                          direction={"row"}
-                          alignItems={"center"}
-                          width={100}
-                          justifyContent={"space-between"}
-                          onClick={() => {
-                            setAvatarIndex(element.index);
-                            navigate(getAvatarPath(element.index));
-                          }}
-                        >
-                          <span>{element.title}</span>
-                          {element.icon}
-                        </Stack>
-                      </MenuItem>
-                    </>
-                  );
-                })} */}
                 <MenuItem>
                   <Stack
                     direction={"row"}

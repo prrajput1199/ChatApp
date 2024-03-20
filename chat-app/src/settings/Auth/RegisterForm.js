@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormProvider from "../../components/hookform/FormProvider";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,6 +27,8 @@ import { v4 } from "uuid";
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const [newUser, setnewUser] = useState(false);
+
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
@@ -61,17 +63,15 @@ const RegisterForm = () => {
     formState: { errors, isSubmitting, isSubmitSUccessful },
   } = methods;
 
-  const onSubmit = async (data) => {
+  const OnSubmit = async (data) => {
     try {
-      const { email, Newpassword, displayName} = data;
+      const { email, Newpassword, displayName } = data;
       const res = await createUserWithEmailAndPassword(
         auth,
         email,
         Newpassword
       );
 
-      navigate("/app");
-      
       const storageRef = ref(storage, displayName);
 
       const uploadTask = uploadBytesResumable(storageRef, photo);
@@ -98,8 +98,7 @@ const RegisterForm = () => {
           });
         }
       );
-
-     
+      navigate("/app");  
     } catch (error) {
       reset();
       setError("afterSubmit", {
@@ -111,7 +110,7 @@ const RegisterForm = () => {
 
   return (
     <>
-      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <FormProvider methods={methods} onSubmit={handleSubmit(OnSubmit)}>
         <Stack spacing={3}>
           {!!errors.afterSubmit && (
             <Alert severity="error">{errors.afterSubmit.message}</Alert>

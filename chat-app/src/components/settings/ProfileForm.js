@@ -22,7 +22,7 @@ import { updateProfile } from "firebase/auth";
 const ProfileForm = () => {
   const LoginSchema = Yup.object().shape({
     About: Yup.string().required("About is required"),
-    Country: Yup.string().required("About is required"),
+    Country: Yup.string().required("Country Name is required"),
   });
 
   const methods = useForm({
@@ -60,19 +60,18 @@ const ProfileForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const { About, Country} = data;
+      const { About, Country } = data;
       console.log("about", "=>", About);
       await updateDoc(doc(db, "users", currentUser.uid), {
-        [currentUser.uid + ".About"]: {
-          about: About,
-        },
-      });
-      await updateDoc(doc(db, "users", currentUser.uid), {
-        [currentUser.uid + ".Country"]: {
+        [currentUser.uid + ".profileinfo"]: {
+          About:About,
           Country: Country,
-        },
+        }
       });
-      reset();
+      reset({
+        About: "",
+        Country: "",
+      });
     } catch (error) {
       console.log(error);
       reset();

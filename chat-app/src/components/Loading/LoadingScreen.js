@@ -3,8 +3,6 @@ import "./Loading.css"
 const LoadingScreen = () => {
   return <>
   <div className="Loader">
-
-    hiiiiiii
   </div>
   </>;
 };
