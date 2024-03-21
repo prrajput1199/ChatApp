@@ -11,9 +11,9 @@ import { DEFAULT_PATH } from "../config";
 import { AuthContext } from "../contexts/AuthContext";
 import LoadingScreen from "../components/Loading/LoadingScreen";
 
-const Loadable = (Component) => (props) => {
+export const Loadable = (Component) => (props) => {
   return (
-    <Suspense fallback={<LoadingScreen />}>
+    <Suspense fallback={<LoadingScreen/>}>
       <Component {...props} />
     </Suspense>
   );

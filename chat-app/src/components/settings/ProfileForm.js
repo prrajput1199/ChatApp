@@ -62,11 +62,10 @@ const ProfileForm = () => {
     try {
       const { About, Country } = data;
       console.log("about", "=>", About);
-      await updateDoc(doc(db, "users", currentUser.uid), {
-        [currentUser.uid + ".profileinfo"]: {
+      await setDoc(doc(db, "ProfileInfo", currentUser.uid), {
+          uid:currentUser.uid,
           About:About,
-          Country: Country,
-        }
+          Country:Country
       });
       reset({
         About: "",

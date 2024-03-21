@@ -15,7 +15,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Bell,
   CaretRight,
@@ -33,6 +33,8 @@ import MaterialUISwitch from "../MaterialUISwitch";
 import AntSwitch from "../AntSwitch";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChatContext } from "../../contexts/ChatContext";
+import { db } from "../../firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -84,13 +86,16 @@ const DeleteDialog = ({ open, handleClose }) => {
   );
 };
 
-const Contact = () => {
+const Contact = ({ user, setUser }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-
+  const { data } = useContext(ChatContext);
+  const { currentUser } = useContext(AuthContext);
   const [openBlock, setopenBlock] = useState(false);
   const [openDelete, setopenDelete] = useState(false);
-  const { data } = useContext(ChatContext);
+  const [profileData, setProfileData] = useState([]);
+  const [err, setError] = useState(false);
+  console.log("user=>", user);
 
   const handleCloseBlock = () => {
     setopenBlock(false);
@@ -100,9 +105,38 @@ const Contact = () => {
     setopenDelete(false);
   };
 
+  // useEffect(()=>{
+  //    const unsub=async ()=>{
+  //     try {
+  //       const q = query(collection(db, "ProfileInfo"), where("uid", "==", user.uid));
+  //       const querySnapshot = await getDocs(q);
+  //       querySnapshot.forEach((doc) => {
+  //         // doc.data() is never undefined for query doc snapshots
+  //         // console.log(doc.id, " => ", doc.data());
+  //         profileData.push({ ...doc.data() });
+  //       });
+  //      } catch (error) {
+  //       setError(true);
+  //      }
+  //    }
+
+  //    return () => {
+  //     unsub();
+  //   };
+  // },[profileData])
+  // console.log("profileData=>",profileData);
   return (
     <div>
-      <Box sx={{ width: "300px", height: "100vh" }}>
+      <Box
+        sx={{
+          width: "300px",
+          height: "100vh",
+          display: {
+            sm: "none",
+            md: "block",
+          },
+        }}
+      >
         <Stack direction={"column"} sx={{ height: "100%" }}>
           {/* Header */}
           <Box
@@ -158,7 +192,7 @@ const Contact = () => {
                 }}
               />
               <Typography variant="article" fontWeight={600}>
-              {data.user.displayName}
+                {data.user.displayName}
               </Typography>
             </Stack>
 
@@ -170,13 +204,13 @@ const Contact = () => {
 
             {/* about */}
 
-            <Stack direction={"column"} p={2} spacing={2}>
+            {/* <Stack direction={"column"} p={2} spacing={2}>
             {console.log("data.user=>",data.user)}
               {console.log("data.user.Profile=>",data.user.Profile)}
-              {data.user.Profile? <Typography variant="body2">{data.user.displayName}</Typography> :
+              {data.user.Profile? <Typography variant="body2">{data.user.Profile.About}</Typography> :
               <Typography variant="body2">Hi,I am {data.user.displayName}</Typography>
               }
-            </Stack>
+            </Stack> */}
 
             <Divider />
 
@@ -187,7 +221,7 @@ const Contact = () => {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                mt:"24px",
+                mt: "24px",
               }}
             >
               <Typography fontSize={"13px"}>Media,links and docs</Typography>
@@ -205,11 +239,10 @@ const Contact = () => {
               direction={"row"}
               sx={{
                 alignItems: "center",
-                mb:"16px"
+                mb: "16px",
               }}
               spacing={2}
               p={1}
-      
             >
               {[1, 2, 3].map((element) => {
                 return (
@@ -226,7 +259,7 @@ const Contact = () => {
               })}
             </Stack>
 
-            <Divider/>
+            <Divider />
 
             <Stack
               direction={"row"}
@@ -241,8 +274,8 @@ const Contact = () => {
                 sx={{
                   alignItems: "center",
                   p: "4px",
-                  mt:"16px",
-                  mb:"16px"
+                  mt: "16px",
+                  mb: "16px",
                 }}
               >
                 <IconButton>

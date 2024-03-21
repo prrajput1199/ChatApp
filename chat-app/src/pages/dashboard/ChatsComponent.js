@@ -37,10 +37,10 @@ import { ChatContext } from "../../contexts/ChatContext";
 import ChatsAll from "./chatsAll";
 import Communication from "../../components/Chat/communication";
 
-const Chats = () => {
+const Chats = ({user,setUser,setShowChats,showChats}) => {
   const theme = useTheme();
   const [username, setUserName] = useState();
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState({});
 
@@ -82,6 +82,8 @@ const Chats = () => {
 
   const Handleselect = async () => {
     //check whether the group exist(in firebase) ,if not then create
+    setShowChats(!showChats);
+    
     const CombinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + "-" + user.uid
@@ -271,6 +273,7 @@ const Chats = () => {
                               onClick={() => {
                                 HandleClick(chat[1].userinfo);
                                 setshowCommunication(!showCommunication);
+                                setShowChats(!showChats);
                               }}
                             >
                               <Stack

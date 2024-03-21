@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Nav_Buttons, Profile_Menu } from "../../data";
-import { Gear, SignOut } from "phosphor-react";
+import { ArrowsClockwise, Gear, SignOut } from "phosphor-react";
 import { faker } from "@faker-js/faker";
 import useSettings from "../../hooks/useSettings";
 import MaterialUISwitch from "../../components/MaterialUISwitch";
@@ -23,6 +23,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import "./sidebar.css";
+import { Loadable } from "../../routes";
 const SideBar = () => {
   const theme = useTheme();
   const [selectedButton, setSelectedButton] = useState();
@@ -32,6 +33,10 @@ const SideBar = () => {
   const { currentUser } = useContext(AuthContext);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+
+  const handleReload = (event) => {
+    <Loadable>{window.location.reload(false)}</Loadable>;
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -134,6 +139,19 @@ const SideBar = () => {
               },
             }}
           >
+            {" "}
+            <div className="reload">
+              {
+                <>
+                  <Stack direction={"column"} alignItems={"center"} spacing={3}>
+                    <ArrowsClockwise size={24} onClick={handleReload} />
+                    <Typography variant="caption" color={"#676767"}>
+                      Reload for updating data
+                    </Typography>
+                  </Stack>
+                </>
+              }
+            </div>
             <div className="sidebarMenu">
               {Nav_Buttons.map((Element) => {
                 return (

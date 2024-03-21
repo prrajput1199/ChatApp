@@ -115,7 +115,7 @@ const Settings = () => {
           sx={{
             width: {
               xs: "100%",
-              lg: "350px",
+              lg: "400px",
             },
             backgroundColor:
               theme.palette.mode === "light"

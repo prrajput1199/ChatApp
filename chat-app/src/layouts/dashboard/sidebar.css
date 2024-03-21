@@ -10,6 +10,11 @@
   margin-top: 10px;
 }
 
+.reload{
+  margin-top: 40px;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
   .sidebarMenu{
     flex-direction: row;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import FormProvider from "../../components/hookform/FormProvider";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,12 +23,13 @@ import { storage } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import profilePhoto from "../../Images/ProfileImage.jpeg";
 import { v4 } from "uuid";
+import { Loadable } from "../../routes";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [newUser, setnewUser] = useState(false);
-
+  const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0);
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
@@ -98,7 +99,13 @@ const RegisterForm = () => {
           });
         }
       );
-      navigate("/app");  
+      navigate("/app");
+      // setTimeout(() => {
+      //   <Loadable>{window.location.reload(false)}</Loadable>;
+      // }, 10000);
+      setTimeout(() => {
+        <Loadable>{window.location.reload(false)}</Loadable>;
+      }, 5000);
     } catch (error) {
       reset();
       setError("afterSubmit", {
