@@ -28,7 +28,7 @@ const LoginPage = () => {
       {/* Loginform */}
       <LoginForm />  
     
-      <AuthSection/>
+      {/* <AuthSection/> */}
       {/* auth */}
     </>
   );

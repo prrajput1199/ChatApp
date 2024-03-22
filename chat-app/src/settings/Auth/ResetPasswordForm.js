@@ -38,7 +38,9 @@ const ResetPasswordForm = () => {
       await sendPasswordResetEmail(auth, email)
         .then(() => {
           alert("Password reset email sent!");
-          reset();
+          reset({
+            email: "",
+          });
         })
         .catch((error) => {
           const errorCode = error.code;

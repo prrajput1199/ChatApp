@@ -11,13 +11,14 @@ import StarredMessages from "../../components/settings/StarredMessage.js";
 import { Outlet } from "react-router-dom";
 import { ChatContext } from "../../contexts/ChatContext";
 import chatapp from "../../Images/chatapp.jpeg";
+import "./GeneralApp.css";
 
 const GeneralApp = () => {
   const theme = useTheme();
   const { sidebar } = useSelector((store) => store.app);
   const { data } = useContext(ChatContext);
   const [user, setUser] = useState(null);
-  const [showChats,setShowChats]=useState(false);
+  const [showChats, setShowChats] = useState(false);
 
   return (
     <Stack
@@ -52,13 +53,21 @@ const GeneralApp = () => {
               display: { xs: "none", md: "block" },
             }}
           >
-            <Communication/>
+            <Communication />
           </Box>
         ) : (
-          <Stack width={"100%"} sx={{
-            justifyContent:"center",
-            alignItems:"center"
-          }}>
+          <Stack
+            sx={{
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+              display: {
+                xs: "none",
+                md: "flex",
+              },
+            }}
+          >
             <img
               src={chatapp}
               alt=""
@@ -66,7 +75,7 @@ const GeneralApp = () => {
                 width: "400px",
                 height: "auto",
                 objectFit: "cover",
-                borderRadius:"50%"
+                borderRadius: "50%",
               }}
             />
           </Stack>

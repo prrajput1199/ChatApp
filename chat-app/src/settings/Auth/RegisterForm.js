@@ -99,15 +99,27 @@ const RegisterForm = () => {
           });
         }
       );
+
+      reset({
+        displayName:"",
+        email:"",
+        Newpassword:""
+      })
+
+      alert("Your account has been created");
       navigate("/app");
       // setTimeout(() => {
       //   <Loadable>{window.location.reload(false)}</Loadable>;
       // }, 10000);
       setTimeout(() => {
         <Loadable>{window.location.reload(false)}</Loadable>;
-      }, 5000);
+      }, 4000);
     } catch (error) {
-      reset();
+      reset({
+        displayName:"",
+        email:"",
+        Newpassword:""
+      })
       setError("afterSubmit", {
         ...error,
         message: error.message,

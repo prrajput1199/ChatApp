@@ -51,9 +51,16 @@ const LoginForm = () => {
     try {
       const { email, Newpassword } = data;
       const res = await signInWithEmailAndPassword(auth, email, Newpassword);
+      reset({
+        email:"",
+        Newpassword:""
+      });
       navigate("/app");
     } catch (error) {
-      reset();
+      reset({
+        email:"",
+        Newpassword:""
+      });
       setError("afterSubmit", {
         ...error,
         message: error.message,

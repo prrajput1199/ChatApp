@@ -105,26 +105,6 @@ const Contact = ({ user, setUser }) => {
     setopenDelete(false);
   };
 
-  // useEffect(()=>{
-  //    const unsub=async ()=>{
-  //     try {
-  //       const q = query(collection(db, "ProfileInfo"), where("uid", "==", user.uid));
-  //       const querySnapshot = await getDocs(q);
-  //       querySnapshot.forEach((doc) => {
-  //         // doc.data() is never undefined for query doc snapshots
-  //         // console.log(doc.id, " => ", doc.data());
-  //         profileData.push({ ...doc.data() });
-  //       });
-  //      } catch (error) {
-  //       setError(true);
-  //      }
-  //    }
-
-  //    return () => {
-  //     unsub();
-  //   };
-  // },[profileData])
-  // console.log("profileData=>",profileData);
   return (
     <div>
       <Box
@@ -204,13 +184,11 @@ const Contact = ({ user, setUser }) => {
 
             {/* about */}
 
-            {/* <Stack direction={"column"} p={2} spacing={2}>
+            <Stack direction={"column"} p={2} spacing={2}>
             {console.log("data.user=>",data.user)}
-              {console.log("data.user.Profile=>",data.user.Profile)}
-              {data.user.Profile? <Typography variant="body2">{data.user.Profile.About}</Typography> :
-              <Typography variant="body2">Hi,I am {data.user.displayName}</Typography>
-              }
-            </Stack> */}
+              {/* {console.log("data.user.Profile=>",data.user.Profile)} */}
+              {data.user.About && <Typography variant="body2">{data.user.About}</Typography>}
+            </Stack>
 
             <Divider />
 

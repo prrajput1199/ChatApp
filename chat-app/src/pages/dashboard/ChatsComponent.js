@@ -33,16 +33,19 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
+
 import { ChatContext } from "../../contexts/ChatContext";
 import ChatsAll from "./chatsAll";
 import Communication from "../../components/Chat/communication";
+import { useSelector } from "react-redux";
 
-const Chats = ({user,setUser,setShowChats,showChats}) => {
+const Chats = ({ user, setUser, setShowChats, showChats }) => {
   const theme = useTheme();
   const [username, setUserName] = useState();
   // const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState({});
+  const { sidebar } = useSelector((store) => store.app);
 
   // paste here
   const { currentUser } = useContext(AuthContext);
@@ -82,14 +85,13 @@ const Chats = ({user,setUser,setShowChats,showChats}) => {
 
   const Handleselect = async () => {
     //check whether the group exist(in firebase) ,if not then create
-    setShowChats(!showChats);
-    
+
     const CombinedId =
       currentUser.uid > user.uid
-        ? currentUser.uid + "-" + user.uid
-        : user.uid + "-" + currentUser.uid;
-     
-    console.log("CombinedId =>",CombinedId)
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
+
+    console.log("CombinedId =>", CombinedId);
     try {
       const res = await getDoc(doc(db, "chats", CombinedId));
 
@@ -151,7 +153,7 @@ const Chats = ({user,setUser,setShowChats,showChats}) => {
           width: {
             xs: "100%",
             md: "50vw",
-            lg:"400px"
+            lg: sidebar.open ? "40%" : "400px",
           },
           height: "100vh",
           overflowX: "hidden",
@@ -190,7 +192,6 @@ const Chats = ({user,setUser,setShowChats,showChats}) => {
               <Stack direction={"column"} spacing={2} mt={2}>
                 <Stack width={"100%"} direction={"column"} spacing={2}>
                   {user && (
-                
                     <Stack
                       width={"100%"}
                       sx={{
@@ -201,7 +202,9 @@ const Chats = ({user,setUser,setShowChats,showChats}) => {
                       onClick={Handleselect}
                     >
                       {/* used for testing purpose */}
-                      <Typography variant="caption" color={"#676767"}>Add the user in your chatlist and start chatting</Typography>
+                      <Typography variant="caption" color={"#676767"}>
+                        Add the user in your chatlist and start chatting
+                      </Typography>
                       <Box
                         sx={{
                           backgroundColor:
@@ -346,20 +349,20 @@ const Chats = ({user,setUser,setShowChats,showChats}) => {
             sx={{
               height: "100%",
               width: {
-                xs:"100%",
-                sm:""
+                xs: "100%",
+                sm: "",
               },
-              position:"fixed",
-              top:0,
-              right:0,
-              zIndex:{
-                xs:1
+              position: "fixed",
+              top: 0,
+              right: 0,
+              zIndex: {
+                xs: 1,
               },
               // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
               display: { xs: showCommunication ? "block" : "none" },
             }}
           >
-            <Communication  setshowCommunication={setshowCommunication}/>
+            <Communication setshowCommunication={setshowCommunication} />
           </Box>
         </div>
       </Box>

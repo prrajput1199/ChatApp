@@ -39,7 +39,7 @@ const Register = () => {
         </Link>
       </Typography>
 
-      <AuthSection/>
+      {/* <AuthSection/> */}
     </>
   );
 };

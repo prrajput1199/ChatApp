@@ -61,9 +61,8 @@ const ProfileForm = () => {
   const onSubmit = async (data) => {
     try {
       const { About, Country } = data;
-      console.log("about", "=>", About);
-      await setDoc(doc(db, "ProfileInfo", currentUser.uid), {
-          uid:currentUser.uid,
+      // console.log("about", "=>", About);
+      await updateDoc(doc(db, "users", currentUser.uid), {
           About:About,
           Country:Country
       });
