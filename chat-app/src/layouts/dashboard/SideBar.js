@@ -34,9 +34,9 @@ const SideBar = () => {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
-  const handleReload = (event) => {
-    <Loadable>{window.location.reload(false)}</Loadable>;
-  };
+  // const handleReload = (event) => {
+  //   <Loadable>{window.location.reload(false)}</Loadable>;
+  // };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -72,21 +72,24 @@ const SideBar = () => {
           boxShadow: "0px 1px 2px rgba(0,0,0,0.25)",
           height: {
             xs: "70px",
-            sm: "100%",
+            sm: "70px",
+            md: "100%",
           },
           zIndex: {
             xs: 1,
+            sm:1
           },
           position: {
             xs: "fixed",
-            sm: "unset",
+            md: "unset",
           },
           bottom: {
             xs: "0",
+            sm: "0"
           },
           width: {
             xs: "100%",
-            sm: "100px",
+            md: "100px",
           },
         }}
       >
@@ -115,7 +118,7 @@ const SideBar = () => {
               borderRadius: 1.5,
               display: {
                 xs: "none",
-                sm: "block",
+                md: "block",
               },
             }}
           >
@@ -139,7 +142,7 @@ const SideBar = () => {
               },
             }}
           >
-            {" "}
+            {/* {" "}
             <div className="reload">
               {
                 <>
@@ -151,7 +154,7 @@ const SideBar = () => {
                   </Stack>
                 </>
               }
-            </div>
+            </div> */}
             <div className="sidebarMenu">
               {Nav_Buttons.map((Element) => {
                 return (

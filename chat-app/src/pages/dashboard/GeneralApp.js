@@ -17,7 +17,7 @@ const GeneralApp = () => {
   const theme = useTheme();
   const { sidebar } = useSelector((store) => store.app);
   const { data } = useContext(ChatContext);
-  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [showChats, setShowChats] = useState(false);
 
   return (
@@ -37,8 +37,8 @@ const GeneralApp = () => {
         {/* 1st section */}
 
         <Chats
-          user={user}
-          setUser={setUser}
+          userData={userData}
+          setUserData={setUserData}
           showChats={showChats}
           setShowChats={setShowChats}
         />
@@ -86,7 +86,7 @@ const GeneralApp = () => {
           (() => {
             switch (sidebar.type) {
               case "CONTACT":
-                return <Contact user={user} setUser={setUser} />;
+                return <Contact userData={userData} setUserData={setUserData} />;
 
               case "SHARED":
                 return <SharedMessages />;

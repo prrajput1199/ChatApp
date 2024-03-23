@@ -17,6 +17,8 @@ export default function BasicTextFields({
   setErr,
   setUser,
   setUserName,
+  userData,
+  setUserData
 }) {
   const HandleSearch = async () => {
     const q = query(collection(db, "users"), where("displayName", "==", username));
@@ -26,6 +28,8 @@ export default function BasicTextFields({
     try {
       querySnapshot.forEach((doc) => {
         !user && setUser(doc.data());
+        !userData && setUserData(doc.data());
+        console.log("userdata=>",userData);
       });
     } catch (error) {
       setErr(true);
@@ -48,7 +52,6 @@ export default function BasicTextFields({
           id="outlined-basic"
           label="Search Name from User List"
           variant="outlined"
-          
           onChange={(e) => setUserName(e.target.value)}
           onKeyDown={handleKey}
           value={username}

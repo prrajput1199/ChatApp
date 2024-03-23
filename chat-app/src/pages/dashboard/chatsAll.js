@@ -47,7 +47,6 @@ const ChatsAll = ({ setChats }) => {
       });
 
       setAlluser(userdata);
-      console.log("alluser", "=>", allUser);
     };
     return () => {
       getalluser();

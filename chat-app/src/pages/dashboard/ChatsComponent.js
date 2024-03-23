@@ -10,7 +10,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import TextField from "@mui/material/TextField";
-import { Archive, List, MagnifyingGlass } from "phosphor-react";
+import { Archive, List, MagnifyingGlass, Trash } from "phosphor-react";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import styled from "@emotion/styled";
@@ -38,11 +38,12 @@ import { ChatContext } from "../../contexts/ChatContext";
 import ChatsAll from "./chatsAll";
 import Communication from "../../components/Chat/communication";
 import { useSelector } from "react-redux";
+import ProfileForm from "../../components/settings/ProfileForm";
 
-const Chats = ({ user, setUser, setShowChats, showChats }) => {
+const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
   const theme = useTheme();
   const [username, setUserName] = useState();
-  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState({});
   const { sidebar } = useSelector((store) => store.app);
@@ -91,7 +92,6 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
 
-    console.log("CombinedId =>", CombinedId);
     try {
       const res = await getDoc(doc(db, "chats", CombinedId));
 
@@ -105,6 +105,8 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
             uid: user.uid,
             displayName: user.displayName,
             photoURL: user.photoURL,
+            About: user.About,
+            Country: user.Country,
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -114,6 +116,8 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
             photoURL: currentUser.photoURL,
+            About: currentUser.About,
+            Country: currentUser.Country,
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -153,7 +157,7 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
           width: {
             xs: "100%",
             md: "50vw",
-            lg: sidebar.open ? "40%" : "400px",
+            lg: "400px",
           },
           height: "100vh",
           overflowX: "hidden",
@@ -176,6 +180,8 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
               err={err}
               user={user}
               setUser={setUser}
+              userData={userData}
+              setUserData={setUserData}
               setUserName={setUserName}
               setErr={setErr}
             />
@@ -238,6 +244,9 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
                                 {user.displayName}
                               </Typography>
                             </Stack>
+                          </Stack>
+                          <Stack px={3}>
+                            <Trash onClick={() => setUser(null)} size={32} />
                           </Stack>
                         </Stack>
                       </Box>
@@ -338,6 +347,14 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
                     user={user}
                     setuser={setUser}
                   />
+
+                  <Stack
+                    sx={{
+                      display: "none",
+                    }}
+                  >
+                    <ProfileForm user={user} />
+                  </Stack>
                 </Stack>
               </Stack>
             </Stack>
@@ -359,7 +376,10 @@ const Chats = ({ user, setUser, setShowChats, showChats }) => {
                 xs: 1,
               },
               // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
-              display: { xs: showCommunication ? "block" : "none" },
+              display: {
+                xs: showCommunication ? "block" : "none",
+                sm: showCommunication ? "block" : "none",
+              },
             }}
           >
             <Communication setshowCommunication={setshowCommunication} />

@@ -86,7 +86,7 @@ const DeleteDialog = ({ open, handleClose }) => {
   );
 };
 
-const Contact = ({ user, setUser }) => {
+const Contact = ({ userData, setUserData }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { data } = useContext(ChatContext);
@@ -95,7 +95,10 @@ const Contact = ({ user, setUser }) => {
   const [openDelete, setopenDelete] = useState(false);
   const [profileData, setProfileData] = useState([]);
   const [err, setError] = useState(false);
-  console.log("user=>", user);
+
+  console.log("userData=>",userData);
+
+  
 
   const handleCloseBlock = () => {
     setopenBlock(false);
@@ -185,9 +188,10 @@ const Contact = ({ user, setUser }) => {
             {/* about */}
 
             <Stack direction={"column"} p={2} spacing={2}>
-            {console.log("data.user=>",data.user)}
-              {/* {console.log("data.user.Profile=>",data.user.Profile)} */}
-              {data.user.About && <Typography variant="body2">{data.user.About}</Typography>}
+              {console.log("data.user=>",data.user)}
+              {data.user.About ? <Typography variant="body2">{data.user.About}</Typography> :
+              <Typography variant="body2">Hello everyone,I am {data.user.displayName}</Typography>
+              }
             </Stack>
 
             <Divider />

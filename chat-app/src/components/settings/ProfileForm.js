@@ -18,8 +18,9 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { db } from "../../firebase";
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
+import { ChatContext } from "../../contexts/ChatContext";
 
-const ProfileForm = () => {
+const ProfileForm = ({user}) => {
   const LoginSchema = Yup.object().shape({
     About: Yup.string().required("About is required"),
     Country: Yup.string().required("Country Name is required"),
@@ -59,12 +60,13 @@ const ProfileForm = () => {
   const { currentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
+
     try {
       const { About, Country } = data;
       // console.log("about", "=>", About);
       await updateDoc(doc(db, "users", currentUser.uid), {
-          About:About,
-          Country:Country
+       About:About,
+       Country:Country
       });
       reset({
         About: "",

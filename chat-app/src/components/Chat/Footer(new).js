@@ -50,7 +50,6 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
   const [clickActions, setClickActions] = useState(false);
 
   const theme = useTheme();
-  console.log(theme);
   const AddDocument = [
     {
       color: "#4da5fe",
