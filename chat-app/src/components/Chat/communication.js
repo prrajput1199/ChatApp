@@ -13,7 +13,6 @@ import Footer_New from "./Footer(new)";
 const Communication = ({setshowCommunication}) => {
   const theme = useTheme();
 
-
   return (
     <>
     <Stack

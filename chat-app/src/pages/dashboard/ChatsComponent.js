@@ -104,9 +104,9 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
           [CombinedId + ".userinfo"]: {
             uid: user.uid,
             displayName: user.displayName,
-            photoURL: user.photoURL,
-            About: user.About,
-            Country: user.Country,
+            photoURL: user.profileInfo.photoURL,
+            About: user.profileInfo.About,
+            Country: user.profileInfo.Country,
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -115,9 +115,9 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
           [CombinedId + ".userinfo"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
-            About: currentUser.About,
-            Country: currentUser.Country,
+            photoURL: currentUser.profileInfo.photoURL,
+            About: currentUser.profileInfo.About,
+            Country: currentUser.profileInfo.Country,
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -151,13 +151,12 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
   };
 
   return (
-    <>
+  
       <Box
         sx={{
           width: {
             xs: "100%",
-            md: "50vw",
-            lg: "400px",
+            md:"400px"
           },
           height: "100vh",
           overflowX: "hidden",
@@ -175,16 +174,19 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
             <Typography variant="h5">Chats</Typography>
           </Stack>
           <Stack spacing={3} overflowX={"hidden"}>
-            <BasicTextFields
-              username={username}
-              err={err}
-              user={user}
-              setUser={setUser}
-              userData={userData}
-              setUserData={setUserData}
-              setUserName={setUserName}
-              setErr={setErr}
-            />
+            <Stack width={"100%"}>
+              <BasicTextFields
+                username={username}
+                err={err}
+                user={user}
+                setUser={setUser}
+                userData={userData}
+                setUserData={setUserData}
+                setUserName={setUserName}
+                setErr={setErr}
+              />
+            </Stack>
+
             <Stack direction={"row"} alignItems={"center"} spacing={3}>
               <Archive size={24} />
               <Button>Archives</Button>
@@ -367,13 +369,14 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
               height: "100%",
               width: {
                 xs: "100%",
-                sm: "",
+                md: "",
               },
               position: "fixed",
               top: 0,
               right: 0,
               zIndex: {
                 xs: 1,
+                sm: 1,
               },
               // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
               display: {
@@ -386,7 +389,6 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
           </Box>
         </div>
       </Box>
-    </>
   );
 };
 

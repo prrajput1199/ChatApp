@@ -10,12 +10,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { DotsThreeCircleVertical, DownloadSimple, Image } from "phosphor-react";
+import {
+  DotsThreeCircleVertical,
+  DownloadSimple,
+  Image,
+  Trash,
+} from "phosphor-react";
 import { element } from "prop-types";
 import React, { useContext, useEffect, useRef } from "react";
 import { Message_options } from "../../data";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChatContext } from "../../contexts/ChatContext";
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const DocMsg = ({ element }) => {
   const theme = useTheme();
@@ -182,7 +189,6 @@ const MediaMsg = ({ element, Menu }) => {
   const theme = useTheme();
   return (
     <div>
-      {console.log(theme)}
       <Stack
         direction={"row"}
         justifyContent={element.incoming ? "start" : "end"}
@@ -218,18 +224,41 @@ const MediaMsg = ({ element, Menu }) => {
   );
 };
 
-const TextMsg = ({ message, Menu }) => {
+const TextMsg = ({ message, Menu ,setMessages,messages}) => {
   const theme = useTheme();
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
   const ref = useRef();
 
-  useEffect(()=>{
-      ref.current?.scrollIntoView({
-        behaviour:"smooth"
-      })
-  },[message])
+  useEffect(() => {
+    ref.current?.scrollIntoView({
+      behaviour: "smooth",
+    });
+  }, [message]);
+  
 
+ const deleteMessage = async (messageId) => {
+  const messageRef = doc(db, 'chats', data.chatId);
+  const objectToRemove = messages.find(item => item.id === messageId);
+
+  try {
+    await updateDoc( messageRef, {
+      messages: arrayRemove( objectToRemove) // Replace with the message object if needed
+    });
+    // You can also update the UI to reflect the deletion
+  } catch (error) {
+    console.error('Error deleting message:', error);
+    // Handle deletion errors (e.g., display an error message to the user)
+  }
+};
+
+  const HandleDelete = (messageId) => {
+    deleteMessage(messageId);
+    // const updatedList = messages.filter((element)=>{
+    //   return element.id != messageId;
+    // })
+    // setMessages(updatedList);
+  };
   return (
     <div>
       <Stack
@@ -249,28 +278,49 @@ const TextMsg = ({ message, Menu }) => {
             width: "max-content",
           }}
         >
-          <Stack direction={"row"} spacing={3} alignItems={"center"}>
-            <Avatar
-              src={
-                message.senderId === currentUser.uid
-                  ? currentUser.photoURL
-                  : data.user.photoURL
-              }
-            />
-            {message.textData &&  <Typography
-              variant="body"
-              color={
-                message.senderId == currentUser.uid
-                  ? theme.palette.text
-                  : "white"
-              }
-            >
-              {  message.textData}
-            </Typography>}
-        
-            {message.img && <img src={message.img} style={{
-              width:"200px"
-            }}></img>}
+          <Stack direction={"column"} spacing={3} alignItems={"center"}>
+            <IconButton sx={{}} onClick={() => HandleDelete(message.id)}>
+              <Trash size={32} />
+            </IconButton>
+
+            {message.img && (
+              <img
+                src={message.img}
+                style={{
+                  width: "200px",
+                }}
+              ></img>
+            )}
+            {message.video && (
+              <video
+                src={message.video}
+                style={{
+                  width: "250px",
+                }}
+                controls
+              ></video>
+            )}
+            <Stack direction={"row"} alignItems={"center"} spacing={3}>
+              <Avatar
+                src={
+                  message.senderId === currentUser.uid
+                    ? currentUser.photoURL
+                    : data.user.photoURL
+                }
+              />
+              {message.textData && (
+                <Typography
+                  variant="body"
+                  color={
+                    message.senderId == currentUser.uid
+                      ? theme.palette.text
+                      : "white"
+                  }
+                >
+                  {message.textData}
+                </Typography>
+              )}
+            </Stack>
           </Stack>
         </Box>
         {Menu && <MessagesMenu />}

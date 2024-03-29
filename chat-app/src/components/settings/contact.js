@@ -115,8 +115,8 @@ const Contact = ({ userData, setUserData }) => {
           width: "300px",
           height: "100vh",
           display: {
-            sm: "none",
-            md: "block",
+            xs: "none",
+            lg: "block",
           },
         }}
       >

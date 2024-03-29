@@ -51,7 +51,7 @@ const Messages = ({Menu}) => {
             }
           })} */}
           {messages?.map((message)=>{
-             return <TextMsg message={message}/>
+             return <TextMsg message={message} setMessages={setMessages} messages={messages}/>
           })}
         </Stack>
       </Box>

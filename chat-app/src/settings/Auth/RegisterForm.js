@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import profilePhoto from "../../Images/ProfileImage.jpeg";
+
 import { v4 } from "uuid";
 import { Loadable } from "../../routes";
 
@@ -73,33 +73,46 @@ const RegisterForm = () => {
         Newpassword
       );
 
-      const storageRef = ref(storage, displayName);
+      // const storageRef = ref(storage, displayName);
 
-      const uploadTask = uploadBytesResumable(storageRef, photo);
+      // const uploadTask = uploadBytesResumable(storageRef, photo);
 
-      uploadTask.on(
-        "state_changed",
+      // uploadTask.on(
+      //   "state_changed",
 
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
+      //   () => {
+      //     getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+      //       await updateProfile(res.user, {
+      //         displayName,
+      //         photoURL: downloadURL,
+      //       });
 
-            await setDoc(doc(db, "users", res.user.uid), {
-              displayName,
-              email,
-              photoURL: downloadURL,
-              uid: res.user.uid,
-            });
+      //       await setDoc(doc(db, "users", res.user.uid), {
+      //         displayName,
+      //         email,
+      //         photoURL: downloadURL,
+      //         uid: res.user.uid,
+      //       });
 
-            //  create userchat folder
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-          });
-        }
-      );
+      //       //  create userchat folder
+      //       await setDoc(doc(db, "userChats", res.user.uid), {});
+      //     });
+      //   }
+      // );
+      // await updateProfile(res.user, {
+      //   displayName,
+      //   photoURL: downloadURL,
+      // });
 
+      await setDoc(doc(db, "users", res.user.uid), {
+        displayName,
+        email,
+        // photoURL: downloadURL,
+        uid: res.user.uid,
+      });
+
+      //  create userchat folder
+      await setDoc(doc(db, "userChats", res.user.uid), {});
       reset({
         displayName:"",
         email:"",
@@ -176,13 +189,14 @@ const RegisterForm = () => {
               ),
             }}
           />
-          <Stack>
+          {/* <Stack>
             <input
               src={photo}
               onChange={(e) => setPhoto(e.target.files[0])}
               type="file"
               id="file"
               style={{ display: "none" }}
+              name="file"
             />
 
             <label htmlFor="file">
@@ -191,7 +205,7 @@ const RegisterForm = () => {
                 <p>Add an Avatar</p>
               </Stack>
             </label>
-          </Stack>
+          </Stack> */}
           <Button
             fullWidth
             color="inherit"

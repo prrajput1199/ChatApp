@@ -28,8 +28,7 @@ export default function BasicTextFields({
     try {
       querySnapshot.forEach((doc) => {
         !user && setUser(doc.data());
-        !userData && setUserData(doc.data());
-        console.log("userdata=>",userData);
+         setUserName("");
       });
     } catch (error) {
       setErr(true);
@@ -42,7 +41,7 @@ export default function BasicTextFields({
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 1, width: "100%", borderRadius: 2 },
+        "& > :not(style)": { width: "100%", borderRadius: 2 },
       }}
       noValidate
       autoComplete="off"
@@ -61,6 +60,7 @@ export default function BasicTextFields({
                 position="end"
                 sx={{
                   cursor: "pointer",
+                  zIndex:1
                 }}
               >
                 <MagnifyingGlass size={32} onClick={HandleSearch} />

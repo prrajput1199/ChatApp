@@ -45,6 +45,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 export function BasicTextFields({ setOpenPicker, openPicker }) {
   const [textData, setTextData] = useState("");
   const [img, setImg] = useState(null);
+  const [video, setVideo] = useState(null);
+  const [progress, setProgress] = useState(0);
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(AuthContext);
   const [clickActions, setClickActions] = useState(false);
@@ -91,7 +93,6 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
       const uploadTask = uploadBytesResumable(storageRef, img);
       uploadTask.on(
         "state_changed",
-
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateDoc(doc(db, "chats", data.chatId), {
@@ -101,6 +102,39 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                 senderId: currentUser.uid,
                 date: Timestamp.now(),
                 img: downloadURL,
+              }),
+            });
+          });
+        }
+      );
+    } else if (video) {
+      const storageRef = ref(storage, uuid());
+      const uploadTask = uploadBytesResumable(storageRef, video);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        }, 
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                textData: textData,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                video: downloadURL,
               }),
             });
           });
@@ -135,6 +169,16 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
     setImg(null);
   };
 
+  const HandleSendfiles = (e) => {
+    if (
+      e.target.files[0].type == "image/png" ||
+      e.target.files[0].type == "image/jpeg"
+    ) {
+      setImg(e.target.files[0]);
+    } else if (e.target.files[0].type == "video/mp4") {
+      setVideo(e.target.files[0]);
+    }
+  };
   return (
     <Box
       component="form"
@@ -189,8 +233,11 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                       <input
                         type="file"
                         id="file"
-                        onChange={(e) => setImg(e.target.files[0])}
-                        src={img}
+                        onChange={(e) => {
+                          console.log(e);
+                          HandleSendfiles(e);
+                        }}
+                        src={img ? img : video}
                         // style={{
                         //   display: "none",
                         // }}
@@ -203,6 +250,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                           size={25}
                         />
                       </label>
+                 
                     </Stack>
                   </InputAdornment>
                 </Stack>
@@ -241,11 +289,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
             >
               <IconButton onClick={HandleSend}>
                 <PaperPlaneTilt
-                  color={
-                    theme.palette.mode === "light"
-                      ? "black"
-                      : "white"
-                  }
+                  color={theme.palette.mode === "light" ? "black" : "white"}
                 />
               </IconButton>
             </Stack>

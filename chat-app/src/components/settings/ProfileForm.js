@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import {
   Alert,
+  Avatar,
   Button,
   IconButton,
   InputAdornment,
@@ -15,12 +16,15 @@ import RHFTextField from "../../components/hookform/ReacthookFormTextField";
 import { Eye, EyeSlash } from "phosphor-react";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import profilePhoto from "../../Images/ProfileImage.jpeg";
 import { updateProfile } from "firebase/auth";
 import { ChatContext } from "../../contexts/ChatContext";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { v4 as uuid } from "uuid";
 
-const ProfileForm = ({user}) => {
+const ProfileForm = ({ user }) => {
   const LoginSchema = Yup.object().shape({
     About: Yup.string().required("About is required"),
     Country: Yup.string().required("Country Name is required"),
@@ -58,20 +62,33 @@ const ProfileForm = ({user}) => {
   // );
 
   const { currentUser } = useContext(AuthContext);
+  const [photo, setPhoto] = useState(null);
 
   const onSubmit = async (data) => {
-
     try {
       const { About, Country } = data;
       // console.log("about", "=>", About);
-      await updateDoc(doc(db, "users", currentUser.uid), {
-       About:About,
-       Country:Country
+
+      const storageRef = ref(storage, uuid());
+
+      const uploadTask = uploadBytesResumable(storageRef, photo);
+
+      uploadTask.on("state_changed", () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await updateDoc(doc(db, "users", currentUser.uid), {
+            profileInfo: {
+              photoURL: downloadURL,
+              About: About,
+              Country: Country,
+            },
+          });
+        });
       });
       reset({
         About: "",
         Country: "",
       });
+      setPhoto(null);
     } catch (error) {
       console.log(error);
       reset();
@@ -93,6 +110,25 @@ const ProfileForm = ({user}) => {
           <RHFTextField name="About" label="About" multiline />
 
           <RHFTextField name="Country" label="Country" multiline />
+
+          <Stack>
+            <label htmlFor="file">
+              <Stack direction={"row"} alignItems={"center"} spacing={3}>
+                <Avatar src={profilePhoto} alt="Sampleprofile" />
+                <p>Add an Avatar</p>
+              </Stack>
+            </label>
+            <input
+              src={photo}
+              onChange={(e) => setPhoto(e.target.files[0])}
+              type="file"
+              id="file"
+              name="file"
+              style={{
+                display: "none",
+              }}
+            />
+          </Stack>
 
           <Button color="primary" size="large" type="submit" variant="outlined">
             Save
