@@ -24,6 +24,7 @@ import { auth } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import "./sidebar.css";
 import { Loadable } from "../../routes";
+import { ChatContext } from "../../contexts/ChatContext";
 const SideBar = () => {
   const theme = useTheme();
   const [selectedButton, setSelectedButton] = useState();
@@ -31,6 +32,7 @@ const SideBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [avatarIndex, setAvatarIndex] = useState();
   const { currentUser } = useContext(AuthContext);
+  const {data}=useContext(ChatContext);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
@@ -220,8 +222,9 @@ const SideBar = () => {
                 onToggleMode();
               }}
             />
+            {console.log("currentUser=>",currentUser)}
             <Avatar
-              src={currentUser.photoURL}
+              src={currentUser.uid == data.user.uid && data.user}
               sx={{ marginBottom: "30px" }}
               id="basic-buttton"
               aria-controls={open ? "basic-menu" : undefined}

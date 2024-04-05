@@ -224,7 +224,7 @@ const MediaMsg = ({ element, Menu }) => {
   );
 };
 
-const TextMsg = ({ message, Menu ,setMessages,messages}) => {
+const TextMsg = ({ message, Menu, setMessages, messages }) => {
   const theme = useTheme();
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
@@ -235,29 +235,24 @@ const TextMsg = ({ message, Menu ,setMessages,messages}) => {
       behaviour: "smooth",
     });
   }, [message]);
-  
 
- const deleteMessage = async (messageId) => {
-  const messageRef = doc(db, 'chats', data.chatId);
-  const objectToRemove = messages.find(item => item.id === messageId);
+  const deleteMessage = async (messageId) => {
+    const messageRef = doc(db, "chats", data.chatId);
+    const objectToRemove = messages.find((item) => item.id === messageId);
 
-  try {
-    await updateDoc( messageRef, {
-      messages: arrayRemove( objectToRemove) // Replace with the message object if needed
-    });
-    // You can also update the UI to reflect the deletion
-  } catch (error) {
-    console.error('Error deleting message:', error);
-    // Handle deletion errors (e.g., display an error message to the user)
-  }
-};
+    try {
+      await updateDoc(messageRef, {
+        messages: arrayRemove(objectToRemove), // Replace with the message object if needed
+      });
+      // You can also update the UI to reflect the deletion
+    } catch (error) {
+      console.error("Error deleting message:", error);
+      // Handle deletion errors (e.g., display an error message to the user)
+    }
+  };
 
   const HandleDelete = (messageId) => {
     deleteMessage(messageId);
-    // const updatedList = messages.filter((element)=>{
-    //   return element.id != messageId;
-    // })
-    // setMessages(updatedList);
   };
   return (
     <div>
@@ -278,20 +273,9 @@ const TextMsg = ({ message, Menu ,setMessages,messages}) => {
             width: "max-content",
           }}
         >
-          <Stack direction={"column"} spacing={3} alignItems={"center"}>
-            <IconButton sx={{}} onClick={() => HandleDelete(message.id)}>
-              <Trash size={32} />
-            </IconButton>
-
-            {message.img && (
-              <img
-                src={message.img}
-                style={{
-                  width: "200px",
-                }}
-              ></img>
-            )}
-            {message.video && (
+          <Stack direction={"row"} spacing={6} alignItems={"center"}>
+            <Stack direction={"column"} spacing={3} alignItems={"center"}>
+              {/* {message.video && (
               <video
                 src={message.video}
                 style={{
@@ -299,28 +283,42 @@ const TextMsg = ({ message, Menu ,setMessages,messages}) => {
                 }}
                 controls
               ></video>
-            )}
-            <Stack direction={"row"} alignItems={"center"} spacing={3}>
-              <Avatar
-                src={
-                  message.senderId === currentUser.uid
-                    ? currentUser.photoURL
-                    : data.user.photoURL
-                }
-              />
-              {message.textData && (
-                <Typography
-                  variant="body"
-                  color={
-                    message.senderId == currentUser.uid
-                      ? theme.palette.text
-                      : "white"
+                    )} */}
+              <Stack direction={"row"} alignItems={"center"} spacing={3}>
+                <Avatar
+                  src={
+                    message.senderId === currentUser.uid
+                      ? currentUser.photoURL
+                      : data.user.photoURL
                   }
-                >
-                  {message.textData}
-                </Typography>
-              )}
+                />
+
+                {message.img && (
+                  <img
+                    src={message.img}
+                    style={{
+                      width: "200px",
+                    }}
+                  ></img>
+                )}
+                {message.textData && (
+                  <Typography
+                    variant="body"
+                    color={
+                      message.senderId == currentUser.uid
+                        ? theme.palette.text
+                        : "white"
+                    }
+                  >
+                    {message.textData}
+                  </Typography>
+                )}
+              </Stack>
             </Stack>
+
+            <IconButton sx={{}} onClick={() => HandleDelete(message.id)}>
+              <Trash size={20} />
+            </IconButton>
           </Stack>
         </Box>
         {Menu && <MessagesMenu />}

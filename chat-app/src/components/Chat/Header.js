@@ -17,8 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { store } from "../../Redux/store";
 import { ChatContext } from "../../contexts/ChatContext";
 
-const 
-Header = ({setshowCommunication}) => {
+const Header = ({setshowCommunication}) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const {data}=useContext(ChatContext);

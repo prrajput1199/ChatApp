@@ -107,40 +107,42 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
           });
         }
       );
-    } else if (video) {
-      const storageRef = ref(storage, uuid());
-      const uploadTask = uploadBytesResumable(storageRef, video);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused');
-              break;
-            case 'running':
-              console.log('Upload is running');
-              break;
-          }
-        }, 
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateDoc(doc(db, "chats", data.chatId), {
-              messages: arrayUnion({
-                id: uuid(),
-                textData: textData,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                video: downloadURL,
-              }),
-            });
-          });
-        }
-      );
-    } else {
+    } 
+    // else if (video) {
+    //   const storageRef = ref(storage, uuid());
+    //   const uploadTask = uploadBytesResumable(storageRef, video);
+    //   uploadTask.on(
+    //     "state_changed",
+    //     (snapshot) => {
+    //       // Observe state change events such as progress, pause, and resume
+    //       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //       console.log('Upload is ' + progress + '% done');
+    //       switch (snapshot.state) {
+    //         case 'paused':
+    //           console.log('Upload is paused');
+    //           break;
+    //         case 'running':
+    //           console.log('Upload is running');
+    //           break;
+    //       }
+    //     }, 
+    //     () => {
+    //       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+    //         await updateDoc(doc(db, "chats", data.chatId), {
+    //           messages: arrayUnion({
+    //             id: uuid(),
+    //             textData: textData,
+    //             senderId: currentUser.uid,
+    //             date: Timestamp.now(),
+    //             video: downloadURL,
+    //           }),
+    //         });
+    //       });
+    //     }
+    //   );
+    // }
+     else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
@@ -170,14 +172,16 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
   };
 
   const HandleSendfiles = (e) => {
-    if (
-      e.target.files[0].type == "image/png" ||
-      e.target.files[0].type == "image/jpeg"
-    ) {
-      setImg(e.target.files[0]);
-    } else if (e.target.files[0].type == "video/mp4") {
-      setVideo(e.target.files[0]);
+    const file = e.target.files[0];
+    const maxSizeInBytes = 500000; // 1MB limit (change this as per your requirement)
+    
+    if (file && file.size > maxSizeInBytes) {
+      alert('File size exceeds the limit (500 kb)');
+    } else {
+      setImg(file);
     }
+   
+    
   };
   return (
     <Box
@@ -229,7 +233,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                     })}
                   </Stack> */}
                   <InputAdornment>
-                    <Stack>
+                    <Stack direction={"row"} alignItems={"center"}>
                       <input
                         type="file"
                         id="file"
@@ -237,10 +241,11 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                           console.log(e);
                           HandleSendfiles(e);
                         }}
-                        src={img ? img : video}
-                        // style={{
-                        //   display: "none",
-                        // }}
+                        // src={img ? img : video}
+                        src={img}
+                        style={{
+                          width:"180px"
+                        }}
                       />
                       <label htmlFor="file">
                         <LinkSimple

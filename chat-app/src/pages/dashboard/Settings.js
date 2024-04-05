@@ -18,6 +18,7 @@ import {
   Key,
   Lock,
   PencilCircle,
+  SignOut,
   WarningCircle,
 } from "phosphor-react";
 import React, { useContext, useState } from "react";
@@ -26,12 +27,14 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ChatContext } from "../../contexts/ChatContext";
 import { Link as RouterLink } from "react-router-dom";
 import Theme from "../../settings/sections/Theme";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
 
 const Settings = () => {
   const theme = useTheme();
 
   const [openShortcut, setOpenShortcut] = useState(false);
-  const [openTheme , setOpenTheme] = useState(false);
+  const [openTheme, setOpenTheme] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
@@ -51,13 +54,15 @@ const Settings = () => {
     setOpenTheme(false);
   };
 
+  const signout=()=>{
+    signOut(auth);
+  }
   const SettingsList = [
     {
       key: 0,
       icon: <PencilCircle size={20} />,
       title: "Theme",
       onclick: handleopenTheme,
-     
     },
     {
       key: 1,
@@ -85,21 +90,9 @@ const Settings = () => {
     },
     {
       key: 5,
-      icon: <ClipboardText size={20} />,
-      title: "Request account info",
-      onclick: () => {},
-    },
-    {
-      key: 6,
-      icon: <Lock size={20} />,
-      title: "Privacy",
-      onclick: () => {},
-    },
-    {
-      key: 7,
-      icon: <WarningCircle size={20} />,
-      title: "Help",
-      onclick: () => {},
+      icon: <SignOut size={20} />,
+      title: "SignOut",
+      onclick: signout,
     },
   ];
   return (
@@ -182,11 +175,8 @@ const Settings = () => {
               handleClose={handleCloseshortcut}
             />
           )}
-           {openTheme && (
-            <Theme
-              open={handleopenTheme}
-              handleClose={handlecloseTheme}
-            />
+          {openTheme && (
+            <Theme open={handleopenTheme} handleClose={handlecloseTheme} />
           )}
         </Box>
 
