@@ -96,9 +96,7 @@ const Contact = ({ userData, setUserData }) => {
   const [profileData, setProfileData] = useState([]);
   const [err, setError] = useState(false);
 
-  console.log("userData=>",userData);
-
-  
+  console.log("userData=>", userData);
 
   const handleCloseBlock = () => {
     setopenBlock(false);
@@ -174,9 +172,14 @@ const Contact = ({ userData, setUserData }) => {
                   height: "64px",
                 }}
               />
-              <Typography variant="article" fontWeight={600}>
-                {data.user.displayName}
-              </Typography>
+              <Stack direction={"column"} alignItems={"center"}>
+                <Typography variant="article" fontWeight={600}>
+                  {data.user.displayName}
+                </Typography>
+                <Typography variant="subtitle2" fontWeight={600}>
+                  {data.user.Country}
+                </Typography>
+              </Stack>
             </Stack>
 
             <Divider
@@ -188,10 +191,14 @@ const Contact = ({ userData, setUserData }) => {
             {/* about */}
 
             <Stack direction={"column"} p={2} spacing={2}>
-              {console.log("data.user=>",data.user)}
-              {data.user.About ? <Typography variant="body2">{data.user.About}</Typography> :
-              <Typography variant="body2">Hello everyone,I am {data.user.displayName}</Typography>
-              }
+              {console.log("data.user=>", data.user)}
+              {data.user.About ? (
+                <Typography variant="body2">{data.user.About}</Typography>
+              ) : (
+                <Typography variant="body2">
+                  Hello everyone,I am {data.user.displayName}
+                </Typography>
+              )}
             </Stack>
 
             <Divider />

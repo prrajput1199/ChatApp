@@ -222,8 +222,8 @@ const SideBar = () => {
                 onToggleMode();
               }}
             />
-            {console.log("currentUser=>",currentUser)}
-            <Avatar
+            {/* {console.log("currentUser=>",currentUser)} */}
+            {/* <Avatar
               src={currentUser.uid == data.user.uid && data.user}
               sx={{ marginBottom: "30px" }}
               id="basic-buttton"
@@ -265,7 +265,7 @@ const SideBar = () => {
                   </Stack>
                 </MenuItem>
               </Stack>
-            </Menu>
+            </Menu> */}
           </Stack>
         </Stack>
       </Box>

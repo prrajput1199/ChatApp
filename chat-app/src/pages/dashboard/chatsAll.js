@@ -81,12 +81,11 @@ const ChatsAll = ({ setChats }) => {
                   direction={"row"}
                   gap={3}
                   alignItems={"center"}
+                  justifyContent={"center"}
                   marginTop={"6px"}
                   width={"100%"}
                   height={"100%"}
                 >
-                  <Avatar alt="Remy Sharp" src={el.photoURL} />
-
                   <Typography variant="subtitle2">{el.displayName}</Typography>
                 </Stack>
               </Box>

@@ -91,23 +91,20 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
       const storageRef = ref(storage, uuid());
 
       const uploadTask = uploadBytesResumable(storageRef, img);
-      uploadTask.on(
-        "state_changed",
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateDoc(doc(db, "chats", data.chatId), {
-              messages: arrayUnion({
-                id: uuid(),
-                textData: textData,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
-              }),
-            });
+      uploadTask.on("state_changed", () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await updateDoc(doc(db, "chats", data.chatId), {
+            messages: arrayUnion({
+              id: uuid(),
+              textData: textData,
+              senderId: currentUser.uid,
+              date: Timestamp.now(),
+              img: downloadURL,
+            }),
           });
-        }
-      );
-    } 
+        });
+      });
+    }
     // else if (video) {
     //   const storageRef = ref(storage, uuid());
     //   const uploadTask = uploadBytesResumable(storageRef, video);
@@ -126,7 +123,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
     //           console.log('Upload is running');
     //           break;
     //       }
-    //     }, 
+    //     },
     //     () => {
     //       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
     //         await updateDoc(doc(db, "chats", data.chatId), {
@@ -142,7 +139,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
     //     }
     //   );
     // }
-     else {
+    else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
@@ -173,15 +170,13 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
 
   const HandleSendfiles = (e) => {
     const file = e.target.files[0];
-    const maxSizeInBytes = 500000; // 1MB limit (change this as per your requirement)
-    
+    const maxSizeInBytes = 225000; // 1MB limit (change this as per your requirement)
+
     if (file && file.size > maxSizeInBytes) {
-      alert('File size exceeds the limit (500 kb)');
+      alert("File size exceeds the limit (225 kb)");
     } else {
       setImg(file);
     }
-   
-    
   };
   return (
     <Box
@@ -210,7 +205,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
             value={textData}
             InputProps={{
               startAdornment: (
-                <Stack sx={{ width: "max-content" }}>
+                <Stack sx={{ width: "max-content"}}>
                   {/* <Stack sx={{ position: "relative" }}>
                     {AddDocument.map((Element) => {
                       return (
@@ -233,9 +228,10 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                     })}
                   </Stack> */}
                   <InputAdornment>
-                    <Stack direction={"row"} alignItems={"center"}>
+                    <Stack direction={"row"} alignItems={"center"} mx={"10px"}>
                       <input
                         type="file"
+                        accept="image/*"
                         id="file"
                         onChange={(e) => {
                           console.log(e);
@@ -244,7 +240,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                         // src={img ? img : video}
                         src={img}
                         style={{
-                          width:"180px"
+                          width: "180px",
                         }}
                       />
                       <label htmlFor="file">
@@ -255,7 +251,6 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                           size={25}
                         />
                       </label>
-                 
                     </Stack>
                   </InputAdornment>
                 </Stack>
@@ -263,12 +258,12 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
 
               endAdornment: (
                 <InputAdornment>
-                  <IconButton
-                    onClick={() => {
-                      openPicker ? setOpenPicker(false) : setOpenPicker(true);
-                    }}
-                  >
-                    <Smiley />
+                  <IconButton>
+                    <Smiley
+                      onClick={() => {
+                        openPicker ? setOpenPicker(false) : setOpenPicker(true);
+                      }}
+                    />
                   </IconButton>
                 </InputAdornment>
               ),
@@ -311,27 +306,27 @@ const Footer_New = () => {
   return (
     <>
       <Stack width={"100%"}>
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: "90px",
-            right: "95px",
-            zIndex: "10",
-            display: openPicker ? "inline" : "none",
-            backgroundColor:
-              theme.palette.mode === "Light"
-                ? "white"
-                : theme.palette.background.default,
-          }}
-        >
-          <EmojiPicker
-            Theme={theme.palette.mode}
-            setOpenPicker={setOpenPicker}
-            openPicker={openPicker}
-          />
-        </Box>
         <BasicTextFields />
       </Stack>
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: "90px",
+          right: "95px",
+          zIndex: "10",
+          display: openPicker ? "inline" : "none",
+          backgroundColor:
+            theme.palette.mode === "Light"
+              ? "white"
+              : theme.palette.background.default,
+        }}
+      >
+        <EmojiPicker
+          Theme={theme.palette.mode}
+          setOpenPicker={setOpenPicker}
+          openPicker={openPicker}
+        />
+      </Box>
     </>
   );
 };

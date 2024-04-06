@@ -63,6 +63,17 @@ const ProfileForm = ({ user }) => {
 
   const { currentUser } = useContext(AuthContext);
   const [photo, setPhoto] = useState(null);
+  
+  const HandleSendfiles = (e) => {
+    const file = e.target.files[0];
+    const maxSizeInBytes = 250000; // 1MB limit (change this as per your requirement)
+
+    if (file && file.size > maxSizeInBytes) {
+      alert("File size exceeds the limit (225 kb)");
+    } else {
+      setPhoto(file);
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -111,7 +122,7 @@ const ProfileForm = ({ user }) => {
 
           <RHFTextField name="Country" label="Country" multiline />
 
-          <Stack>
+          <Stack direction={"column"} spacing={3} alignItems={"center"}>
             <label htmlFor="file">
               <Stack direction={"row"} alignItems={"center"} spacing={3}>
                 <Avatar src={profilePhoto} alt="Sampleprofile" />
@@ -120,13 +131,11 @@ const ProfileForm = ({ user }) => {
             </label>
             <input
               src={photo}
-              onChange={(e) => setPhoto(e.target.files[0])}
+              onChange={(e) => HandleSendfiles(e)}
               type="file"
               id="file"
               name="file"
-              style={{
-                display: "none",
-              }}
+              accept="image/*"
             />
           </Stack>
 

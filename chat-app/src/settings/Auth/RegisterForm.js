@@ -124,9 +124,9 @@ const RegisterForm = () => {
       // setTimeout(() => {
       //   <Loadable>{window.location.reload(false)}</Loadable>;
       // }, 10000);
-      setTimeout(() => {
-        <Loadable>{window.location.reload(false)}</Loadable>;
-      }, 4000);
+      // setTimeout(() => {
+      //   <Loadable>{window.location.reload(false)}</Loadable>;
+      // }, 4000);
     } catch (error) {
       reset({
         displayName:"",

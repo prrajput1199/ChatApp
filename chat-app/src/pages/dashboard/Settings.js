@@ -144,7 +144,7 @@ const Settings = () => {
               <Typography variant="subtitle1">
                 {currentUser.displayName}
               </Typography>
-              {currentUser.About ? (
+              {currentUser.profileInfo ? (
                 <Typography variant="body2">
                   {currentUser.About.about}
                 </Typography>
