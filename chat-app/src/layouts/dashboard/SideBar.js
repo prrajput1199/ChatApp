@@ -161,7 +161,7 @@ const SideBar = () => {
               {Nav_Buttons.map((Element) => {
                 return (
                   <>
-                    <div className="menuItem">
+                    <div className="menuItem" key={Element.index}>
                       {Element.index === selectedButton ? (
                         <Box
                           sx={{
@@ -172,6 +172,7 @@ const SideBar = () => {
                             color: "white",
                             borderRadius: 1,
                           }}
+                          
                         >
                           <IconButton
                             key={Element.index}

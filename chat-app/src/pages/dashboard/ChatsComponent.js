@@ -209,7 +209,6 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
                       spacing={2}
                       onClick={Handleselect}
                     >
-                      {/* used for testing purpose */}
                       <Typography variant="caption" color={"#676767"}>
                         Add the user in your chatlist and start chatting
                       </Typography>
@@ -220,10 +219,12 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
                               ? "white"
                               : theme.palette.background.paper,
 
-                          // width: "100%",
+                          width: "100%",
                           height: "57px",
                           borderRadius: "20px",
                         }}
+                        direction={"column"}
+                        alignItems={"center"}
                       >
                         <Stack
                           direction={"row"}

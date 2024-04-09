@@ -41,6 +41,7 @@ import { ChatContext } from "../../contexts/ChatContext";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { AuthContext } from "../../contexts/AuthContext";
+import "./footer.css"
 
 export function BasicTextFields({ setOpenPicker, openPicker }) {
   const [textData, setTextData] = useState("");
@@ -49,7 +50,6 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
   const [progress, setProgress] = useState(0);
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(AuthContext);
-  const [clickActions, setClickActions] = useState(false);
 
   const theme = useTheme();
   const AddDocument = [
@@ -242,6 +242,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                         style={{
                           width: "180px",
                         }}
+                        className="inputFooter"
                       />
                       <label htmlFor="file">
                         <LinkSimple

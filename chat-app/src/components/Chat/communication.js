@@ -5,10 +5,8 @@ import {
 } from "@mui/material";
 import React, { useContext } from "react";
 import Header from "./Header";
-// import Footer from "./Footer";
 import Messages from "./messages";
 import Footer_New from "./Footer(new)";
-
 
 const Communication = ({setshowCommunication}) => {
   const theme = useTheme();
