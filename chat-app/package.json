@@ -62,5 +62,9 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.5.0"
-  }
+  },
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
