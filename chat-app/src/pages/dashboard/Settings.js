@@ -132,7 +132,7 @@ const Settings = () => {
             </Typography>
           </Stack>
 
-          <Stack direction={"row"} alignItems={"center"} spacing={4} px={3}>
+          {/* <Stack direction={"row"} alignItems={"center"} spacing={4} px={3}>
             <Avatar
               src={currentUser.photoURL}
               sx={{
@@ -154,7 +154,7 @@ const Settings = () => {
                 </Typography>
               )}
             </Stack>
-          </Stack>
+          </Stack> */}
 
           <Stack direction={"column"} py={5} px={3} spacing={3}>
             {SettingsList.map(({ key, icon, title, onclick }) => {

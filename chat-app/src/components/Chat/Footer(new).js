@@ -257,17 +257,17 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                 </Stack>
               ),
 
-              endAdornment: (
-                <InputAdornment>
-                  <IconButton>
-                    <Smiley
-                      onClick={() => {
-                        openPicker ? setOpenPicker(false) : setOpenPicker(true);
-                      }}
-                    />
-                  </IconButton>
-                </InputAdornment>
-              ),
+              // endAdornment: (
+              //   <InputAdornment>
+              //     <IconButton>
+              //       <Smiley
+              //         onClick={() => {
+              //           openPicker ? setOpenPicker(false) : setOpenPicker(true);
+              //         }}
+              //       />
+              //     </IconButton>
+              //   </InputAdornment>
+              // ),
             }}
           />
           <Box
